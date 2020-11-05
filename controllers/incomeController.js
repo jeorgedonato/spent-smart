@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../../BootStocks/models');
+const db = require('../../spent-smart/models');
 const router = express.Router();
 const moment = require('moment');
 // const { check, validationResult } = require('express-validator');
