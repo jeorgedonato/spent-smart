@@ -4,29 +4,33 @@ const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
   id: {
-    type: Number
+    type: Number,
+    unique: true
   },
   email: {
     type: String,
     trim: true,
-    required: "Enter your e-mail address"
+    required: [true, "Enter your e-mail address"],
+    unique: [true, "This e-mail address already exists"]
   },
   password: {
-    type: String
+    type: String,
+    required: [true, "Enter a password"]
   },
   firstname: {
     type: String,
     trim: true,
-    required: "Enter your first name"
+    required: [true, "Enter your first name"]
   },
   lastname: {
     type: String,
     trim: true,
-    required: "Enter your last name"
+    required: [true, "Enter your last name"]
   },
   email_confirm: {
     type: Boolean,
-    default: false
+    default: false,
+    required: true
   },
   profile_picture: {
     type: String,
