@@ -7,12 +7,10 @@ const incomeSchema = new Schema({
     type: Number
   },
   user_id: {
-    type: String,
-    trim: true,
-    required: "Enter a user ID"
+    type: mongoose.Schema.Types.ObjectId, ref: 'User'
   },
   category_id: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId, ref: 'Categories'
   },
   month_created: {
     type: Number
@@ -22,7 +20,7 @@ const incomeSchema = new Schema({
   },
   amount: {
     type: Number,
-    required: "Enter an amount"
+    required: [true, "Enter an amount"]
   },
   due_date: {
     type: Date,

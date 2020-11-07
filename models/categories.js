@@ -4,20 +4,23 @@ const Schema = mongoose.Schema;
 
 const categoriesSchema = new Schema({
   id: {
-    type: Number
+    type: Number,
+    unique: true
   },
   user_id: {
     type: String,
     trim: true,
-    required: "Enter a user ID"
+    required: [true, "Enter a user ID"],
+    unique: true
   },
   type: {
     type: String,
-    enum: ["Income", "Expense"]
+    enum: ["Income", "Expense"],
+    required: [true, "Select a category type"]
   },
   name: {
     type: String,
-    required: "Enter a category name"
+    required: [true, "Enter a category name"]
   },
   created_date: {
     type: Date,
