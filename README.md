@@ -1,0 +1,78 @@
+# Spent Smart
+UCI Project 3 (Team Members: Amir Ashkan Salehian Dardashti, Jeorge Donato, Lauren Goettsch, Duyen Pham, Raymond Tieu)
+
+  
+## Table of Contents
+
+* Motivation
+* Project Description
+* User Story
+* Technology Used
+* Installation
+* Contributing
+* Github Link
+* Heroku Deployed Link
+* Screenshots
+
+
+## Motivation
+
+A very crucial skill in life that is rarely taught in school, is how to budget your income and spending appropriately.  As a result, many adults, especially young adults, will encounter difficult situations such as falling into debt and having to make financial sacrifices.  With our easy-to-use Spent Smart application, you can view your financial situation in a snapshot to help guide you into making smart spending decisions according to your available income and savings.
+
+
+## Project Description
+
+Initially, users will be prompted to sign-up or log-in to the application.  Spent Smart allows users to input their income upon a selection of time ranges (daily, weekly, monthly, annually) and will be presented with categories (e.g. food, transportation, utilities, etc.) for which they can also create separate entries within.  The goal is to be net positive after accounting for all of the users' expenses.  Additional features will include a calendar feature, milestone statistics (e.g. breakdown of average spending), investment/savings advice according to your budget, and more.
+
+
+## User Story
+
+AS a financially responsible person
+I WANT an application that will help me budget my income and expenses
+SO THAT I can build my savings and avoid falling into debt
+
+
+
+## Technology Used 
+
+* HTML/CSS
+* Bootstrap
+* Heroku
+* Express
+* Handlebars
+* JavaScript
+* Node.js
+* MongoDB/Mongoose
+* React/Redux
+* Moment.js
+* Chart.js
+
+
+## Installation
+
+* Open your terminal in the spent-smart directory and "npm install"
+* Run "npm start" after the installation is complete
+
+
+## Contributing
+
+* Amir Ashkan Salehian Dardashti
+* Jeorge Donato https://github.com/jeorgedonato
+* Lauren Goettsch https://github.com/laurlaur2181
+* Duyen Pham https://github.com/phtrmd8
+* Raymond Tieu https://github.com/raytieu
+
+
+## Github Link:
+https://github.com/jeorgedonato/spent-smart
+
+
+## Heroku Deployed Link:
+https://spentsmart.herokuapp.com/
+
+
+## Screenshots:
+![Image 1]()
+
+![Image 2]()
+
