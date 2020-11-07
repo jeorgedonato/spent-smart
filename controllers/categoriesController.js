@@ -1,11 +1,13 @@
-// api-routes.js - file offers a set of routes for displaying & saving data to the db
-
 // Dependencies
 const express = require('express');
 const db = require("../models");
 const router = express.Router();
 const moment = require('moment');
 const auth = require("../middleware/auth");
+
+  router.get('/',auth,async (req,res) => {
+
+  });
 
 // ==================================================
 // Methods
@@ -47,3 +49,5 @@ const auth = require("../middleware/auth");
 //     }
 // };
 // ==================================================
+
+module.exports = router;

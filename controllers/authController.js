@@ -52,6 +52,12 @@ router.post(
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
+      if(!user.email_confirm){
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Account is not Confirmed' }] });
+      }
+
       const payload = {
         user: {
           id: user.id
