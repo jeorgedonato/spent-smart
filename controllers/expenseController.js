@@ -1,5 +1,5 @@
 const db = require("../models");
-const auth = require("../middleware/auth");
+// const auth = require("../middleware/auth");
 
 // Defining methods for the expenseController
 module.exports = {

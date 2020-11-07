@@ -1,6 +1,6 @@
 // Dependencies
 const db = require('../models');
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
