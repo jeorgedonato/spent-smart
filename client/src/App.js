@@ -2,7 +2,7 @@ import {Switch, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Index from "./pages/index";
+// import Index from "./pages/index";
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <>
     <Navbar></Navbar>
     <Switch>
-    <Route path = "/" exact><Index/></Route>
+    <Route path = "/" exact></Route>
     </Switch>
     <Footer></Footer>
     </>
