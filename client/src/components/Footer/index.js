@@ -1,10 +1,11 @@
 import React from "react";
 import "./style.css";
 
+
 function Footer() {
   return (
     <footer className="footer">
-      <span>Pupster 2017</span>
+      <span>Spent Smart 2020</span>
     </footer>
   );
 }
