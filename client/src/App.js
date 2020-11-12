@@ -1,7 +1,7 @@
 import {Switch, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Index from "./pages/Index";
+import LoginPage from "./pages";
 
 function App() {
   return (

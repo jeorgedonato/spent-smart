@@ -1,5 +1,5 @@
 import React, { Components } from "react";
-import "./style.css";
+import "./LoginPage.css";
 
 class LoginPage extends Components {
   // Setting the component's initial state
@@ -49,7 +49,7 @@ class LoginPage extends Components {
     return (
       <div>
         <p>
-          Hello {this.state.firstName} {this.state.lastName}
+          Hello, Welcome to Spent Smart. Please Login Below. {this.state.firstName} {this.state.lastName}
         </p>
         <form className="form">
           <input
