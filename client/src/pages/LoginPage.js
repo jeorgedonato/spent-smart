@@ -1,15 +1,18 @@
-import React, { Components } from "react";
-import "./LoginPage.css";
+import React, { useState } from "react";
+import {login} from '../actions/auth';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+// import "./style.css";
 
-class LoginPage extends Components {
+const LoginPage = ({login , isAuthenticated}) => {
   // Setting the component's initial state
-  state = {
-    firstName: "",
-    lastName: "",
+  const [loginCred,setLoginCred] = useState({
+    email: "",
     password: ""
-  };
+  })
 
-  handleInputChange = event => {
+  const handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     let value = event.target.value;
     const name = event.target.name;
@@ -18,66 +21,58 @@ class LoginPage extends Components {
       value = value.substring(0, 15);
     }
     // Updating the input's state
-    this.setState({
-      [name]: value
-    });
+    setLoginCred({...loginCred,[name] : value})
   };
 
-  handleFormSubmit = event => {
+  const handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    if (!this.state.firstName || !this.state.lastName) {
-      alert("Fill out your first and last name please!");
-    } else if (this.state.password.length < 6) {
-      alert(
-        `Choose a more secure password ${this.state.firstName} ${this.state
-          .lastName}`
-      );
-    } else {
-      alert(`Hello ${this.state.firstName} ${this.state.lastName}`);
-    }
 
-    this.setState({
-      firstName: "",
-      lastName: "",
-      password: ""
-    });
+      login(loginCred.email, loginCred.password);
+      console.log("login clicked")
   };
 
-  render() {
+    if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
     // Notice how each input has a `value`, `name`, and `onChange` prop
     return (
       <div>
         <p>
-          Hello, Welcome to Spent Smart. Please Login Below. {this.state.firstName} {this.state.lastName}
+          Hello {loginCred.email} {loginCred.password}
         </p>
         <form className="form">
           <input
-            value={this.state.firstName}
-            name="firstName"
-            onChange={this.handleInputChange}
-            type="text"
-            placeholder="First Name"
+            value={loginCred.email}
+            name="email"
+            onChange={handleInputChange}
+            type="email"
+            placeholder="Email"
           />
           <input
-            value={this.state.lastName}
-            name="lastName"
-            onChange={this.handleInputChange}
-            type="text"
-            placeholder="Last Name"
-          />
-          <input
-            value={this.state.password}
+            value={loginCred.password}
             name="password"
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
             type="password"
             placeholder="Password"
           />
-          <button onClick={this.handleFormSubmit}>Submit</button>
+          <button onClick={handleFormSubmit}>Submit</button>
         </form>
       </div>
     );
-  }
-}
 
-export default LoginPage;
+};
+
+LoginPage.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(
+  mapStateToProps,
+  { login }
+)(LoginPage);
