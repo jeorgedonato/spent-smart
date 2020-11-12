@@ -33,10 +33,10 @@ router.post(
                 year_created: moment().format("YYYY")
             };
 
-            const category = await db.Category.create(newCategory);
+            const categoryRec = await db.Category.create(newCategory);
 
             // res.json(dbCategory);
-            res.json(category);
+            res.json(categoryRec);
         } catch (err) {
             console.error(err.message);
             res.status(500).send("Server Error");
