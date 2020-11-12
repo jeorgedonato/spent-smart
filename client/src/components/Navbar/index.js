@@ -10,7 +10,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">
-        Pupster
+        Spent Smart
       </Link>
       <div>
         <ul className="navbar-nav">
