@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
 import {loadUser} from './actions/auth';
-import {Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LoginPage from "./pages/LoginPage";
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
+import ExpensesPage from './pages/Expenses/ExpensesPage';
+import PrivateRoute from './components/routing/PrivateRoute'
 // import Index from "./pages/Index";
 
 if (localStorage.token) {
@@ -21,12 +23,17 @@ function App() {
   return (
     <>
     <Provider store={store}>
-      <Navbar></Navbar>
-      <LoginPage />
-      <Switch>
-        <Route path = "/" exact></Route>
-      </Switch>
-      <Footer></Footer>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={LoginPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <PrivateRoute exact path="/dashboard" component={ExpensesPage}/>
+          <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
+          <Route path="/" exact></Route>
+        </Switch>
+        <Footer />
+      </Router>
     </Provider>
     </>
   );

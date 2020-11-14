@@ -14,7 +14,7 @@ router.post(
   async (req, res) => {
     try {
       // const user = await User.findById(req.user.id).select('-password');
-      const { amount, category } = req.body;
+      const { name, amount, category } = req.body;
       const catUpsert = await db.Category.findOneAndUpdate(
         {name : category
           .trim()
@@ -23,12 +23,13 @@ router.post(
             .map(s => s.charAt(0).toUpperCase() + s.substring(1))
             .join(" "),
           type : 'Income'},
-        {userId: req.user.id},
+        {user_id: req.user.id},
         {new: true, upsert: true});
       
       const newIncome = {
         amount: amount,
-        category_id: catUpsert.id,
+        name: name,
+        category_id: catUpsert._id,
         user_id: req.user.id,
         month_created : moment().format('M'),
         year_created : moment().format('YYYY'),
