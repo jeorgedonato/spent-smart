@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {setAlert} from './alert';
+// import {Redirect} from 'react-router-dom';
 //Importing the types from types file to use for dispatching types
 import {
   REGISTER_SUCCESS,
@@ -7,6 +9,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  CONFIRM_SUCCESS,
   LOGOUT,
   CLEAR_PROFILE
 } from './types';
@@ -44,22 +47,23 @@ export const register = ({ firstname, lastname, email, password }) => async disp
   };
 
   const body = JSON.stringify({ firstname, lastname, email, password });
-
+ 
   try {
-    const res = await axios.post('/api/users', body, config);
-
+    const res = await axios.post('/api/users/register', body, config);
+    // console.log(res)
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: ""
     });
-
-    dispatch(loadUser());
     
+    dispatch(loadUser());
+    dispatch(setAlert(res.data,'success'));
+
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => console.log(error.msg));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
@@ -92,7 +96,32 @@ export const login = (email, password) => async dispatch => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => console.log(error.msg));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
+};
+
+export const confirm = (id) => async dispatch => {
+
+  try {
+    const res = await axios.get('/api/users/confirm/'+id);
+    // console.log(res)
+    dispatch({
+      type: CONFIRM_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+    dispatch(setAlert("Your account is confirmed", 'success'))
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({

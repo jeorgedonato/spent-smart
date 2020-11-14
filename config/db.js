@@ -4,7 +4,7 @@ const config = require('config');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budgetApp", {
+    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/spentSmart", {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,
