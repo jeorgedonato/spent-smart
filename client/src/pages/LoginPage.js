@@ -3,6 +3,8 @@ import {login} from '../actions/auth';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {Container ,Form, Button} from 'react-bootstrap';
+import ContentContainer from '../components/ContentContainer';
 // import "./style.css";
 
 const LoginPage = ({login , isAuthenticated}) => {
@@ -29,7 +31,7 @@ const LoginPage = ({login , isAuthenticated}) => {
     event.preventDefault();
 
       login(loginCred.email, loginCred.password);
-      console.log("login clicked")
+      // console.log("login clicked")
   };
 
     if (isAuthenticated) {
@@ -37,28 +39,22 @@ const LoginPage = ({login , isAuthenticated}) => {
   }
     // Notice how each input has a `value`, `name`, and `onChange` prop
     return (
-      <div>
-        <p>
-          Hello {loginCred.email} {loginCred.password}
-        </p>
-        <form className="form">
-          <input
-            value={loginCred.email}
-            name="email"
-            onChange={handleInputChange}
-            type="email"
-            placeholder="Email"
-          />
-          <input
-            value={loginCred.password}
-            name="password"
-            onChange={handleInputChange}
-            type="password"
-            placeholder="Password"
-          />
-          <button onClick={handleFormSubmit}>Submit</button>
-        </form>
-      </div>
+      <>
+            <ContentContainer>
+              <h3>Log In</h3>
+              <Form>
+                <Form.Group >
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" />
+                </Form.Group>
+                <Form.Group >
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" name="password" onChange={handleInputChange} placeholder="Password" />
+                </Form.Group>
+              </Form>
+              <Button variant="primary" onClick={handleFormSubmit}>Log In</Button>{' '}Don't have an account? <Link to="/register" >Sign Up</Link>
+            </ContentContainer>
+      </>
     );
 
 };

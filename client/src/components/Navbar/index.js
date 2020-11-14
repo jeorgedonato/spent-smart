@@ -35,16 +35,17 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
               Discover
             </Link>
           </li>
-          <li className="nav-item">
-            <a
-              onClick={logout} 
-              href='#!'
-              // to="/search"
-              className={window.location.pathname === "/search" ? "nav-link active" : "nav-link"}
-            >
-              Logout
-            </a>
-          </li>
+          {isAuthenticated ?  <li className="nav-item">
+              <a
+                onClick={logout} 
+                href='#!'
+                // to="/search"
+                className="nav-link"
+              >
+                Logout
+              </a>
+            </li>
+           : ""}
         </ul>
         
       </div>
