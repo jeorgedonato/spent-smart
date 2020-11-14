@@ -39,6 +39,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
                 onClick={logout} 
                 href='#!'
                 // to="/search"
+                className="nav-link"
               >
                 Logout
               </a>

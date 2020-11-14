@@ -9,7 +9,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 
 // Register User
-// Route : /api/users
+// Route : /api/users/register
 router.post("/register", async (req, res) => {
   const { email, firstname, lastname, password } = req.body;
   try {
@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ errors: [{ msg: "User already exists" }] });
     }
 
-    user = new db.User({
+    newUser = new db.User({
       email,
       firstname,
       lastname,
@@ -28,12 +28,12 @@ router.post("/register", async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
 
-    user.password = await bcrypt.hash(password, salt);
+    newUser.password = await bcrypt.hash(password, salt);
 
-    await user.save();
-
+    await newUser.save();
+    // console.log(req)
     const emailConUrl =
-      req.protocol + "://" + req.get("host") + "/api/users/confirm/" + user._id;
+      req.protocol + "://" + req.headers["x-forwarded-host"] + "/confirm/" + newUser._id;
     // console.log(emailConUrl)
 
     let transporter = nodemailer.createTransport({
@@ -46,15 +46,13 @@ router.post("/register", async (req, res) => {
 
     await transporter.sendMail({
       from: config.get("emailHost"), // sender address
-      to: user.email, // list of receivers
+      to: newUser.email, // list of receivers
       subject: "Account Confirmation for Spent Smart", // Subject line
       text: `Click this link to confirm your accout `, // plain text body
       html: `<b>Click this link to confirm you account : <u>${emailConUrl}</u></b>`, // html body
     });
 
-    res
-      .status(200)
-      .send("Please check your email for the Account Confirmation");
+    res.status(200).send("Please check your email for the Account Confirmation");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
