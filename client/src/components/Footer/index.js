@@ -72,6 +72,7 @@ function Footer() {
 
 
       
+      <span>© Created by Jeorge Donato, Lauren Goettsch, Duyen Pham, and Raymond Tieu © 2020</span>
     </footer>
   );
 }
