@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { login } from '../actions/auth';
+import { login } from '../../actions/auth';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Form, Button } from 'react-bootstrap';
-import ContentContainer from '../components/ContentContainer';
+import ContentContainer from '../../components/ContentContainer';
 import "./LoginPage.css";
 
 
