@@ -13,7 +13,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
 import Confirm from './pages/Confirm'
-// import './App.css'
+import './App.css'
 // import Index from "./pages/Index";
 
 if (localStorage.token) {
@@ -29,6 +29,7 @@ function App() {
     <>
     <Provider store={store}>
       <Router>
+        <div className= "content">
         <Navbar />
         <Container>
         <Alert />
@@ -42,6 +43,7 @@ function App() {
           <Route path="/" exact></Route>
         </Switch>
         </Container>
+        </div>
         <Footer />
       </Router>
     </Provider>

@@ -1,0 +1,9 @@
+#root {
+    height: 100vh;
+}
+.content {
+    min-height: 100%;
+}
+footer {
+    margin-top: -6.0rem;
+}
