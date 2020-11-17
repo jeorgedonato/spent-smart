@@ -8,4 +8,10 @@
     margin-bottom: 5px;
     width: 100%;
   }
-  
+.btn {
+  background: #266352;
+  border-color: black;
+}
+.btn:hover {
+  background-color: #53c0a2;
+}

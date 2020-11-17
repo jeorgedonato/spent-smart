@@ -14,7 +14,7 @@ import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
 import Confirm from './pages/Confirm'
 import Dashboard from './pages/Dashboard/Dashboard.js'
-// import './App.css'
+import './App.css'
 // import Index from "./pages/Index";
 
 if (localStorage.token) {
@@ -30,6 +30,7 @@ function App() {
     <>
     <Provider store={store}>
       <Router>
+        <div className= "content">
         <Navbar />
         <Container>
         <Alert />
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" exact></Route>
         </Switch>
         </Container>
+        </div>
         <Footer />
       </Router>
     </Provider>
