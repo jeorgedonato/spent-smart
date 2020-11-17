@@ -8,12 +8,12 @@ const categoriesSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ["Income", "Expense"],
-    required: [true, "Select a category type"]
+    // enum: ["Income", "Expense"],
+    // required: [true, "Select a category type"]
   },
   name: {
     type: String,
-    required: [true, "Enter a category name"]
+    // required: [true, "Enter a category name"]
   },
   created_date: {
     type: Date,

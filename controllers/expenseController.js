@@ -23,14 +23,8 @@ router.post(
             .join(" "),
         type: "Expense"
       },
-      {user_id : req.user.id, 
-        name : category.trim()
-            .toLowerCase()
-            .split(" ")
-            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" "),
-        type: "Expense"},
-        {upsert: true, new: true, runValidators: true});
+      {},
+      {upsert: true, new: true, runValidators: true});
       
       const newExpense = {
         amount: amount,
@@ -60,7 +54,7 @@ router.post(
 // @access   Private
 router.get("/", auth, async(req,res) => {
   try {
-    const expenseRec = await db.Expense.find({user_id : req.user.id}).sort({created_date: -1});
+    const expenseRec = await db.Expense.find({user_id : req.user.id}).sort({created_date: -1}).populate("category_id");
     res.json(expenseRec);
   } catch (err) {
     console.error(err.message);
@@ -73,7 +67,7 @@ router.get("/", auth, async(req,res) => {
 // @access   Private
 router.get("/:id", auth, async(req,res) => {
   try {
-    const expenseRec = await db.Expense.findById(req.params.id);
+    const expenseRec = await db.Expense.findById(req.params.id).populate('category_id');
 
      // Check for ObjectId format & expense record
      // 0-9, A-F, 24 characters
@@ -105,13 +99,7 @@ router.put("/:id", auth, async(req, res) => {
             .join(" "),
         type: "Expense"
       },
-      {user_id : req.user.id, 
-        name : category.trim()
-            .toLowerCase()
-            .split(" ")
-            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" "),
-        type: "Expense"},
+      {},
         {upsert: true, new: true, runValidators: true});
 
     expenseRec.name = name.trim()

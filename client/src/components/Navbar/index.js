@@ -55,10 +55,15 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
       </div>
       <ul className={navClassNames.join(" ")} ref={ulNav}>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
+        
         {isAuthenticated ?
-          <li><button onClick={logout}>Logout</button></li> :
           [
+            <li key="0"><Link to="/expenses">Expenses</Link></li>,
+            <li key="1"><Link to="/incomes">Incomes</Link></li>,
+            <li key="2"><Link to="/register">Logout</Link></li>
+          ] :
+          [
+            <li key="0"><Link to="/about">About</Link></li>,
             <li key="1"><Link to="/login">Log In</Link></li>,
             <li key="2"><Link to="/register">Sign Up</Link></li>
           ]

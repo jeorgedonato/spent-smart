@@ -8,7 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
-import ExpensesPage from './pages/Expenses/ExpensesPage';
+import ExpensesPage from './pages/Expenses';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
