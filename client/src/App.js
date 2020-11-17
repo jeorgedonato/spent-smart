@@ -9,6 +9,8 @@ import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import ExpensesPage from './pages/Expenses/ExpensesPage';
+import Income from './pages/Income/Income';
+import IncomeRecord from './pages/Income/IncomeRecord';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
@@ -41,6 +43,8 @@ function App() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={SignUpPage} />
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+          <PrivateRoute exact path="/income" component={Income} />
+          <PrivateRoute exact path="/income-record" component={IncomeRecord} />
           <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
           <Route component={NotFound}></Route>
         </Switch>
