@@ -1,14 +1,41 @@
 .footer {
-  min-height: 100px;
+  height: 6rem;
   background: #128061;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  background: #266352;
+  padding: 50px;
+}
+.gather-link{
+  font-size: 25px;
+  margin: 0%;
+  margin-right: 80px;
+  padding: 3px;
+  color: white;
+  text-decoration: none;
+}
+.footer-link{
+  font-size: .7em;
+  margin: 0%;
+  padding: 0px 0px 0px;
+  color: white;
+  text-decoration: none;
 }
 
-.footer span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+
+.contact{
+ margin:0px 0px 40px;
+}
+.about{
+  margin:0px 0px 40px;
+}
+.about-link{
+  font-size: 18px;
+  margin: 0%;
+  margin-right: 80px;
   padding: 3px;
-  background: #128061;
+  color: white;
+  text-decoration: none;
 }

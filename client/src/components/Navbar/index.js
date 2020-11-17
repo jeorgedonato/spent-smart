@@ -4,13 +4,14 @@ import "./style.css";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {logout} from '../../actions/auth';
+// import Banner from "../img/"
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 function Navbar({ auth: { isAuthenticated, loading }, logout }) {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light back">
       <Link className="navbar-brand" to="/">
-        Spent Smart
+       {/* <img src={Banner} alt="" /> */}
       </Link>
       <div>
         <ul className="navbar-nav">
@@ -46,8 +47,11 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
             </li>
            : ""}
         </ul>
+        
       </div>
+      
     </nav>
+
   );
 }
 
