@@ -24,14 +24,8 @@ router.post(
             .join(" "),
         type: "Income"
       },
-      {user_id : req.user.id, 
-        name : name.trim()
-            .toLowerCase()
-            .split(" ")
-            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" "),
-        type: "Income"},
-        {upsert: true, new: true, runValidators: true});
+      {},
+      {upsert: true, new: true, runValidators: true});
 
       const newIncome = {
         amount: amount,
@@ -61,7 +55,7 @@ router.post(
 // @access   Private
 router.get('/', auth, async(req,res) => {
   try {
-    const incomeRec = await db.Income.find({user_id : req.user.id}).sort({created_date: -1});
+    const incomeRec = await db.Income.find({user_id : req.user.id}).populate('categories').sort({created_date: -1});
     res.json(incomeRec);
   } catch (err) {
     console.error(err.message);
@@ -74,7 +68,7 @@ router.get('/', auth, async(req,res) => {
 // @access   Private
 router.get('/:id', auth, async(req,res) => {
   try {
-    const incomeRec = await db.Income.findById(req.params.id);
+    const incomeRec = await db.Income.findById(req.params.id).populate('categories');
 
      // Check for ObjectId format and income record
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !incomeRec) {
@@ -105,13 +99,7 @@ router.put('/:id', auth, async(req, res) => {
             .join(" "),
         type: "Income"
       },
-      {user_id : req.user.id, 
-        name : name.trim()
-            .toLowerCase()
-            .split(" ")
-            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" "),
-        type: "Income"},
+      {},
         {upsert: true, new: true, runValidators: true});
 
     incomeRec.name = name.trim()

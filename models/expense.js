@@ -11,10 +11,10 @@ const expenseSchema = new Schema({
     type: String
   },
   user_id: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    type: Schema.Types.ObjectId, ref: 'Users'
   },
   category_id: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'Categories'
+    type: Schema.Types.ObjectId, ref: 'Categories'
   },
   month_created: {
     type: Number

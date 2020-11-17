@@ -7,13 +7,13 @@ const incomeSchema = new Schema({
   //   type: Number
   // },
   user_id: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    type: Schema.Types.ObjectId, ref: 'Users'
   },
    name : {
     type: String
   },
   category_id: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'Categories'
+    type: Schema.Types.ObjectId, ref: 'Categories'
   },
   month_created: {
     type: Number

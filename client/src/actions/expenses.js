@@ -10,11 +10,11 @@ import {
 } from './types';
 
 // Get Expenses
-// API : 
+// GET ALL : /api/expenses
 export const getExpenses = () => async dispatch => {
   try {
     const res = await axios.get('/api/expenses');
-
+    // console.log(res)
     dispatch({
       type: GET_EXPENSES,
       payload: res.data
@@ -28,6 +28,7 @@ export const getExpenses = () => async dispatch => {
 };
 
 // Get Expense
+// GET ONE : /api/expenses/:id
 export const getExpense = id => async dispatch => {
   try {
     const res = await axios.get(`/api/expenses/${id}`);
@@ -44,6 +45,8 @@ export const getExpense = id => async dispatch => {
   }
 };
 
+// Post Expense
+// POST : /api/expenses
 export const addExpense = formData => async dispatch => {
   const config = {
     headers: {
@@ -67,6 +70,8 @@ export const addExpense = formData => async dispatch => {
   }
 };
 
+// Update Expenses
+// PUT : /api/expenses/:id
 export const updateExpense = formData => async dispatch => {
   const config = {
     headers: {
@@ -75,7 +80,14 @@ export const updateExpense = formData => async dispatch => {
   };
 
   try {
-    
+    const {id, name, category , dueDate, amount} = formData;
+    const res = await axios.put(`/api/expenses/${id}`,{name,category,dueDate,amount},config);
+
+    dispatch({
+      type: UPDATE_EXPENSE,
+      payload: res.data
+    });
+     dispatch(setAlert(`Expense ${res.data.name} is Updated`, 'success'));
   } catch (err) {
     dispatch({
       type: EXPENSE_ERROR,
@@ -84,4 +96,21 @@ export const updateExpense = formData => async dispatch => {
   }
 };
 
+export const deleteExpense = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/expenses/${id}`);
+
+    dispatch({
+      type: DELETE_EXPENSE,
+      payload: id
+    });
+
+    dispatch(setAlert('Expense Removed', 'success'));
+  } catch (err) {
+    dispatch({
+      type: EXPENSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
 
