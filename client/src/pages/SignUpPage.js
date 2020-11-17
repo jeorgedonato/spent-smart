@@ -44,12 +44,12 @@ const SignUpPage = ({setAlert, register, isAuthenticated}) => {
         <h3>Sign Up</h3>
         <Form>
           <Form.Group >
-            <Form.Label>Firstname</Form.Label>
-            <Form.Control type="text" name="firstname" onChange={handleOnChange} placeholder="Firstname" />
+            <Form.Label>First Name</Form.Label>
+            <Form.Control type="text" name="firstname" onChange={handleOnChange} placeholder="First Name" />
           </Form.Group>
           <Form.Group >
-            <Form.Label>Lastname</Form.Label>
-            <Form.Control type="text" name="lastname" onChange={handleOnChange} placeholder="Lastname" />
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control type="text" name="lastname" onChange={handleOnChange} placeholder="Last Name" />
           </Form.Group>
           <Form.Group >
             <Form.Label>Email</Form.Label>
