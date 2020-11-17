@@ -1,7 +1,6 @@
 nav.navbar.navbar-default {
   margin-bottom: 0;
   font-family:
-  
 }
 .back{
 background: #b5f7e6;
@@ -9,4 +8,13 @@ background: #b5f7e6;
 
 .navbar-brand {
 font-size:30px
+}
+
+.about-link{
+  font-size: 18px;
+  margin: 0%;
+  margin-right: 80px;
+  padding: 3px;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
 }

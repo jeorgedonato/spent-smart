@@ -24,7 +24,11 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
                   : "nav-link"
               }
             >
-              About
+              <div className="colum">
+                <a className="about-link" href="/" taget="_self">
+                  ABOUT
+                </a>
+              </div>
             </Link>
           </li>
           <li className="nav-item">
@@ -32,7 +36,6 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
               to="/discover"
               className={window.location.pathname === "/discover" ? "nav-link active" : "nav-link"}
             >
-              Discover
             </Link>
           </li>
           {isAuthenticated ?  <li className="nav-item">
