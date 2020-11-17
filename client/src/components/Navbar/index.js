@@ -47,11 +47,12 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
     // scrollCheck();
     // }
   };
-
+  
   return (
     <nav ref={navRef}>
       <div className="logo">
         <h4>$pent $mart</h4>
+        <img src="/favicon.png"></img>
       </div>
       <ul className={navClassNames.join(" ")} ref={ulNav}>
         <li><Link to="/">Home</Link></li>
