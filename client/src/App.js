@@ -41,6 +41,8 @@ function App() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={SignUpPage} />
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+          <PrivateRoute exact path="/income" component={Income} />
+          <PrivateRoute exact path="/income-record" component={IncomeRecord} />
           <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
           <Route component={NotFound}></Route>
         </Switch>

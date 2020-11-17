@@ -16,8 +16,17 @@ nav{
   text-transform: uppercase;
   letter-spacing: 5px;
   font-size: 20px;
+  position: center;
+  margin-top: 25px;
+  margin-right: -200px;
 }
-
+.logo img{
+  width: 100px;
+  height: 100px;
+  margin-top: -55px;
+  margin-bottom: 5px;
+  margin-left: -200px;
+}
 .nav-links{
   display: flex;
   justify-content: space-around;
@@ -70,7 +79,6 @@ nav{
   width: 60%;
 }
 }
-
 @media screen and (max-width: 768px){
   body{
     overflow-x: hidden;
