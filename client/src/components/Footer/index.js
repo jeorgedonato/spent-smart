@@ -38,7 +38,7 @@ function Footer() {
 
                <div className="colum">
                   <a className="about-link" href="/" taget="_self">
-                    CONNETCT WITH US
+                    CONNECT WITH US
                   </a>
 
                 <div className="row">
