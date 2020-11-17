@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import {login} from '../../actions/auth';
+import { login } from '../actions/auth';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Container ,Form, Button} from 'react-bootstrap';
-import ContentContainer from '../../components/ContentContainer';
-// import "./style.css";
+import { Container, Form, Button } from 'react-bootstrap';
+import ContentContainer from '../components/ContentContainer';
+import "./LoginPage.css";
 
-const LoginPage = ({login , isAuthenticated}) => {
+
+const LoginPage = ({ login, isAuthenticated }) => {
   // Setting the component's initial state
-  const [loginCred,setLoginCred] = useState({
+  const [loginCred, setLoginCred] = useState({
     email: "",
     password: ""
   })
@@ -23,15 +24,15 @@ const LoginPage = ({login , isAuthenticated}) => {
       value = value.substring(0, 15);
     }
     // Updating the input's state
-    setLoginCred({...loginCred,[name] : value})
+    setLoginCred({ ...loginCred, [name]: value })
   };
 
   const handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-      login(loginCred.email, loginCred.password);
-      // console.log("login clicked")
+    login(loginCred.email, loginCred.password);
+    // console.log("login clicked")
   };
 
   const handleKeyPress = e =>{
@@ -62,7 +63,6 @@ const LoginPage = ({login , isAuthenticated}) => {
             </ContentContainer>
       </>
     );
-
 };
 
 LoginPage.propTypes = {

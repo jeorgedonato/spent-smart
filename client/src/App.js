@@ -15,7 +15,7 @@ import {Container} from 'react-bootstrap';
 import Confirm from './pages/Confirm';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard'
-// import './App.css'
+import './App.css'
 // import Index from "./pages/Index";
 
 if (localStorage.token) {
@@ -31,6 +31,7 @@ function App() {
     <>
     <Provider store={store}>
       <Router>
+        <div className= "content">
         <Navbar />
         <Container>
         <Alert />
@@ -44,6 +45,7 @@ function App() {
           <Route component={NotFound}></Route>
         </Switch>
         </Container>
+        </div>
         <Footer />
       </Router>
     </Provider>

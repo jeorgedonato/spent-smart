@@ -6,7 +6,6 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-
          <div className="row contact">
              <div className="colum">
                 <a className="gather-link" href="/" taget="_self">
@@ -38,7 +37,7 @@ function Footer() {
 
                <div className="colum">
                   <a className="about-link" href="/" taget="_self">
-                    CONNETCT WITH US
+                    CONNECT WITH US
                   </a>
 
                 <div className="row">
@@ -69,10 +68,7 @@ function Footer() {
          </div>
 
      </div>
-
-
-      
-      <span>© Created by Jeorge Donato, Lauren Goettsch, Duyen Pham, and Raymond Tieu © 2020</span>
+      <span>© Created by Amir Ashkan, Jeorge Donato, Lauren Goettsch, Duyen Pham, and Raymond Tieu © 2020</span>
     </footer>
   );
 }
