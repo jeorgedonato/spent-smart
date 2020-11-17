@@ -17,7 +17,7 @@
   text-decoration: none;
 }
 .footer-link{
-  font-size: .7em;
+  font-size: 15px;
   margin: 0%;
   padding: 0px 0px 0px;
   color: white;
@@ -31,11 +31,4 @@
 .about{
   margin:0px 0px 40px;
 }
-.about-link{
-  font-size: 18px;
-  margin: 0%;
-  margin-right: 80px;
-  padding: 3px;
-  color: white;
-  text-decoration: none;
-}
+
