@@ -4,49 +4,6 @@ const router = express.Router();
 const moment = require("moment");
 const auth = require("../middleware/auth");
 
-// ==================================================
-// Defining methods for the expenseController
-// module.exports = {
-//     findAll: function (req, res) {
-//         db.Expense
-//             .find(req.query)
-//             // .sort({ date: -1 })
-//             .then(dbExpense => res.json(dbExpense))
-//             .catch(err => res.status(422).json(err));
-//     },
-
-//     findById: function (req, res) {
-//         db.Expense
-//             .findById(req.params.id)
-//             .then(dbExpense => res.json(dbExpense))
-//             .catch(err => res.status(422).json(err));
-//     },
-
-//     create: function (req, res) {
-//         db.Expense
-//             .create(req.body)
-//             .then(dbExpense => res.json(dbExpense))
-//             .catch(err => res.status(422).json(err));
-//     },
-
-//     update: function (req, res) {
-//         db.Expense
-//             .findOneAndUpdate({ _id: req.params.id }, req.body)
-//             .then(dbExpense => res.json(dbExpense))
-//             .catch(err => res.status(422).json(err));
-//     },
-
-//     remove: function (req, res) {
-//         db.Expense
-//             .findById({ _id: req.params.id })
-//             .then(dbExpense => dbExpense.remove())
-//             .then(dbExpense => res.json(dbExpense))
-//             .catch(err => res.status(422).json(err));
-//     }
-// };
-// ==================================================
-
-
 // @route    POST api/expense
 // @desc     Create an expense
 // @access   Private
@@ -57,20 +14,31 @@ router.post(
     // console.log(req)
     try {
       const { name, amount, category } = req.body;
-      const catUpsert = await db.Category.findOneAndUpdate(
-        {name : category
-          .trim()
+      const catUpsert = await db.Category.findOneAndUpdate({
+        user_id : req.user.id, 
+        name : category.trim()
             .toLowerCase()
             .split(" ")
             .map(s => s.charAt(0).toUpperCase() + s.substring(1))
             .join(" "),
-          type : "Expense"},
-        {user_id: req.user.id},
-        {new: true, upsert: true});
+        type: "Expense"
+      },
+      {user_id : req.user.id, 
+        name : category.trim()
+            .toLowerCase()
+            .split(" ")
+            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" "),
+        type: "Expense"},
+        {upsert: true, new: true, runValidators: true});
       
       const newExpense = {
         amount: amount,
-        name: name,
+        name: name.trim()
+            .toLowerCase()
+            .split(" ")
+            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" "),
         category_id: catUpsert._id,
         user_id: req.user.id,
         month_created : moment().format("M"),
@@ -126,9 +94,33 @@ router.get("/:id", auth, async(req,res) => {
 router.put("/:id", auth, async(req, res) => {
   try {
     const expenseRec = await db.Expense.findById(req.params.id);
-    const { amount, category_id } = req.body;
+    const { name,amount, category } = req.body;
+
+    const catUpsert = await db.Category.findOneAndUpdate({
+        user_id : req.user.id, 
+        name : category.trim()
+            .toLowerCase()
+            .split(" ")
+            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" "),
+        type: "Expense"
+      },
+      {user_id : req.user.id, 
+        name : category.trim()
+            .toLowerCase()
+            .split(" ")
+            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" "),
+        type: "Expense"},
+        {upsert: true, new: true, runValidators: true});
+
+    expenseRec.name = name.trim()
+            .toLowerCase()
+            .split(" ")
+            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" ");
     expenseRec.amount = amount;
-    expenseRec.category_id = category_id;
+    expenseRec.category_id = catUpsert._id;
     await expenseRec.save();
     res.json(expenseRec);
   } catch (err) {

@@ -7,6 +7,7 @@ import { Container, Form, Button } from 'react-bootstrap';
 import ContentContainer from '../components/ContentContainer';
 import "./LoginPage.css";
 
+
 const LoginPage = ({ login, isAuthenticated }) => {
   // Setting the component's initial state
   const [loginCred, setLoginCred] = useState({
@@ -34,29 +35,34 @@ const LoginPage = ({ login, isAuthenticated }) => {
     // console.log("login clicked")
   };
 
-  if (isAuthenticated) {
+  const handleKeyPress = e =>{
+    if(e.keyCode === 13){
+        login(loginCred.email, loginCred.password);
+    }
+  }
+
+    if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
-  // Notice how each input has a `value`, `name`, and `onChange` prop
-  return (
-    <>
-      <ContentContainer>
-        <h3>Log In</h3>
-        <Form>
-          <Form.Group >
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" />
-          </Form.Group>
-          <Form.Group >
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" name="password" onChange={handleInputChange} placeholder="Password" />
-          </Form.Group>
-        </Form>
-        <Button variant="primary" onClick={handleFormSubmit}>Log In</Button>{' '}Don't have an account? <Link to="/register" >Sign Up</Link>
-      </ContentContainer>
-    </>
-  );
-
+    // Notice how each input has a `value`, `name`, and `onChange` prop
+    return (
+      <>
+            <ContentContainer>
+              <h3>Log In</h3>
+              <Form onKeyDown={handleKeyPress}>
+                <Form.Group >
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" />
+                </Form.Group>
+                <Form.Group >
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" name="password" onChange={handleInputChange} placeholder="Password" />
+                </Form.Group>
+              </Form>
+              <Button variant="primary" onClick={handleFormSubmit}>Log In</Button>{' '}Don't have an account? <Link to="/register" >Sign Up</Link>
+            </ContentContainer>
+      </>
+    );
 };
 
 LoginPage.propTypes = {
