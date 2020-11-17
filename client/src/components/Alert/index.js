@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+const style= {
+  position : "relative",
+  top: "9vh",
+}
+
 const Alert = ({ alerts }) =>
   alerts !== null &&
   alerts.length > 0 &&
   alerts.map(alert => (
-    <div key={alert.id} className={`alert alert-${alert.alertType}`} style={{marginTop:"10px"}}>
+    <div key={alert.id} className={`alert alert-${alert.alertType}`} style={style}>
       {alert.msg}
     </div>
   ));

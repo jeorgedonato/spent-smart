@@ -12,7 +12,9 @@ import ExpensesPage from './pages/Expenses/ExpensesPage';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
-import Confirm from './pages/Confirm'
+import Confirm from './pages/Confirm';
+import NotFound from './pages/NotFound';
+import Dashboard from './pages/Dashboard'
 // import './App.css'
 // import Index from "./pages/Index";
 
@@ -37,9 +39,9 @@ function App() {
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={SignUpPage} />
-          <PrivateRoute exact path="/dashboard" component={ExpensesPage}/>
+          <PrivateRoute exact path="/dashboard" component={Dashboard}/>
           <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
-          <Route path="/" exact></Route>
+          <Route component={NotFound}></Route>
         </Switch>
         </Container>
         <Footer />

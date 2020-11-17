@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import {register} from '../actions/auth';
-import {setAlert} from '../actions/alert';
+import { register } from '../../actions/auth';
+import { setAlert } from '../../actions/alert';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Container,Form,Button} from 'react-bootstrap';
-import ContentContainer from '../components/ContentContainer';
+import { Container, Form, Button } from 'react-bootstrap';
+import ContentContainer from '../../components/ContentContainer';
 
-const SignUpPage = ({setAlert, register, isAuthenticated}) => {
+const SignUpPage = ({ setAlert, register, isAuthenticated }) => {
 
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     email: '',
@@ -22,16 +22,30 @@ const SignUpPage = ({setAlert, register, isAuthenticated}) => {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    if(!firstname && !lastname && !email && !password && !cPassword){
-      setAlert("All Fields are Required","danger");
-    }else if(password !== cPassword){
-      setAlert("Passwords must match","danger");
-    }else{
+    if (!firstname && !lastname && !email && !password && !cPassword) {
+      setAlert("All Fields are Required", "danger");
+    } else if (password !== cPassword) {
+      setAlert("Passwords must match", "danger");
+    } else {
       register(formData);
       // setFormData({...formData, [firstname] : "",[lastname] : "", [email] : "", [firstname] : "",})
     }
 
   };
+
+  const handleKeyPress = e => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      if (!firstname && !lastname && !email && !password && !cPassword) {
+        setAlert("All Fields are Required", "danger");
+      } else if (password !== cPassword) {
+        setAlert("Passwords must match", "danger");
+      } else {
+        register(formData);
+        // setFormData({...formData, [firstname] : "",[lastname] : "", [email] : "", [firstname] : "",})
+      }
+    }
+  }
 
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
@@ -39,10 +53,10 @@ const SignUpPage = ({setAlert, register, isAuthenticated}) => {
 
   return (
     <>
-    
+
       <ContentContainer>
         <h3>Sign Up</h3>
-        <Form>
+        <Form onKeyDown={handleKeyPress}>
           <Form.Group >
             <Form.Label>Firstname</Form.Label>
             <Form.Control type="text" name="firstname" onChange={handleOnChange} placeholder="Firstname" />
@@ -72,18 +86,18 @@ const SignUpPage = ({setAlert, register, isAuthenticated}) => {
 
 //Assigning Proptypes for linting
 SignUpPage.propTypes = {
-  isAuthenticated : PropTypes.bool,
-  register : PropTypes.func.isRequired,
-  setAlert : PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  register: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 //Getting state from store and use it for component prop consuming
 const mapStateToProps = state => ({
-  isAuthenticated : state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 //Exporting and connecting to our store
 export default connect(
   mapStateToProps,
-  { setAlert,register }
+  { setAlert, register }
 )(SignUpPage);

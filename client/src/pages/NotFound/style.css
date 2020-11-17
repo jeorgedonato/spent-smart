@@ -1,0 +1,25 @@
+.notfound{
+  margin: 10%;
+
+  height: 300px;
+  border: 3px solid gray;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.notfound h3{
+  position: absolute;
+  left: 43%;
+  top: 45%;
+  font-weight: bold;
+  color: black;
+}
+.notfound span{
+  position: absolute;
+  left: 43%;
+  top: 55%;
+  font-weight: bold;
+  color: black;
+  font-size: 1rem;
+}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import {login} from '../actions/auth';
+import {login} from '../../actions/auth';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Container ,Form, Button} from 'react-bootstrap';
-import ContentContainer from '../components/ContentContainer';
+import ContentContainer from '../../components/ContentContainer';
 // import "./style.css";
 
 const LoginPage = ({login , isAuthenticated}) => {
@@ -34,6 +34,12 @@ const LoginPage = ({login , isAuthenticated}) => {
       // console.log("login clicked")
   };
 
+  const handleKeyPress = e =>{
+    if(e.keyCode === 13){
+        login(loginCred.email, loginCred.password);
+    }
+  }
+
     if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
@@ -42,7 +48,7 @@ const LoginPage = ({login , isAuthenticated}) => {
       <>
             <ContentContainer>
               <h3>Log In</h3>
-              <Form>
+              <Form onKeyDown={handleKeyPress}>
                 <Form.Group >
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" />
