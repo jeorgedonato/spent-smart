@@ -8,7 +8,7 @@ function Footer() {
    <div className="span" >
       <span ><a href="/" taget="_self"className="footer-link">© 2020 Created by AmirAshkan S.Dardashti, Jeorge Donato, Lauren Goettsch, Duyen Pham and Raymond Tieu.  </a></span>
    </div>
-</footer>
+    </footer>
   );
 }
 

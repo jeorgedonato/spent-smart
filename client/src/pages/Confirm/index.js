@@ -15,6 +15,10 @@ export const Confirm = ({  isAuthenticated ,confirm, setAlert}) => {
       // <Redirect to="/dashboard" />
   },[]);
 
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
+
 
   // console.log(id)
   return (
