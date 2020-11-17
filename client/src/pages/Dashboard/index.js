@@ -6,7 +6,38 @@ import ContentContainer from '../../components/ContentContainer';
 import './style.css';
 
 
+function DashIncome(props) {
+  return (
+    <div>
+      <h5>Monthly Income Amount:</h5>
+      <h3 style={{color: "green"}}>${props.income}</h3>
+    </div>
+  );
+}
+
+function DashExpenses(props) {
+  return (
+    <div>
+      <h5>Monthly Expenses Amount:</h5>
+      <h3 style={{color: "red"}}>${props.expenses}</h3>
+    </div>
+  );
+}
+
+function DashSavings(props) {
+  return (
+    <div>
+      <h5>Monthly Savings Amount:</h5>
+      <h3 style={{color: "blue"}}>${props.savings}</h3>
+    </div>
+  );
+}
+  
 function Dashboard() {
+  const income = 1000;
+  const expenses = 800;
+  const savings = 200;
+
   return (
     <div>
       <ContentContainer style={{textAlign: "center"}}>
@@ -15,16 +46,13 @@ function Dashboard() {
         </Jumbotron>
         <Row>
           <Col size="md-4">
-            <h5>Monthly Income Amount:</h5>
-            <h3 style={{color: "green"}}>$1,000</h3>
+            <DashIncome income={income} />
           </Col>
           <Col size="md-4">
-            <h5>Monthly Expense Amount:</h5>
-            <h3 style={{color: "red"}}>$800</h3>
+            <DashExpenses expenses={expenses} />
           </Col>
           <Col size="md-4">
-            <h5>Monthly Savings Amount:</h5>
-            <h3 style={{color: "blue"}}>$200</h3>
+            <DashSavings savings={savings} />
           </Col>
         </Row>
       </ContentContainer>
