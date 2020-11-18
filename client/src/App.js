@@ -10,6 +10,7 @@ import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import IncomePage from './pages/Incomes';
 import ExpensesPage from './pages/Expenses';
+import AddExpensesPage from './pages/Expenses/Add';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
@@ -44,6 +45,7 @@ function App() {
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
           <PrivateRoute exact path="/incomes" component={IncomePage} />
           <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
+          <PrivateRoute exact path="/expenses/add" component={AddExpensesPage}/>
           <Route component={NotFound}></Route>
         </Switch>
         </Container>

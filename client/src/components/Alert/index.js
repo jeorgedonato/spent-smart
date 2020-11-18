@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const style= {
   position : "relative",
-  top: "9vh",
+  top: "12vh",
 }
 
 const Alert = ({ alerts }) =>

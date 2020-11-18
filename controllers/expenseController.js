@@ -67,6 +67,7 @@ router.get("/", auth, async(req,res) => {
 // @access   Private
 router.get("/:id", auth, async(req,res) => {
   try {
+    // console.log(req.params.id)
     const expenseRec = await db.Expense.findById(req.params.id).populate('category_id');
 
      // Check for ObjectId format & expense record
