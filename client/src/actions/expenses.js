@@ -30,6 +30,7 @@ export const getExpenses = () => async dispatch => {
 // Get Expense
 // GET ONE : /api/expenses/:id
 export const getExpense = id => async dispatch => {
+  // console.log(id)
   try {
     const res = await axios.get(`/api/expenses/${id}`);
 
