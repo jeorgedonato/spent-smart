@@ -1,24 +1,61 @@
-import React, { useEffect } from 'react';
-import { Table, Container } from 'react-bootstrap';
-import { styled } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { Table, Modal, Button, Badge } from 'react-bootstrap';
+import styled from 'styled-components';
 import { connect } from 'react-redux'
 import ContentContainer from '../../components/ContentContainer';
-import { getIncomes } from '../../actions/incomes';
+import { getIncomes, deleteIncome, getIncome } from '../../actions/incomes';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
 
+const FlexContainer = styled.div`
+  display: flex;
+`;
 
-const Income = ({ getIncomes, incomes: { incomes, loading } }) => {
+const AnchorTag = styled.a`
+  color : ${props => props.info ? "#117a8b" : "#dc3545"};
+  &:hover {
+    text-decoration : none;
+    color :  ${props => props.info ? "#117a8b" : "#dc3545"};
+  }
+  font-size : 1.5rem;
+  @media (max-width: 768px){
+    font-size : 1rem;
+    margin-top: 15px
+  }
+`;
 
+const CenteredTd = styled.td`
+  text-align: center;
+`;
+
+
+const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome } }) => {
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = id => {
+        getIncome(id)
+        setShow(true)
+    };
+    // console.log(curIncome)
     useEffect(() => {
         getIncomes();
-    }, [getIncomes])
+    }, [getIncomes]);
+
+    const handleDelete = id => {
+        deleteIncome(id);
+        setShow(false)
+    };
 
     return (
         <>
             <ContentContainer>
-                <h2>Incomes</h2>
+                <FlexContainer>
+                    <h2 style={{ width: '50%' }}>Incomes</h2>
+                    <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/imcomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
+                </FlexContainer>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -41,20 +78,45 @@ const Income = ({ getIncomes, incomes: { incomes, loading } }) => {
                                     <td>$ {income.amount}</td>
                                     <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td>
                                     <td>{moment(income.created_date).format("MMM DD, YYYY")}</td>
-                                    <td><i className="fa fa-pencil-square" aria-hidden="true"></i>{' '}<i class="fa fa-trash" aria-hidden="true"></i></td>
+                                    <CenteredTd>
+                                        <AnchorTag info><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
+                                        <AnchorTag onClick={() => handleShow(income._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag>
+                                    </CenteredTd>
                                 </tr>
                             );
                         })}
                     </tbody>
                 </Table>
             </ContentContainer>
+
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                style={{ top: '30%' }}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Income</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ fontSize: '1.2rem' }}>
+                    Do you really want to delete {curIncome && curIncome.hasOwnProperty('name') ? <Badge variant="info">{curIncome.name}</Badge> : ""}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button style={{ backgroundColor: "#117a8b" }} onClick={handleClose}>No</Button>
+                    <Button style={{ backgroundColor: "#dc3545" }} onClick={() => handleDelete(curIncome._id)}>Yes</Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 };
 
 Income.propTypes = {
     getIncomes: PropTypes.func.isRequired,
-    incomes: PropTypes.object.isRequired
+    deleteIncome: PropTypes.func.isRequired,
+    getIncome: PropTypes.func.isRequired,
+    incomes: PropTypes.object.isRequired,
+    // curIncomes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -63,5 +125,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { getIncomes }
+    { getIncomes, deleteIncome, getIncome }
 )(Income);
