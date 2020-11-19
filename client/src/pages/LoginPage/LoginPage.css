@@ -15,3 +15,52 @@
 .btn:hover {
   background-color: #53c0a2;
 }
+.show{
+  display: block;
+  margin-top: -2px;
+  margin-bottom: 0px;
+  width: 2%;
+}
+
+
+
+
+.App {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-items: center;
+  font-size: 22px;
+  max-width: 500px;
+  min-height: 672px;
+  margin: 0 auto;
+  border-radius: 25px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.App > input {
+  margin-top: 200px;
+}
+
+
+
+.pass-wrapper {
+  position: relative;
+  display: flex;
+  margin-bottom: 14px;
+}
+
+i {
+  position: absolute;
+  top: 38%;
+  right: 16%;
+}
+i:hover {
+  color: #00fcb6;
+  cursor: pointer;
+}
+
+
+
+
