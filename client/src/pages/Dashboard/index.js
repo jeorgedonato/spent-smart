@@ -3,6 +3,7 @@ import Row from "../../components/Row";
 import Col from "../../components/Col";
 import {Jumbotron} from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
+import Chart from "../../components/Chart"
 import './style.css';
 
 function DashAmount(props) {
@@ -16,8 +17,8 @@ function DashAmount(props) {
   
 function Dashboard() {
   const income = 1000;
-  const expenses = 800;
-  const savings = 200;
+  const expenses = 600;
+  const savings = income - expenses;
 
   return (
     <div>
@@ -36,6 +37,7 @@ function Dashboard() {
             <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings} />
           </Col>
         </Row>
+        <Chart savings={savings} expenses={expenses}/>
       </ContentContainer>
     </div>
   );

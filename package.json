@@ -38,6 +38,7 @@
     "mongoose": "^5.10.11",
     "nodemailer": "^6.4.15",
     "react-hook-form": "^6.11.3",
+    "react-minimal-pie-chart": "^8.1.0",
     "request": "^2.88.2",
     "serve": "^11.3.2"
   },
