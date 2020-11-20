@@ -4,6 +4,8 @@ import Col from "../../components/Col";
 import {Jumbotron} from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
 import './style.css';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 
 function DashIncome(props) {
@@ -33,7 +35,7 @@ function DashSavings(props) {
   );
 }
   
-function Dashboard() {
+function Dashboard({auth : {user}}) {
   const income = 1000;
   const expenses = 800;
   const savings = 200;
@@ -43,6 +45,7 @@ function Dashboard() {
       <ContentContainer style={{textAlign: "center"}}>
         <Jumbotron className="jumbo">
             <h1>Welcome to $pent $mart</h1>
+            <p style={{fontSize: "1.3rem"}}>Hello, {user.firstname} {user.lastname}</p>
         </Jumbotron>
         <Row>
           <Col size="md-4">
@@ -60,4 +63,12 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  auth : PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth : state.auth
+})
+
+export default connect(mapStateToProps,{})(Dashboard);

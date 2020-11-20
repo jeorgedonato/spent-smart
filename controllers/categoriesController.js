@@ -45,9 +45,10 @@ router.post(
 );
 
 // GET route for getting ALL of the categories
-router.get("/", auth, async (req, res) => {
+router.get("/:type", auth, async (req, res) => {
     try {
-        const categoryRec = await db.Category.find({ user_id: req.user.id }).sort({ created_date: -1 });
+        // console.log(req.params.type)
+        const categoryRec = await db.Category.find({ user_id: req.user.id, type : req.params.type }).sort({ created_date: -1 });
 
         res.json(categoryRec);
     } catch (err) {

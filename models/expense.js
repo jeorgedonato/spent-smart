@@ -7,7 +7,7 @@ const expenseSchema = new Schema({
   //   type: Number,
   //   unique: true
   // },
-  name : {
+  description : {
     type: String
   },
   user_id: {
