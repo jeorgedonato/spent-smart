@@ -49,10 +49,9 @@ const LoginPage = ({ login, isAuthenticated }) => {
     }
   }
 
-  const [passwordShown, setPasswordShown] = useState(false);
+
+ const [passwordShown, setPasswordShown] = useState(false);
  const handleTogglePassword = e => {
-    
-    
       setPasswordShown(passwordShown ? false : true);
     };
   
@@ -60,7 +59,7 @@ const LoginPage = ({ login, isAuthenticated }) => {
     
 
 
-    if (isAuthenticated) {
+   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
     // Notice how each input has a `value`, `name`, and `onChange` prop
