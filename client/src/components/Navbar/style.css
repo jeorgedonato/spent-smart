@@ -3,7 +3,7 @@ nav{
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color:#53c1a1;
+  background-color:#266352;
   font-family: 'Poppins', sans-serif;
   position: fixed;
   top: 0;
@@ -88,7 +88,7 @@ nav{
     right: 0px;
     height: 42vh;
     top: 8vh;
-    background-color: #000000;
+    background-color: #266352;
     display: flex;
     flex-direction: column;
     align-items: center;
