@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const router = express.Router();
 const nodemailer = require("nodemailer");
+const env = process.env.NODE_ENV || 'development';
 
 // Register User
 // Route : /api/users/register
@@ -31,9 +32,9 @@ router.post("/register", async (req, res) => {
     newUser.password = await bcrypt.hash(password, salt);
 
     await newUser.save();
-    // console.log(req)
+    // return console.log(req.headers.host)
     const emailConUrl =
-      req.protocol + "://" + req.headers["x-forwarded-host"] + "/confirm/" + newUser._id;
+      req.protocol + "://" + env === "development" ? req.headers["x-forwarded-host"] : req.headers.host + "/confirm/" + newUser._id;
     // console.log(emailConUrl)
 
     let transporter = nodemailer.createTransport({

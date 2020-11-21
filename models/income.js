@@ -9,7 +9,7 @@ const incomeSchema = new Schema({
   user_id: {
     type: Schema.Types.ObjectId, ref: 'Users'
   },
-   name : {
+   description : {
     type: String
   },
   category_id: {

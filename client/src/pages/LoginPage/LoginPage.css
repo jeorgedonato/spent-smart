@@ -15,12 +15,12 @@
 .btn:hover {
   background-color: #53c0a2;
 }
-.show{
+/* .show{
   display: block;
   margin-top: -2px;
   margin-bottom: 0px;
   width: 2%;
-}
+} */
 
 
 
@@ -51,7 +51,7 @@
   margin-bottom: 14px;
 }
 
-i {
+/* i {
   position: absolute;
   top: 38%;
   right: 16%;
@@ -59,7 +59,7 @@ i {
 i:hover {
   color: #00fcb6;
   cursor: pointer;
-}
+} */
 
 
 

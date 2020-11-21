@@ -14,7 +14,7 @@ router.post(
   async (req, res) => {
     try {
       // const user = await User.findById(req.user.id).select('-password');
-      const { name, amount, category } = req.body;
+      const { description, amount, category } = req.body;
       const catUpsert = await db.Category.findOneAndUpdate({
         user_id : req.user.id, 
         name : category.trim()
@@ -28,12 +28,8 @@ router.post(
       {upsert: true, new: true, runValidators: true});
 
       const newIncome = {
-        amount: amount,
-        name: name.trim()
-            .toLowerCase()
-            .split(" ")
-            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" "),
+        amount: parseFloat(amount),
+        description,
         category_id: catUpsert._id,
         user_id: req.user.id,
         month_created : moment().format('M'),
@@ -88,7 +84,7 @@ router.get('/:id', auth, async(req,res) => {
 router.put('/:id', auth, async(req, res) => {
   try {
     const incomeRec = await db.Income.findById(req.params.id);
-    const { amount, category, name } = req.body;
+    const { amount, category, description } = req.body;
 
     const catUpsert = await db.Category.findOneAndUpdate({
         user_id : req.user.id, 
@@ -102,11 +98,7 @@ router.put('/:id', auth, async(req, res) => {
       {},
         {upsert: true, new: true, runValidators: true});
 
-    incomeRec.name = name.trim()
-            .toLowerCase()
-            .split(" ")
-            .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" ");
+    incomeRec.description = description;
     incomeRec.amount = amount;
     incomeRec.category_id = catUpsert._id;
     await incomeRec.save();

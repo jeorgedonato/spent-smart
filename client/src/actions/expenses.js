@@ -56,13 +56,13 @@ export const addExpense = formData => async dispatch => {
   };
   try {
     const res = await axios.post('/api/expenses', formData, config);
-
+    // console.log(res)
     dispatch({
       type: ADD_EXPENSE,
       payload: res.data
     });
-
-    dispatch(setAlert(`Expense ${res.data.name} Created`, 'success'));
+    window.location.replace('/expenses');
+    dispatch(setAlert(`Expense Created`, 'success'));
   } catch (err) {
     dispatch({
       type: EXPENSE_ERROR,
@@ -73,7 +73,7 @@ export const addExpense = formData => async dispatch => {
 
 // Update Expenses
 // PUT : /api/expenses/:id
-export const updateExpense = formData => async dispatch => {
+export const updateExpense = (id, formData) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -81,14 +81,15 @@ export const updateExpense = formData => async dispatch => {
   };
 
   try {
-    const {id, name, category , dueDate, amount} = formData;
-    const res = await axios.put(`/api/expenses/${id}`,{name,category,dueDate,amount},config);
+    // const {id, description, category , amount} = formData;
+    const res = await axios.put(`/api/expenses/${id}`,formData,config);
 
     dispatch({
       type: UPDATE_EXPENSE,
       payload: res.data
     });
-     dispatch(setAlert(`Expense ${res.data.name} is Updated`, 'success'));
+      window.location.replace('/expenses')
+     dispatch(setAlert(`Expense Updated`, 'success'));
   } catch (err) {
     dispatch({
       type: EXPENSE_ERROR,
