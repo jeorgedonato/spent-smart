@@ -51,7 +51,7 @@ router.post(
 // @access   Private
 router.get('/', auth, async(req,res) => {
   try {
-    const incomeRec = await db.Income.find({user_id : req.user.id}).populate('categories').sort({created_date: -1});
+    const incomeRec = await db.Income.find({ user_id: req.user.id }).sort({ created_date: -1 }).populate("category_id");
     res.json(incomeRec);
   } catch (err) {
     console.error(err.message);
@@ -59,14 +59,14 @@ router.get('/', auth, async(req,res) => {
   }
 });
 
-// @route    Get One Income api/income/:id
-// @desc     Get One Income Records
+// @route    Get 1 Income api/income/:id
+// @desc     Get 1 Income Records
 // @access   Private
 router.get('/:id', auth, async(req,res) => {
   try {
-    const incomeRec = await db.Income.findById(req.params.id).populate('categories');
+    const incomeRec = await db.Income.findById(req.params.id).populate('category_id');
 
-     // Check for ObjectId format and income record
+     // Check for ObjectId format & income record
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !incomeRec) {
       return res.status(404).json({ msg: 'Income Record not found' });
     }
@@ -78,8 +78,8 @@ router.get('/:id', auth, async(req,res) => {
   }
 });
 
-// @route    Put One Income api/income/:id
-// @desc     Update One Income Records
+// @route    Put 1 Income api/income/:id
+// @desc     Update 1 Income Records
 // @access   Private
 router.put('/:id', auth, async(req, res) => {
   try {
@@ -153,6 +153,73 @@ router.get("/monthly/:month/:year", auth, async (req, res) => {
     }
 ]);
 // console.log(expenseRec);
+    res.json(incomeRec);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send("Server Error");
+  }
+});
+
+
+// @route    GET api/incomes/monthly/month/year
+// @desc     GET a monthly 
+// @access   Private
+router.get("/monthly/:month/:year", auth, async (req, res) => {
+  try {
+    const incomeRec = await db.Income.aggregate([
+      {
+        '$match': {
+          'month_created': parseInt(req.params.month),
+          'year_created': parseInt(req.params.year)
+        }
+      }, {
+        '$group': {
+          '_id': null,
+          'sum': {
+            '$sum': '$amount'
+          }
+        }
+      }
+    ]);
+    // console.log(incomeRec);
+    res.json(incomeRec);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    GET api/incomes/monthly/categories/month/year
+// @desc     GET a monthly 
+// @access   Private
+router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
+  try {
+    const incomeRec = await db.Income.aggregate([
+      {
+        '$match': {
+          'month_created': parseInt(req.params.month),
+          'year_created': parseInt(req.params.year)
+        }
+      }, {
+        '$group': {
+          '_id': '$category_id',
+          'amount': {
+            '$sum': '$amount'
+          }
+        }
+      }, {
+        '$lookup': {
+          'from': 'categories',
+          'localField': '_id',
+          'foreignField': '_id',
+          'as': 'category'
+        }
+      }
+    ]);
+    // const populatedIncome = db.Category.populate(incomeRec, {path: "categories"});
+    // console.log(incomeRec);
     res.json(incomeRec);
   } catch (err) {
     console.error(err.message);

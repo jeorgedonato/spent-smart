@@ -10,12 +10,11 @@ import {
     GET_MONTHLY_INCOME
 } from './types';
 
-// Get incomes
-// GET ALL : /api/incomes
+// Get ALL incomes : /api/incomes
 export const getIncomes = () => async dispatch => {
     try {
         const res = await axios.get('/api/incomes');
-        // console.log(res)
+
         dispatch({
             type: GET_INCOMES,
             payload: res.data
@@ -28,8 +27,7 @@ export const getIncomes = () => async dispatch => {
     }
 };
 
-// Get income
-// GET ONE : /api/incomes/:id
+// Get ONE income : /api/incomes/:id
 export const getIncome = id => async dispatch => {
     try {
         const res = await axios.get(`/api/incomes/${id}`);
@@ -80,8 +78,9 @@ export const addIncome = formData => async dispatch => {
             type: ADD_INCOME,
             payload: res.data
         });
-
-        dispatch(setAlert(`Income ${res.data.name} Created`, 'success'));
+        window.location.replace('/incomes');
+        dispatch(setAlert(`Income Created`, 'success'));
+        // dispatch(setAlert(`Income ${res.data.name} Created`, 'success'));
     } catch (err) {
         dispatch({
             type: INCOME_ERROR,
@@ -98,7 +97,6 @@ export const updateIncome = (id, formData) => async dispatch => {
             'Content-Type': 'application/json'
         }
     };
-
     try {
         // const { id, name, category, dueDate, amount } = formData;
         const res = await axios.put(`/api/incomes/${id}`, formData, config);
@@ -107,7 +105,9 @@ export const updateIncome = (id, formData) => async dispatch => {
             type: UPDATE_INCOME,
             payload: res.data
         });
-        dispatch(setAlert(`Income ${res.data.name} is Updated`, 'success'));
+        window.location.replace('/incomes');
+        dispatch(setAlert(`Income Created`, 'success'));
+        // dispatch(setAlert(`Income ${res.data.name} is Updated`, 'success'));
     } catch (err) {
         dispatch({
             type: INCOME_ERROR,
@@ -124,7 +124,6 @@ export const deleteIncome = id => async dispatch => {
             type: DELETE_INCOME,
             payload: id
         });
-
         dispatch(setAlert('Income Removed', 'success'));
     } catch (err) {
         dispatch({

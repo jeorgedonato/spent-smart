@@ -7,6 +7,7 @@ import { getIncomes, deleteIncome, getIncome } from '../../actions/incomes';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
+import { Redirect } from 'react-router-dom';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -28,7 +29,6 @@ const AnchorTag = styled.a`
 const CenteredTd = styled.td`
   text-align: center;
 `;
-
 
 const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome } }) => {
 
@@ -54,15 +54,15 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
             <ContentContainer>
                 <FlexContainer>
                     <h2 style={{ width: '50%' }}>Incomes</h2>
-                    <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/imcomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
+                    <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
                 </FlexContainer>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            {/* <th>Name</th> */}
                             <th>Category</th>
                             <th>Amount</th>
-                            <th>Due Date</th>
+                            {/* <th>Due Date</th> */}
                             <th>Created Date</th>
                             <th>Actions</th>
                         </tr>
@@ -73,10 +73,10 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                             // {console.log(income)}
                             return (
                                 <tr key={income._id}>
-                                    <td>{income.name}</td>
+                                    {/* <td>{income.name}</td> */}
                                     <td>{income.category_id.name}</td>
                                     <td>$ {income.amount}</td>
-                                    <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td>
+                                    {/* <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td> */}
                                     <td>{moment(income.created_date).format("MMM DD, YYYY")}</td>
                                     <CenteredTd>
                                         <AnchorTag info><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
@@ -100,7 +100,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                     <Modal.Title>Delete Income</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{ fontSize: '1.2rem' }}>
-                    Do you really want to delete {curIncome && curIncome.hasOwnProperty('name') ? <Badge variant="info">{curIncome.name}</Badge> : ""}
+                    Do you really want to delete {curIncome && curIncome.hasOwnProperty('name') ? <Badge variant="info">{curIncome.name}</Badge> : ""}?
                 </Modal.Body>
                 <Modal.Footer>
                     <Button style={{ backgroundColor: "#117a8b" }} onClick={handleClose}>No</Button>
