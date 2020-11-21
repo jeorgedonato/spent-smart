@@ -7,6 +7,7 @@ import { getExpenses, deleteExpense, getExpense } from '../../actions/expenses';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
+import {Redirect} from 'react-router-dom';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -59,7 +60,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Name</th>
+              {/* <th>Name</th> */}
               <th>Category</th>
               <th>Amount</th>
               <th>Due Date</th>
@@ -73,13 +74,13 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
               // {console.log(expense)}
               return (
                 <tr key={expense._id}>
-                  <td>{expense.name}</td>
+                  {/* <td>{expense.name}</td> */}
                   <td>{expense.category_id.name}</td>
                   <td>$ {expense.amount}</td>
                   <td>{expense.hasOwnProperty('due_date') ? <Moment>expense.due_date</Moment> : "Not Provided"}</td>
                   <td>{moment(expense.created_date).format("MMM DD, YYYY")}</td>
                   <CenteredTd>
-                    <AnchorTag info><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
+                    <AnchorTag info href={"/expenses/update/"+expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
                     <AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag>
                   </CenteredTd>
                 </tr>
@@ -100,7 +101,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
           <Modal.Title>Delete Expense</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{fontSize: '1.2rem'}}>
-         Do you really want to delete {curExpense && curExpense.hasOwnProperty('name') ? <Badge variant="info">{curExpense.name}</Badge> : ""}
+         Do you really want to delete {curExpense && curExpense.hasOwnProperty('name') ? <Badge variant="info">{curExpense.name}</Badge> : ""}?
         </Modal.Body>
         <Modal.Footer>
             <Button style={{backgroundColor : "#117a8b"}} onClick={handleClose}>No</Button>

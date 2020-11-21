@@ -72,7 +72,7 @@ export const addIncome = formData => async dispatch => {
 
 // Update incomes
 // PUT : /api/incomes/:id
-export const updateIncome = formData => async dispatch => {
+export const updateIncome = (id, formData) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -80,8 +80,8 @@ export const updateIncome = formData => async dispatch => {
     };
 
     try {
-        const { id, name, category, dueDate, amount } = formData;
-        const res = await axios.put(`/api/incomes/${id}`, { name, category, dueDate, amount }, config);
+        // const { id, name, category, dueDate, amount } = formData;
+        const res = await axios.put(`/api/incomes/${id}`, formData, config);
 
         dispatch({
             type: UPDATE_INCOME,

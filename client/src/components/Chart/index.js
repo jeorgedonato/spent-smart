@@ -27,7 +27,7 @@ function Chart(props) {
 			paddingAngle={0}
 			radius={30}
 			startAngle={0}
-			viewBoxSize={[100, 100]}
+			viewBoxSize={[50, 50]}
 					/>
 	);
 }
