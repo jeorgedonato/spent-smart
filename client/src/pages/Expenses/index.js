@@ -57,13 +57,13 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
           <h2 style={{ width: '50%' }}>Expenses</h2>
           <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag>
         </FlexContainer>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               {/* <th>Name</th> */}
               <th>Category</th>
               <th>Amount</th>
-              <th>Due Date</th>
+              {/* <th>Due Date</th> */}
               <th>Created Date</th>
               <th>Actions</th>
             </tr>
@@ -77,7 +77,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
                   {/* <td>{expense.name}</td> */}
                   <td>{expense.category_id.name}</td>
                   <td>$ {expense.amount}</td>
-                  <td>{expense.hasOwnProperty('due_date') ? <Moment>expense.due_date</Moment> : "Not Provided"}</td>
+                  {/* <td>{expense.hasOwnProperty('due_date') ? <Moment>expense.due_date</Moment> : "Not Provided"}</td> */}
                   <td>{moment(expense.created_date).format("MMM DD, YYYY")}</td>
                   <CenteredTd>
                     <AnchorTag info href={"/expenses/update/"+expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}

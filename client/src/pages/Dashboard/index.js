@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Row from "../../components/Row";
 import Col from "../../components/Col";
 import {Jumbotron} from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
-import Chart from "../../components/Chart"
+// import Chart from "../../components/Chart"
 import './style.css';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {getMonthlyExpenseSum} from '../../actions/expenses';
+import {getMonthlyIncomeSum} from '../../actions/incomes';
+// import expenses from "../../reducers/expenses";
+import moment from 'moment';
+import PieChart from "../../components/PieChart"
+import LineChart from "../../components/LineChart"
+import BarChart from "../../components/BarChart"
 
 function DashAmount(props) {
   return (
@@ -17,10 +24,14 @@ function DashAmount(props) {
   );
 }
   
-function Dashboard({auth : {user}}) {
-  const income = 1000;
-  const expenses = 600;
-  const savings = income - expenses;
+function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, expenseMonthlySum, incomeMonthlySum}) {
+  const savings = incomeMonthlySum - expenseMonthlySum;
+
+  useEffect(() => {
+    const [month, year] = moment().format("M/YYYY").split("/");
+    getMonthlyExpenseSum(month,year);
+    getMonthlyIncomeSum(month,year);
+  }, [getMonthlyExpenseSum, getMonthlyIncomeSum])
 
   return (
     <div>
@@ -31,27 +42,34 @@ function Dashboard({auth : {user}}) {
         </Jumbotron>
         <Row>
           <Col size="md-4">
-            <DashAmount style={{color: "green"}} label={"Monthly Income Amount"} amount={income} />
+            <DashAmount style={{color: "green"}} label={"Monthly Income Amount"} amount={incomeMonthlySum} />
           </Col>
           <Col size="md-4">
-            <DashAmount style={{color: "red"}} label={"Monthly Expenses Amount"} amount={expenses} />
+            <DashAmount style={{color: "red"}} label={"Monthly Expenses Amount"} amount={expenseMonthlySum} />
           </Col>
           <Col size="md-4">
             <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings} />
           </Col>
         </Row>
-        <Chart savings={savings} expenses={expenses}/>
+        {/* <Chart savings={savings} expenses={expenses}/> */}
+        <PieChart />
+        <LineChart />
+        <BarChart />
       </ContentContainer>
     </div>
   );
 }
 
 Dashboard.propTypes = {
-  auth : PropTypes.object.isRequired
+  auth : PropTypes.object.isRequired,
+  getMonthlyExpenseSum : PropTypes.func.isRequired,
+  getMonthlyIncomeSum : PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth : state.auth
+  auth : state.auth,
+  expenseMonthlySum : state.expenses.monthlySum,
+  incomeMonthlySum : state.incomes.monthlySum,
 })
 
-export default connect(mapStateToProps,{})(Dashboard);
+export default connect(mapStateToProps,{getMonthlyExpenseSum, getMonthlyIncomeSum})(Dashboard);

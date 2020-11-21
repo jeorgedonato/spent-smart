@@ -19,7 +19,8 @@ import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
 import Confirm from './pages/Confirm';
 import NotFound from './pages/NotFound';
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard';
+import Reports from './pages/Reports';
 import './App.css'
 // import Index from "./pages/Index";
 
@@ -56,7 +57,6 @@ function App() {
         </Switch>
         </Container>
         </div>
-        <Footer />
       </Router>
     </Provider>
     </>

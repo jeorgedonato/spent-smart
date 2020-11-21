@@ -3,6 +3,7 @@ import auth from './auth';
 import alert from './alert';
 import incomes from './incomes';
 import expenses from './expenses';
+import incomes from './incomes';
 import categories from './categories';
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   alert,
   incomes,
   expenses,
-  categories
+  categories,
+  incomes
 });

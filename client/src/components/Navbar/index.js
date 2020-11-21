@@ -52,7 +52,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
     <nav ref={navRef}>
       <div className="logo">
         <h4>$pent $mart</h4>
-        <img src="/favicon.png"></img>
+        <img src="/favicon.png" alt="spent-smart" class="responsive"></img>
       </div>
       <ul className={navClassNames.join(" ")} ref={ulNav}>
         <li><Link to="/">Home</Link></li>
@@ -61,6 +61,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
           [
             <li key="0"><Link to="/expenses">Expenses</Link></li>,
             <li key="1"><Link to="/incomes">Incomes</Link></li>,
+            <li key="3"><Link to="/reports">Reports</Link></li>,
             <li key="2"><Link to="" onClick={logout}>Logout</Link></li>
           ] :
           [

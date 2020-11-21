@@ -15,17 +15,23 @@ nav{
   color: white;
   text-transform: uppercase;
   letter-spacing: 5px;
-  font-size: 20px;
+  font-size: 25px;
   position: center;
   margin-top: 25px;
   margin-right: -200px;
+  padding-top: 20px;
 }
 .logo img{
-  width: 100px;
-  height: 100px;
-  margin-top: -55px;
-  margin-bottom: 5px;
-  margin-left: -200px;
+  max-width: 100px;
+  max-height: 100px;
+  margin-top: -70px;
+  margin-bottom: 10px;
+  margin-left: -150px;
+  position: center;
+}
+img.responsive{
+  width: auto;
+  height: auto;
 }
 .nav-links{
   display: flex;
@@ -60,7 +66,6 @@ nav{
   outline: none !important;
 }
 
-
 .burger{
   display: none;
   cursor: pointer;
@@ -74,12 +79,12 @@ nav{
   transition: all 0.3s ease;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 400px){
   .nav-links{
   width: 60%;
 }
 }
-@media screen and (max-width: 768px){
+@media screen and (max-width: 400px){
   body{
     overflow-x: hidden;
   }
@@ -96,7 +101,18 @@ nav{
     transform: translateX(100%);
     transition: transform 0.5s ease-in;
   }
-
+@media screen and (max-width: 100px) {
+  .logo img  {position: relative;}
+}
+@media screen and (max-width: 600px) {
+  .nav.responsive {position: relative;}
+  .nav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+}
   .nav-links-active{
     transform: translateX(100%);
     transition: transform 0.5s ease-in;
@@ -112,7 +128,6 @@ nav{
 .nav-active{
   transform: translateX(0%);
 }
-
 
 @keyframes navLinkFade{
   from {
