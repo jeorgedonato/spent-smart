@@ -53,7 +53,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
         <>
             <ContentContainer>
                 <FlexContainer>
-                    <h2 style={{ width: '50%' }}>Incomes</h2>
+                    <h2 style={{ width: '50%' }}>Income</h2>
                     <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
                 </FlexContainer>
                 <Table striped bordered hover>
