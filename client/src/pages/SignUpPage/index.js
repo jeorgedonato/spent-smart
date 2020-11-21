@@ -4,9 +4,9 @@ import { setAlert } from '../../actions/alert';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, InputGroup} from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
-
+import "./index.css";
 const SignUpPage = ({ setAlert, register, isAuthenticated }) => {
 
   const [formData, setFormData] = useState({
@@ -47,6 +47,12 @@ const SignUpPage = ({ setAlert, register, isAuthenticated }) => {
     }
   }
 
+
+  const [passwordShown, setPasswordShown] = useState(false);
+  const handleTogglePassword = e => {
+    setPasswordShown(passwordShown ? false : true);
+  };
+
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
@@ -69,14 +75,28 @@ const SignUpPage = ({ setAlert, register, isAuthenticated }) => {
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" name="email" onChange={handleOnChange} placeholder="Email Address" />
           </Form.Group>
+
           <Form.Group >
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" name="password" onChange={handleOnChange} placeholder="Password" />
+            <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
+              Password
+            </Form.Label>
+              <InputGroup className="mb-2 mr-sm-2">
+                <Form.Control type={passwordShown ? "text" : "password"} name="password" onChange={handleOnChange} placeholder="Password" />
+              <InputGroup.Append>
+                  <InputGroup.Text><i onClick={handleTogglePassword}><i className="fa fa-eye" aria-hidden="true"></i></i></InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
           </Form.Group>
+
           <Form.Group >
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" name="cPassword" onChange={handleOnChange} placeholder="Confirm Password" />
+            <Form.Label>
+              Password
+            </Form.Label>
+            <InputGroup className="mb-2 mr-sm-2">
+              <Form.Control type={passwordShown ? "text" : "password"} name="cPassword" onChange={handleOnChange} placeholder="Confirm Password" />
+            </InputGroup>
           </Form.Group>
+
         </Form>
         <Button variant="primary" onClick={handleFormSubmit}>Register</Button>{' '}Do you have an account? <Link to="/login" >Log In</Link>
       </ContentContainer>
