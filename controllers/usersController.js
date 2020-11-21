@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
     await newUser.save();
     // return console.log(req.headers.host)
     const emailConUrl =
-      req.protocol + "://" + env === "development" ? req.headers["x-forwarded-host"] : req.headers.host + "/confirm/" + newUser._id;
+      req.protocol + "://" + req.headers.host + "/confirm/" + newUser._id;
     // console.log(emailConUrl)
 
     let transporter = nodemailer.createTransport({

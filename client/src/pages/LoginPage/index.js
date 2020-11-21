@@ -67,10 +67,11 @@ const LoginPage = ({ login, isAuthenticated }) => {
           <Form.Group >
             <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>Password</Form.Label>
             <InputGroup className="mb-2 mr-sm-2">
-              
               <Form.Control type={passwordShown ? "text" : "password"} name="password" onChange={handleInputChange} placeholder="Password" />
               <InputGroup.Append>
-                <InputGroup.Text><i onClick={handleTogglePassword}><i className="fa fa-eye" aria-hidden="true"></i></i></InputGroup.Text>
+                <InputGroup.Text>
+                  <i onClick={handleTogglePassword}><i className="fa fa-eye" aria-hidden="true"></i></i>
+              </InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
           </Form.Group>

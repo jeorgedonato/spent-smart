@@ -6,7 +6,9 @@ import {
   ADD_EXPENSE,
   UPDATE_EXPENSE,
   DELETE_EXPENSE,
-  GET_EXPENSE
+  GET_EXPENSE,
+  GET_MONTHLY_EXPENSE,
+  GET_MONTHLY_EXPENSE_CATEGORY
 } from './types';
 
 // Get Expenses
@@ -36,6 +38,44 @@ export const getExpense = id => async dispatch => {
 
     dispatch({
       type: GET_EXPENSE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: EXPENSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get Monthly Expense
+// GET SUM : /api/expenses/monthly/:month/:year
+export const getMonthlyExpenseSum = (month, year) => async dispatch => {
+  // console.log(id)
+  try {
+    const res = await axios.get(`/api/expenses/monthly/${month}/${year}`);
+
+    dispatch({
+      type: GET_MONTHLY_EXPENSE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: EXPENSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get Monthly Expense
+// GET SUM : /api/expenses/monthly/:month/:year
+export const getMonthlyExpenseCategorySum = (month, year) => async dispatch => {
+  // console.log(id)
+  try {
+    const res = await axios.get(`/api/expenses/monthly/categories/${month}/${year}`);
+
+    dispatch({
+      type: GET_MONTHLY_EXPENSE_CATEGORY,
       payload: res.data
     });
   } catch (err) {
