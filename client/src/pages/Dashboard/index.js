@@ -27,7 +27,7 @@ function Dashboard({auth : {user}}) {
       <ContentContainer style={{textAlign: "center"}}>
         <Jumbotron className="jumbo">
             <h1>Welcome to $pent $mart</h1>
-            <p style={{fontSize: "1.3rem"}}>Hello, {user.firstname} {user.lastname}</p>
+            <p style={{fontSize: "1.3rem"}}>Hello, {user ? user.firstname : ""} {user ? user.lastname : ""}</p>
         </Jumbotron>
         <Row>
           <Col size="md-4">
