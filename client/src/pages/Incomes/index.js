@@ -79,7 +79,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                                     {/* <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td> */}
                                     <td>{moment(income.created_date).format("MMM DD, YYYY")}</td>
                                     <CenteredTd>
-                                        <AnchorTag info><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
+                                        <AnchorTag info href={"/incomes/update/" + income._id}><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
                                         <AnchorTag onClick={() => handleShow(income._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag>
                                     </CenteredTd>
                                 </tr>

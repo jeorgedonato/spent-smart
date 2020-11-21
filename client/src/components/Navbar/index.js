@@ -65,7 +65,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
             <li key="2"><Link to="" onClick={logout}>Logout</Link></li>
           ] :
           [
-            <li key="0"><Link to="/about">About</Link></li>,
+            // <li key="0"><Link to="/about">About</Link></li>,
             <li key="1"><Link to="/login">Log In</Link></li>,
             <li key="2"><Link to="/register">Sign Up</Link></li>
           ]
