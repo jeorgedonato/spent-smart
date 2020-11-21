@@ -1,9 +1,14 @@
 import React from "react";
 import { VictoryPie } from "victory";
 
-function PieChart() {
+function PieChart(props) {
   return (
-    <VictoryPie />
+    <VictoryPie 
+      data={[
+        { x: "Expenses", y: props.expenses },
+        { x: "Savings", y: props.savings },
+      ]}
+    />
   )
 }
 

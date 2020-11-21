@@ -22,7 +22,17 @@ A very crucial skill in life that is rarely taught in school, is how to budget y
 
 ## Project Description
 
-Initially, users will be prompted to sign-up or log-in to the application.  Spent Smart allows users to input their income upon a selection of time ranges (daily, weekly, monthly, annually) and will be presented with categories (e.g. food, transportation, utilities, etc.) for which they can also create separate entries within.  The goal is to be net positive after accounting for all of the users' expenses.  Additional features will include a calendar feature, milestone statistics (e.g. breakdown of average spending), investment/savings advice according to your budget, and more.
+Initially, users will be prompted to sign-up or log-in to the application.  Spent Smart allows users to input their monthly income and expense breakdown (along with their associated category options, such as paycheck, food, transportation, etc.).  The goal is to be net positive after accounting for all of the users' expenses, which will result in a savings amount.  Graphs of the users' data can be found under the Reports section.
+
+Pages of this application include:
+
+  * Log-in Page
+  * Sign-up Page
+  * E-mail Confirmation Page
+  * Member Dashboard
+  * View/Add Expenses
+  * View/Add Income
+  * Graph Reports
 
 
 ## User Story
@@ -32,31 +42,31 @@ I WANT an application that will help me budget my income and expenses
 SO THAT I can build my savings and avoid falling into debt
 
 
-
 ## Technology Used 
 
 * HTML/CSS
 * Bootstrap
-* Heroku
-* Express
-* Handlebars
 * JavaScript
+* Git/GitHub
+* Heroku
 * Node.js
+* Express.js
 * MongoDB/Mongoose
 * React/Redux
 * Moment.js
-* Chart.js
+* Victory Charts
 
 
 ## Installation
 
-* Open your terminal in the spent-smart directory and "npm install"
+* Open your terminal in the spent-smart directory and run "npm install"
 * Run "npm start" after the installation is complete
+* Sign-up for an account, e-mail verify the account, then log-in to Spent Smart application
 
 
 ## Contributing
 
-* Amir Ashkan Salehian Dardashti
+* Amir Ashkan Salehian Dardashti https://github.com/AmirAshkan7091
 * Jeorge Donato https://github.com/jeorgedonato
 * Lauren Goettsch https://github.com/laurlaur2181
 * Duyen Pham https://github.com/phtrmd8

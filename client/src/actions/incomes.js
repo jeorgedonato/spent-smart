@@ -60,7 +60,7 @@ export const getMonthlyIncomeSum = (month, year) => async dispatch => {
   } catch (err) {
     dispatch({
       type: INCOME_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+    //   payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };
