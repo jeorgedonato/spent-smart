@@ -8,7 +8,9 @@ import SignUpPage from "./pages/SignUpPage";
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
-import IncomePage from './pages/Incomes';
+import IncomesPage from './pages/Incomes';
+import AddIncomesPage from './pages/Incomes/Add';
+import UpdateIncomesPage from './pages/Incomes/Update';
 import ExpensesPage from './pages/Expenses';
 import AddExpensesPage from './pages/Expenses/Add';
 import UpdateExpensesPage from './pages/Expenses/Update';
@@ -44,7 +46,9 @@ function App() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={SignUpPage} />
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
-          <PrivateRoute exact path="/incomes" component={IncomePage} />
+          <PrivateRoute exact path="/incomes" component={IncomesPage} />
+          <PrivateRoute exact path="/incomes/add" component={AddIncomesPage} />
+          <PrivateRoute exact path="/incomes/update/:id" component={UpdateIncomesPage} />
           <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
           <PrivateRoute exact path="/expenses/add" component={AddExpensesPage}/>
           <PrivateRoute exact path="/expenses/update/:id" component={UpdateExpensesPage}/>
