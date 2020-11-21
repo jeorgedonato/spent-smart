@@ -7,6 +7,9 @@ import Chart from "../../components/Chart"
 import './style.css';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import PieChart from "../../components/PieChart"
+import LineChart from "../../components/LineChart"
+import BarChart from "../../components/BarChart"
 
 function DashAmount(props) {
   return (
@@ -40,7 +43,10 @@ function Dashboard({auth : {user}}) {
             <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings} />
           </Col>
         </Row>
-        <Chart savings={savings} expenses={expenses}/>
+        {/* <Chart savings={savings} expenses={expenses}/> */}
+        <PieChart />
+        <LineChart />
+        <BarChart />
       </ContentContainer>
     </div>
   );
