@@ -11,6 +11,9 @@ import {getMonthlyExpenseSum} from '../../actions/expenses';
 import {getMonthlyIncomeSum} from '../../actions/incomes';
 // import expenses from "../../reducers/expenses";
 import moment from 'moment';
+import PieChart from "../../components/PieChart"
+import LineChart from "../../components/LineChart"
+import BarChart from "../../components/BarChart"
 
 function DashAmount(props) {
   return (
@@ -49,6 +52,9 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
           </Col>
         </Row>
         {/* <Chart savings={savings} expenses={expenses}/> */}
+        <PieChart />
+        <LineChart />
+        <BarChart />
       </ContentContainer>
     </div>
   );

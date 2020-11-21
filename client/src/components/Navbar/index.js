@@ -52,7 +52,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
     <nav ref={navRef}>
       <div className="logo">
         <h4>$pent $mart</h4>
-        <img src="/favicon.png"></img>
+        <img src="/favicon.png" alt="spent-smart" class="responsive"></img>
       </div>
       <ul className={navClassNames.join(" ")} ref={ulNav}>
         <li><Link to="/">Home</Link></li>
