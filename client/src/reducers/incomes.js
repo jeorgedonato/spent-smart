@@ -4,14 +4,16 @@ import {
     ADD_INCOME,
     UPDATE_INCOME,
     DELETE_INCOME,
-    GET_INCOME
+    GET_INCOME,
+    GET_MONTHLY_INCOME
 } from '../actions/types';
 
 const initialState = {
     incomes: [],
     income: null,
     loading: true,
-    error: {}
+    error: {},
+	monthlySum: null
 };
 
 export default function (state = initialState, action) {
@@ -42,6 +44,12 @@ export default function (state = initialState, action) {
                 incomes: state.incomes.filter((income) => income._id !== payload),
                 loading: false,
             };
+        case GET_MONTHLY_INCOME:
+			return {
+				...state,
+				monthlySum: payload[0].sum,
+				loading: false,
+			};
         case INCOME_ERROR:
             return {
                 ...state,

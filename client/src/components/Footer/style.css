@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 75px;
+  min-height: 8vh;
   padding: 25px;
   position: absolute;
   z-index: 1000;

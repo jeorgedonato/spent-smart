@@ -6,7 +6,8 @@ import {
     ADD_INCOME,
     UPDATE_INCOME,
     DELETE_INCOME,
-    GET_INCOME
+    GET_INCOME,
+    GET_MONTHLY_INCOME
 } from './types';
 
 // Get incomes
@@ -43,6 +44,25 @@ export const getIncome = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+};
+
+// Get Monthly Income
+// GET SUM : /api/incomes/monthly/:month/:year
+export const getMonthlyIncomeSum = (month, year) => async dispatch => {
+  // console.log(id)
+  try {
+    const res = await axios.get(`/api/incomes/monthly/${month}/${year}`);
+
+    dispatch({
+      type: GET_MONTHLY_INCOME,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: INCOME_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
 };
 
 // Post income

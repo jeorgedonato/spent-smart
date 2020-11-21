@@ -4,14 +4,18 @@ import {
   ADD_EXPENSE,
   UPDATE_EXPENSE,
   DELETE_EXPENSE,
-  GET_EXPENSE
+	GET_EXPENSE,
+	GET_MONTHLY_EXPENSE,
+	GET_MONTHLY_EXPENSE_CATEGORY
 } from '../actions/types';
 
 const initialState = {
   expenses: [],
   expense: null,
   loading: true,
-  error: {}
+	error: {},
+	monthlySum: null,
+	categoryExpenses : null
 };
 
 export default function (state = initialState, action) {
@@ -34,6 +38,18 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				expenses: [payload, ...state.expenses],
+				loading: false,
+			};
+		case GET_MONTHLY_EXPENSE:
+			return {
+				...state,
+				monthlySum: payload[0].sum,
+				loading: false,
+			};
+		case GET_MONTHLY_EXPENSE_CATEGORY:
+			return {
+				...state,
+				categoryExpenses: payload,
 				loading: false,
 			};
 		case DELETE_EXPENSE:

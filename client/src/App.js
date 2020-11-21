@@ -17,7 +17,8 @@ import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
 import Confirm from './pages/Confirm';
 import NotFound from './pages/NotFound';
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard';
+import Reports from './pages/Reports';
 import './App.css'
 // import Index from "./pages/Index";
 
@@ -34,25 +35,27 @@ function App() {
     <>
     <Provider store={store}>
       <Router>
-        <div className= "content">
-        <Navbar />
-        <Container>
-        <Alert />
-        <Switch>
-          <Route path="/confirm/:id" component={Confirm} />
-          <Route exact path="/" component={LoginPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={SignUpPage} />
-          <PrivateRoute exact path="/dashboard" component={Dashboard}/>
-          <PrivateRoute exact path="/incomes" component={IncomePage} />
-          <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
-          <PrivateRoute exact path="/expenses/add" component={AddExpensesPage}/>
-          <PrivateRoute exact path="/expenses/update/:id" component={UpdateExpensesPage}/>
-          <Route component={NotFound}></Route>
-        </Switch>
-        </Container>
+        <div className= "content" style={{position: "relative"}}>
+          <Navbar />
+          <Container>
+          <Alert />
+          <Switch>
+            <Route path="/confirm/:id" component={Confirm} />
+            <Route exact path="/" component={LoginPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={SignUpPage} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+            <PrivateRoute exact path="/incomes" component={IncomePage} />
+            <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
+            <PrivateRoute exact path="/expenses/add" component={AddExpensesPage}/>
+            <PrivateRoute exact path="/expenses/update/:id" component={UpdateExpensesPage}/>
+            <PrivateRoute exact path="/reports" component={Reports}/>
+            <Route component={NotFound}></Route>
+          </Switch>
+          </Container>
+          
+          <Footer />
         </div>
-        <Footer />
       </Router>
     </Provider>
     </>
