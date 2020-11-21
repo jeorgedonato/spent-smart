@@ -101,7 +101,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
           <Modal.Title>Delete Expense</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{fontSize: '1.2rem'}}>
-         Do you really want to delete {curExpense && curExpense.hasOwnProperty('name') ? <Badge variant="info">{curExpense.name}</Badge> : ""}
+         Do you really want to delete {curExpense && curExpense.hasOwnProperty('name') ? <Badge variant="info">{curExpense.name}</Badge> : ""}?
         </Modal.Body>
         <Modal.Footer>
             <Button style={{backgroundColor : "#117a8b"}} onClick={handleClose}>No</Button>
