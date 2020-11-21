@@ -3,7 +3,6 @@ import Row from "../../components/Row";
 import Col from "../../components/Col";
 import {Jumbotron} from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
-// import Chart from "../../components/Chart"
 import './style.css';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -52,9 +51,9 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
           </Col>
         </Row>
         {/* <Chart savings={savings} expenses={expenses}/> */}
-        <PieChart />
-        <LineChart />
-        <BarChart />
+        <PieChart expenses={expenseMonthlySum} savings={savings} />
+        {/* <LineChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} /> */}
+        <BarChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} />
       </ContentContainer>
     </div>
   );

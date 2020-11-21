@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
 
-function LineChart() {
+function LineChart(props) {
   return (
     <VictoryChart theme={VictoryTheme.material}>
       <VictoryLine
@@ -10,11 +10,9 @@ function LineChart() {
           parent: { border: "1px solid #ccc"}
         }}
         data={[
-          { x: 1, y: 2 },
-          { x: 2, y: 3 },
-          { x: 3, y: 5 },
-          { x: 4, y: 4 },
-          { x: 5, y: 7 }
+          { x: "Income", y: props.income },
+          { x: "Expenses", y: props.expenses },
+          { x: "Savings", y: props.savings }
         ]}
       />
     </VictoryChart> 
