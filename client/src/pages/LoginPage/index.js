@@ -76,7 +76,8 @@ const LoginPage = ({ login, isAuthenticated }) => {
             </InputGroup>
           </Form.Group>
         </Form>
-        <Button variant="primary" onClick={handleFormSubmit}>Log In</Button>{' '}Don't have an account? <Link to="/register" >Sign Up</Link>
+        <Button variant="primary" onClick={handleFormSubmit}>Log In</Button>{' '}<div className="underlogin">Don't have an account? </div> <Link to="/register" >Sign Up</Link>
+        
       </ContentContainer>
     </>
   );
