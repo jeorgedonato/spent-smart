@@ -48,7 +48,9 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
   };
 
   return (
-    <nav ref={navRef}>
+    <div className="nav">
+          <nav  ref={navRef}>
+      
       <div className="logo">
         <h4>$pent $mart</h4>
         <img src="/favicon.png" alt="spent-smart" className="responsive"></img>
@@ -84,6 +86,8 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
         <div className="line3"></div>
       </div>
     </nav>
+    </div>
+
 
   );
 }
