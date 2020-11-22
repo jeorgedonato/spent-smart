@@ -6,6 +6,7 @@ import { VictoryPie } from 'victory';
 import styled from 'styled-components';
 import {getMonthlyExpenseCategorySum} from '../../actions/expenses';
 import moment from 'moment';
+import getRandomColor from '../../utils/getRandomColor';
 
 
 const FlexContainer = styled.div`
@@ -34,6 +35,7 @@ const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
         <VictoryPie
           labels={categoryExpenses ? categoryExpenses.map(ce => {return ce.category[0].name}) : []}
           data={categoryExpenses ? categoryExpenses.map(ce => {return parseInt(ce.amount)}) : []}
+          colorScale={categoryExpenses ? categoryExpenses.map(ce => {return getRandomColor()}) : []}
           width={250}
           height={250}
           style={{
@@ -49,6 +51,28 @@ const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
               // fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
             }
           }}
+              events={[{
+      target: "data",
+      eventHandlers: {
+        onClick: () => {
+          // console.log(data)
+          return [
+            {
+              target: "data",
+              mutation: ({style}) => {
+                // console.log(data)
+                return style.fill === "#d52a49" ? null : { style: { fill: "#d52a49" } };
+              }
+            }, {
+              target: "labels",
+              mutation: ({slice,text}) => {
+                return text === `$ ${slice.value}` ? null : { text: `$ ${slice.value}` };
+              }
+            }
+          ];
+        }
+      }
+    }]}
           // animate={{ duration: 1500 }}
           // padding={{top:0,bottom:0,left:0,right:0}}
           />

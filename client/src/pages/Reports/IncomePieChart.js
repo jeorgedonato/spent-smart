@@ -24,7 +24,7 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
     const [month, year] = moment().format("M/YYYY").split("/");
     getMonthlyIncomeCategorySum(month,year);
   }, [getMonthlyIncomeCategorySum])
-  
+
   return (
     <>
       <ContentContainer>
@@ -95,4 +95,4 @@ const mapStateToProps = state => ({
   categoryIncomes : state.incomes.categoryIncomes,
 })
 
-export default connect(mapStateToProps,{getMonthlyIncomeCategorySum})(IncomePieChart);
+export default connect(mapStateToProps,{getMonthlyIncomeCategorySum})(IncomePieChart); 

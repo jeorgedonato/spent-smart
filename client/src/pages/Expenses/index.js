@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
 import {Redirect} from 'react-router-dom';
+import numberWithCommas from '../../utils/numberWithCommas';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -76,7 +77,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
                 <tr key={expense._id}>
                   {/* <td>{expense.name}</td> */}
                   <td>{expense.category_id.name}</td>
-                  <td>$ {expense.amount}</td>
+                  <td>$ {numberWithCommas(expense.amount)}</td>
                   {/* <td>{expense.hasOwnProperty('due_date') ? <Moment>expense.due_date</Moment> : "Not Provided"}</td> */}
                   <td>{moment(expense.created_date).format("MMM DD, YYYY")}</td>
                   <CenteredTd>
