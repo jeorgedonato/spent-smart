@@ -4,8 +4,7 @@ import "./style.css";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
-// import Listlinks from '../ListLinks';
-// import Banner from "../img/"
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 function Navbar({ auth: { isAuthenticated, loading }, logout }) {
@@ -47,21 +46,29 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
     // scrollCheck();
     // }
   };
-  
+
   return (
     <nav ref={navRef}>
       <div className="logo">
         <h4>$pent $mart</h4>
-        <img src="/favicon.png" alt="spent-smart" class="responsive"></img>
+        <img src="/favicon.png" alt="spent-smart" className="responsive"></img>
       </div>
       <ul className={navClassNames.join(" ")} ref={ulNav}>
         <li><Link to="/">Home</Link></li>
-        
+
         {isAuthenticated ?
           [
-            <li key="0"><Link to="/expenses">Expenses</Link></li>,
-            <li key="1"><Link to="/incomes">Incomes</Link></li>,
-            <li key="3"><Link to="/reports">Reports</Link></li>,
+            <li key="0"><Link to="/expenses">Expense</Link></li>,
+            <li key="1"><Link to="/incomes">Income</Link></li>,
+            <DropdownButton
+              as="li"
+              key="3"
+              title="Report"
+            >
+              <Dropdown.Item style={{color: 'black'}} href="/report" eventKey="1">Expense by Category</Dropdown.Item>
+              <Dropdown.Item style={{color: 'black'}} href="/report/income" eventKey="2">Income by Category</Dropdown.Item>
+              <Dropdown.Item style={{color: 'black'}} href="/report/savings" eventKey="3">Yearly Savings</Dropdown.Item>
+            </DropdownButton>,
             <li key="2"><Link to="" onClick={logout}>Logout</Link></li>
           ] :
           [

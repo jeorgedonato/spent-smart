@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getMonthlyExpenseSum} from '../../actions/expenses';
 import {getMonthlyIncomeSum} from '../../actions/incomes';
+import numberWithCommas from '../../utils/numberWithCommas';
 // import expenses from "../../reducers/expenses";
 import moment from 'moment';
 import PieChart from "../../components/PieChart"
@@ -41,13 +42,13 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
         </Jumbotron>
         <Row>
           <Col size="md-4">
-            <DashAmount style={{color: "green"}} label={"Monthly Income Amount"} amount={incomeMonthlySum} />
+            <DashAmount style={{color: "green"}} label={"Monthly Income Amount"} amount={incomeMonthlySum ? numberWithCommas(incomeMonthlySum) : ""} />
           </Col>
           <Col size="md-4">
-            <DashAmount style={{color: "red"}} label={"Monthly Expenses Amount"} amount={expenseMonthlySum} />
+            <DashAmount style={{color: "red"}} label={"Monthly Expenses Amount"} amount={expenseMonthlySum ? numberWithCommas(expenseMonthlySum) : ""} />
           </Col>
           <Col size="md-4">
-            <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings} />
+            <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings ? numberWithCommas(savings) : ""} />
           </Col>
         </Row>
         {/* <Chart savings={savings} expenses={expenses}/> */}

@@ -20,7 +20,9 @@ import {Container} from 'react-bootstrap';
 import Confirm from './pages/Confirm';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
-import Reports from './pages/Reports';
+import ExpensePie from './pages/Reports';
+import IncomePieChart from './pages/Reports/IncomePieChart';
+import YearlySavings from './pages/Reports/YearlySavings';
 import './App.css'
 // import Index from "./pages/Index";
 
@@ -53,6 +55,9 @@ function App() {
           <PrivateRoute exact path="/expenses" component={ExpensesPage}/>
           <PrivateRoute exact path="/expenses/add" component={AddExpensesPage}/>
           <PrivateRoute exact path="/expenses/update/:id" component={UpdateExpensesPage}/>
+          <PrivateRoute exact path="/report" component={ExpensePie}/>
+          <PrivateRoute exact path="/report/income" component={IncomePieChart}/>
+          <PrivateRoute exact path="/report/savings" component={YearlySavings}/>
           <Route component={NotFound}></Route>
         </Switch>
         </Container>

@@ -200,4 +200,16 @@ router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
 });
 
 
+router.get("/yearly/savings/:year", auth, async (req, res) => {
+  try {
+    const expenseRes = await db.Expense.find({year_created : req.params.year}).sort({created_date: -1}).populate("category_id");
+    const incomeRes = await db.Income.find({year_created : req.params.year}).sort({created_date: -1}).populate("category_id");
+    res.json({income : incomeRes,expense : expenseRes})
+  } catch (error) { 
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+})
+
+
 module.exports = router;
