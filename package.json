@@ -34,8 +34,7 @@
     "mongoose": "^5.10.11",
     "nodemailer": "^6.4.15",
     "request": "^2.88.2",
-    "serve": "^11.3.2",
-    "victory": "^35.3.5"
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
