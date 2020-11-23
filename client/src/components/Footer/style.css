@@ -4,9 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 8vh;
-  padding: 25px;
-  position: fixed;
+  position: sticky;
   z-index: 1000;
   bottom: 0;
   width: 100%;
@@ -26,12 +24,7 @@
   text-decoration: none;
   color:white;
 }
-.contact{
- margin:0px 0px 40px;
-}
-.about{
-  margin:0px 0px 40px;
-}
+
 #page-container {
   position: relative;
   min-height: 100vh;
