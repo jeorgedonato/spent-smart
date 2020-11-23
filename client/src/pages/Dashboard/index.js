@@ -11,8 +11,6 @@ import {getMonthlyIncomeSum} from '../../actions/incomes';
 import numberWithCommas from '../../utils/numberWithCommas';
 // import expenses from "../../reducers/expenses";
 import moment from 'moment';
-import PieChart from "../../components/PieChart"
-import LineChart from "../../components/LineChart"
 import BarChart from "../../components/BarChart"
 
 function DashAmount(props) {
@@ -35,12 +33,12 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
 
   return (
     <div>
-      <ContentContainer style={{textAlign: "center"}}>
+      {/* <ContentContainer style={{textAlign: "center"}}> */}
         <Jumbotron className="jumbo">
             <h1>Welcome to $pent $mart</h1>
             <p style={{fontSize: "1.3rem"}}>Hello, {user ? user.firstname : ""} {user ? user.lastname : ""}</p>
         </Jumbotron>
-        <Row>
+        <Row style={{textAlign: "center"}}>
           <Col size="md-4">
             <DashAmount style={{color: "green"}} label={"Monthly Income Amount"} amount={incomeMonthlySum ? numberWithCommas(incomeMonthlySum) : ""} />
           </Col>
@@ -52,10 +50,9 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
           </Col>
         </Row>
         {/* <Chart savings={savings} expenses={expenses}/> */}
-        <PieChart expenses={expenseMonthlySum} savings={savings} />
+        {/* <PieChart expenses={expenseMonthlySum} savings={savings} /> */}
         {/* <LineChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} /> */}
-        <BarChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} />
-      </ContentContainer>
+        <BarChart className="barchart" income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} />
     </div>
   );
 }
