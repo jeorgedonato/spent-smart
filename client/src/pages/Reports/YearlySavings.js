@@ -33,19 +33,22 @@ const YearlySaving = ({ getYearlySaving, yearlySavings }) => {
         <FlexContainer>
           <h3 style={{ width: '100%' }}>Yearly Savings</h3>
         </FlexContainer>
-        <VictoryChart minDomain={{y: -100}}>
+        <VictoryChart  style={{labels : {padding: 100}}}>
           <VictoryLine
+          minDomain={{y: -100}}
+            labels={yearlySavings ? yearlySavings.map(ys => {return ys.name}) : []}
+            data={yearlySavings ? yearlySavings.map(ys => {return ys.amount}) : []}
             width={250}
             height={250}
             style={{
               data: { stroke: "#0cbff3" },
               parent: { border: "1px solid #ccc" },
               labels: {
-              fontSize: 5,
+              fontSize: 6,
+              paddingLeft : 100
               }
             }}
-            labels={yearlySavings ? yearlySavings.map(ys => {return ys.name}) : []}
-            data={yearlySavings ? yearlySavings.map(ys => {return ys.amount}) : []}
+
           />
           </VictoryChart>
       </ContentContainer>
