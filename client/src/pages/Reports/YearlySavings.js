@@ -16,7 +16,7 @@ const FlexContainer = styled.div`
 
 const ContentContainer = styled.div`
   max-width : 100%;
-  padding-top : 15vh;
+  padding-top : 7vh;
 `;
 
 
@@ -33,19 +33,21 @@ const YearlySaving = ({ getYearlySaving, yearlySavings }) => {
         <FlexContainer>
           <h3 style={{ width: '100%' }}>Yearly Savings</h3>
         </FlexContainer>
-        <VictoryChart  style={{labels : {padding: 100}}}>
+        <VictoryChart 
+          theme={VictoryTheme.material} 
+          // width={150}
+            height={250}
+        >
           <VictoryLine
-          minDomain={{y: -100}}
+            minDomain={{y: -100}}
             labels={yearlySavings ? yearlySavings.map(ys => {return ys.name}) : []}
             data={yearlySavings ? yearlySavings.map(ys => {return ys.amount}) : []}
-            width={250}
-            height={250}
             style={{
               data: { stroke: "#0cbff3" },
               parent: { border: "1px solid #ccc" },
               labels: {
               fontSize: 6,
-              paddingLeft : 100
+              // paddingLeft : 100
               }
             }}
 

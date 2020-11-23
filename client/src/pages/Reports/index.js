@@ -47,7 +47,7 @@ const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
             },
             labels: {
               fontSize: 4,
-              padding: 5
+              padding: 10
               // fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
             }
           }}
