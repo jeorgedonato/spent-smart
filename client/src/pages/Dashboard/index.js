@@ -51,10 +51,7 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
             <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings ? numberWithCommas(savings) : ""} />
           </Col>
         </Row>
-        {/* <Chart savings={savings} expenses={expenses}/> */}
-        <PieChart expenses={expenseMonthlySum} savings={savings} />
-        {/* <LineChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} /> */}
-        <BarChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} />
+
       </ContentContainer>
     </div>
   );
