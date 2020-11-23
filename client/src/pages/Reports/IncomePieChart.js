@@ -40,13 +40,8 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
           height={250}
           style={{
             parent: {
-              // marginTop: -140,
-              // marginBottom : -140
-              position : 'absolute',
-              top: '40px',
-              right: 0,
-              left: 0,
-              bottom: 0
+              marginTop: -140,
+              marginBottom : -140
               // padding: -200,
 
             },
@@ -56,7 +51,7 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
               // fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
             }
           }}
-         events={[{
+              events={[{
       target: "data",
       eventHandlers: {
         onClick: () => {
@@ -66,7 +61,7 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
               target: "data",
               mutation: ({style}) => {
                 // console.log(data)
-                return style.fill === "#40bf53" ? null : { style: { fill: "#40bf53" } };
+                return style.fill === "#d52a49" ? null : { style: { fill: "#d52a49" } };
               }
             }, {
               target: "labels",
@@ -78,6 +73,8 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
         }
       }
     }]}
+          // animate={{ duration: 1500 }}
+          // padding={{top:0,bottom:0,left:0,right:0}}
           />
       </ContentContainer>
     </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Modal, Button, Badge } from 'react-bootstrap';
+import { Table, Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import ContentContainer from '../../components/ContentContainer';
@@ -7,7 +7,7 @@ import { getExpenses, deleteExpense, getExpense } from '../../actions/expenses';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import numberWithCommas from '../../utils/numberWithCommas';
 
 const FlexContainer = styled.div`
@@ -31,8 +31,18 @@ const CenteredTd = styled.td`
   text-align: center;
 `;
 
+const popover = (
+  <Popover id="popover-basic">
+    <Popover.Title as="h3">Popover right</Popover.Title>
+    <Popover.Content>
+      And here's some <strong>amazing</strong> content. It's very engaging.
+      right?
+    </Popover.Content>
+  </Popover>
+);
 
-const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense : curExpense } }) => {
+
+const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense } }) => {
 
   const [show, setShow] = useState(false);
 
@@ -71,17 +81,37 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
           </thead>
           <tbody>
             {/* {console.log(expenses)} */}
-            {expenses.map(expense => {
+            {expenses.map((expense, it) => {
               // {console.log(expense)}
               return (
                 <tr key={expense._id}>
                   {/* <td>{expense.name}</td> */}
-                  <td>{expense.category_id.name}</td>
+                  <td>
+                    <OverlayTrigger
+                      trigger="focus"
+                      key={expense._id}
+                      placement="right"
+                      overlay={
+                        <Popover id={`popover-positioned-${expense._id}`}>
+                          <Popover.Title as="h3">Description</Popover.Title>
+                          <Popover.Content>
+                            {expense.description}
+                          </Popover.Content>
+                        </Popover>
+                      }
+                    >
+                      <Button style={{
+                          color: '#212529',
+                          backgroundColor: '#e2e6ea',
+                          borderColor: '#dae0e5'}}
+                      >{expense.category_id.name}</Button>
+                    </OverlayTrigger>
+                  </td>
                   <td>$ {numberWithCommas(expense.amount)}</td>
                   {/* <td>{expense.hasOwnProperty('due_date') ? <Moment>expense.due_date</Moment> : "Not Provided"}</td> */}
                   <td>{moment(expense.created_date).format("MMM DD, YYYY")}</td>
                   <CenteredTd>
-                    <AnchorTag info href={"/expenses/update/"+expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
+                    <AnchorTag info href={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
                     <AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag>
                   </CenteredTd>
                 </tr>
@@ -96,17 +126,17 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        style={{top : '30%'}}
+        style={{ top: '30%' }}
       >
         <Modal.Header closeButton>
           <Modal.Title>Delete Expense</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{fontSize: '1.2rem'}}>
-         Do you really want to delete {curExpense && curExpense.hasOwnProperty('name') ? <Badge variant="info">{curExpense.name}</Badge> : ""}?
+        <Modal.Body style={{ fontSize: '1.2rem' }}>
+          Do you really want to delete {curExpense && curExpense.hasOwnProperty('name') ? <Badge variant="info">{curExpense.name}</Badge> : ""}?
         </Modal.Body>
         <Modal.Footer>
-            <Button style={{backgroundColor : "#117a8b"}} onClick={handleClose}>No</Button>
-            <Button style={{backgroundColor : "#dc3545"}} onClick={() => handleDelete(curExpense._id)}>Yes</Button>
+          <Button style={{ backgroundColor: "#117a8b" }} onClick={handleClose}>No</Button>
+          <Button style={{ backgroundColor: "#dc3545" }} onClick={() => handleDelete(curExpense._id)}>Yes</Button>
         </Modal.Footer>
       </Modal>
     </>
