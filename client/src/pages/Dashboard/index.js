@@ -17,7 +17,7 @@ function DashAmount(props) {
   return (
     <div>
       <h5>{props.label}</h5>
-      <h3 style={props.style}>${props.amount}</h3>
+      <h3 style={props.style}>{props.amount ? "$" : ""}{props.amount}</h3>
     </div>
   );
 }

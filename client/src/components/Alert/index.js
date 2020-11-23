@@ -5,7 +5,7 @@ import "./style.css";
 
 const style= {
   position : "relative",
-  top: "12vh",
+  // top: "12vh",
 }
 
 const Alert = ({ alerts }) =>
