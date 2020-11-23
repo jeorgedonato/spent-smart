@@ -6,7 +6,8 @@ import {
   DELETE_EXPENSE,
 	GET_EXPENSE,
 	GET_MONTHLY_EXPENSE,
-	GET_MONTHLY_EXPENSE_CATEGORY
+	GET_MONTHLY_EXPENSE_CATEGORY,
+	GET_YEARLY_SAVINGS
 } from '../actions/types';
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   loading: true,
 	error: {},
 	monthlySum: null,
-	categoryExpenses : null
+	categoryExpenses : null,
+	yearlySavings : null
 };
 
 export default function (state = initialState, action) {
@@ -44,6 +46,12 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				monthlySum: payload[0].sum,
+				loading: false,
+			};
+		case GET_YEARLY_SAVINGS:
+			return {
+				...state,
+				yearlySavings: payload,
 				loading: false,
 			};
 		case GET_MONTHLY_EXPENSE_CATEGORY:

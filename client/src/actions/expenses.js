@@ -8,8 +8,10 @@ import {
   DELETE_EXPENSE,
   GET_EXPENSE,
   GET_MONTHLY_EXPENSE,
-  GET_MONTHLY_EXPENSE_CATEGORY
+  GET_MONTHLY_EXPENSE_CATEGORY,
+  GET_YEARLY_SAVINGS,
 } from './types';
+import moment from 'moment';
 
 // Get Expenses
 // GET ALL : /api/expenses
@@ -155,4 +157,45 @@ export const deleteExpense = id => async dispatch => {
     });
   }
 };
+
+export const getYearlySaving = () => async dispatch => {
+  try {
+    const year = moment().format("YYYY");
+    const {data} = await axios.get(`/api/expenses/yearly/savings/${year}`);
+    let months = [
+      {name: 'Jan', num : 1},
+      {name: 'Feb', num : 2},
+      {name: 'Mar', num : 3},
+      {name: 'Apr', num : 4},
+      {name: 'May', num : 5},
+      {name: 'Jun', num : 6},
+      {name: 'Jul', num : 7},
+      {name: 'Aug', num : 8},
+      {name: 'Sep', num : 9},
+      {name: 'Oct', num : 10},
+      {name: 'Nov', num : 11},
+      {name: 'Dec', num : 12},
+    ];
+    const {income, expense} = data;
+    months.map(m => {
+      const incomeSum = income.filter(i => {return i.month_created === m.num}).reduce((incS,curInc) => {return incS + curInc.amount},0);
+      const expenseSum = expense.filter(i => {return i.month_created === m.num}).reduce((incS,curInc) => {return incS + curInc.amount},0);
+      m['amount'] = incomeSum - expenseSum;
+    });
+    // console.log(months);
+
+    dispatch({
+      type: GET_YEARLY_SAVINGS,
+      payload : months
+    })
+  } catch (err) {
+    console.log(err)
+    dispatch({
+      type: EXPENSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+
 

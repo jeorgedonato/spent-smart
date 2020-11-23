@@ -7,7 +7,8 @@ import {
     UPDATE_INCOME,
     DELETE_INCOME,
     GET_INCOME,
-    GET_MONTHLY_INCOME
+    GET_MONTHLY_INCOME,
+    GET_MONTHLY_INCOME_CATEGORY
 } from './types';
 
 // Get ALL incomes : /api/incomes
@@ -131,4 +132,24 @@ export const deleteIncome = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+};
+
+
+// Get Monthly Expense
+// GET SUM : /api/expenses/monthly/:month/:year
+export const getMonthlyIncomeCategorySum = (month, year) => async dispatch => {
+  // console.log(id)
+  try {
+    const res = await axios.get(`/api/incomes/monthly/categories/${month}/${year}`);
+
+    dispatch({
+      type: GET_MONTHLY_INCOME_CATEGORY,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: INCOME_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
 };

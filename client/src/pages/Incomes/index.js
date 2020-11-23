@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
+import numberWithCommas from '../../utils/numberWithCommas';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
         <>
             <ContentContainer>
                 <FlexContainer>
-                    <h2 style={{ width: '50%' }}>Incomes</h2>
+                    <h2 style={{ width: '50%' }}>Income</h2>
                     <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
                 </FlexContainer>
                 <Table striped bordered hover>
@@ -75,7 +76,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                                 <tr key={income._id}>
                                     {/* <td>{income.name}</td> */}
                                     <td>{income.category_id.name}</td>
-                                    <td>$ {income.amount}</td>
+                                    <td>$ {numberWithCommas(income.amount)}</td>
                                     {/* <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td> */}
                                     <td>{moment(income.created_date).format("MMM DD, YYYY")}</td>
                                     <CenteredTd>

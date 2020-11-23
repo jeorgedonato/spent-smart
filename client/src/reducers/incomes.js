@@ -5,7 +5,8 @@ import {
     UPDATE_INCOME,
     DELETE_INCOME,
     GET_INCOME,
-    GET_MONTHLY_INCOME
+    GET_MONTHLY_INCOME,
+    GET_MONTHLY_INCOME_CATEGORY
 } from '../actions/types';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
     income: null,
     loading: true,
     error: {},
-	monthlySum: null
+    monthlySum: null,
+    categoryIncomes : null
 };
 
 export default function (state = initialState, action) {
@@ -48,6 +50,12 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				monthlySum: payload[0].sum,
+				loading: false,
+            };
+            case GET_MONTHLY_INCOME_CATEGORY:
+			return {
+				...state,
+				categoryIncomes: payload,
 				loading: false,
 			};
         case INCOME_ERROR:
