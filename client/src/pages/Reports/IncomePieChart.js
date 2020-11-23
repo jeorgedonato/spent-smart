@@ -15,7 +15,7 @@ const FlexContainer = styled.div`
 
 const ContentContainer = styled.div`
   max-width : 100%;
-  padding-top : 15vh;
+  padding-top : 2vh;
 `;
 
 const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
