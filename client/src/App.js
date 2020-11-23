@@ -61,6 +61,7 @@ function App() {
           <Route component={NotFound}></Route>
         </Switch>
         </Container>
+        <Footer />
         </div>
       </Router>
     </Provider>
