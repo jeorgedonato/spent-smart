@@ -5,7 +5,7 @@ nav{
   min-height: 8vh;
   background-color:#266352;
   font-family: 'Poppins', sans-serif;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 9999;
@@ -113,7 +113,7 @@ img.responsive {
 @media screen and (max-width: 100px) {
   .logo img  {position: relative;}
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
   .nav.responsive {position: relative;}
   .nav.responsive a.icon {
     position: absolute;
