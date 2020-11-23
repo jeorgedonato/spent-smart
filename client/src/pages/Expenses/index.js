@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import ContentContainer from '../../components/ContentContainer';
 import { getExpenses, deleteExpense, getExpense } from '../../actions/expenses';
 import PropTypes from 'prop-types';
-import Moment from 'react-moment';
 import moment from 'moment';
-import { Redirect } from 'react-router-dom';
 import numberWithCommas from '../../utils/numberWithCommas';
+import DataTable from 'react-data-table-component';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -27,11 +26,46 @@ const AnchorTag = styled.a`
   }
 `;
 
-const CenteredTd = styled.td`
-  text-align: center;
-`;
+const customStyle = {
+  cells : {
+    style : {
+      fontSize: '1.2rem'
+    }
+  },
+  pagination : {
+    style : {
+      zIndex : 0
+    }
+  },
+  headCells: {
+    style: {
+      fontSize: '1.2rem',
+    },
+  }
+};
 
-
+const columns = [
+  {
+    name: 'Category',
+    // sortable: true,
+    selector: 'category'
+  },
+  {
+    name: 'Amount',
+    sortable: true,
+    selector: 'amount'
+  },
+  {
+    name: 'Created Date',
+    sortable: true,
+    selector: 'created_date'
+  },
+  {
+    name: 'Actions',
+    // sortable: true,
+    selector: 'actions'
+  },
+];
 
 const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense } }) => {
 
@@ -52,33 +86,10 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
     setShow(false)
   };
 
-  return (
-    <>
-      <ContentContainer>
-        <FlexContainer>
-          <h2 style={{ width: '50%' }}>Expenses</h2>
-          <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag>
-        </FlexContainer>
-        <Table striped bordered hover responsive>
-          <thead>
-            <tr>
-              {/* <th>Name</th> */}
-              <th>Category</th>
-              <th>Amount</th>
-              {/* <th>Due Date</th> */}
-              <th>Created Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {console.log(expenses)} */}
-            {expenses.map((expense, it) => {
-              // {console.log(expense)}
-              return (
-                <tr key={expense._id}>
-                  {/* <td>{expense.name}</td> */}
-                  <td>
-                    <OverlayTrigger
+  const data = expenses.map((expense, it) => {
+   return {
+      id: expense._id,
+      category : <OverlayTrigger
                       trigger="focus"
                       key={expense._id}
                       placement="right"
@@ -86,7 +97,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
                         <Popover id={`popover-positioned-${expense._id}`}>
                           <Popover.Title as="h3">Description</Popover.Title>
                           <Popover.Content>
-                            {expense.description}
+                            {expense.description ? expense.description : "No description provided"}
                           </Popover.Content>
                         </Popover>
                       }
@@ -96,20 +107,23 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
                           backgroundColor: '#e2e6ea',
                           borderColor: '#dae0e5'}}
                       >{expense.category_id.name}</Button>
-                    </OverlayTrigger>
-                  </td>
-                  <td>$ {numberWithCommas(expense.amount)}</td>
-                  {/* <td>{expense.hasOwnProperty('due_date') ? <Moment>expense.due_date</Moment> : "Not Provided"}</td> */}
-                  <td>{moment(expense.created_date).format("MMM DD, YYYY")}</td>
-                  <CenteredTd>
-                    <AnchorTag info href={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
-                    <AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag>
-                  </CenteredTd>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+                    </OverlayTrigger>,
+      amount : `$ ${numberWithCommas(expense.amount)}`,
+      created_date : moment(expense.created_date).format("MMM DD, YYYY"),
+      actions: <span><AnchorTag info href={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
+                {' '}<AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
+    }
+  });
+  // console.log(data)
+
+  return (
+    <>
+      <ContentContainer>
+        <FlexContainer>
+          <h2 style={{ width: '50%' }}>Expenses</h2>
+          <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag>
+        </FlexContainer>
+        <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
       </ContentContainer>
 
       <Modal
