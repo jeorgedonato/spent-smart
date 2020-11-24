@@ -142,7 +142,8 @@ router.get("/monthly/:month/:year", auth, async (req, res) => {
     {
         '$match': {
             'month_created': parseInt(req.params.month), 
-            'year_created': parseInt(req.params.year)
+            'year_created': parseInt(req.params.year),
+            'user_id' : req.user.id
         }
     }, {
         '$group': {
@@ -171,7 +172,8 @@ router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
     {
         '$match': {
             'month_created': parseInt(req.params.month), 
-            'year_created': parseInt(req.params.year)
+            'year_created': parseInt(req.params.year),
+            'user_id' : req.user.id
         }
     }, {
         '$group': {
@@ -202,8 +204,8 @@ router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
 
 router.get("/yearly/savings/:year", auth, async (req, res) => {
   try {
-    const expenseRes = await db.Expense.find({year_created : req.params.year}).sort({created_date: -1}).populate("category_id");
-    const incomeRes = await db.Income.find({year_created : req.params.year}).sort({created_date: -1}).populate("category_id");
+    const expenseRes = await db.Expense.find({year_created : req.params.year, user_id: req.user.id}).sort({created_date: -1}).populate("category_id");
+    const incomeRes = await db.Income.find({year_created : req.params.year, user_id: req.user.id}).sort({created_date: -1}).populate("category_id");
     res.json({income : incomeRes,expense : expenseRes})
   } catch (error) { 
     console.error(err.message);

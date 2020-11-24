@@ -141,7 +141,8 @@ router.get("/monthly/:month/:year", auth, async (req, res) => {
     {
         '$match': {
             'month_created': parseInt(req.params.month), 
-            'year_created': parseInt(req.params.year)
+            'year_created': parseInt(req.params.year),
+            'user_id' : req.user.id
         }
     }, {
         '$group': {
@@ -171,7 +172,8 @@ router.get("/monthly/:month/:year", auth, async (req, res) => {
       {
         '$match': {
           'month_created': parseInt(req.params.month),
-          'year_created': parseInt(req.params.year)
+          'year_created': parseInt(req.params.year),
+          'user_id' : req.user.id
         }
       }, {
         '$group': {
@@ -200,7 +202,8 @@ router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
       {
         '$match': {
           'month_created': parseInt(req.params.month),
-          'year_created': parseInt(req.params.year)
+          'year_created': parseInt(req.params.year),
+          'user_id' : req.user.id
         }
       }, {
         '$group': {
