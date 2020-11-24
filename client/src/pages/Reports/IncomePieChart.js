@@ -33,6 +33,14 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
           {/* <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag> */}
         </FlexContainer>
         <VictoryPie
+         labelPosition={({ index }) => index
+    ? "centroid"
+    : "startAngle"
+  }
+  labelPlacement={({ index }) => index
+    ? "parallel"
+    : "vertical"
+  }
           labels={categoryIncomes ? categoryIncomes.map(ce => {return ce.category[0].name}) : []}
           data={categoryIncomes ? categoryIncomes.map(ce => {return parseInt(ce.amount)}) : []}
           colorScale={categoryIncomes ? categoryIncomes.map(ce => {return getRandomColor()}) : []}
@@ -40,8 +48,8 @@ const IncomePieChart = ({getMonthlyIncomeCategorySum, categoryIncomes}) => {
           height={250}
           style={{
             parent: {
-              marginTop: -140,
-              marginBottom : -140
+              // marginTop: -140,
+              // marginBottom : -140
               // padding: -200,
 
             },
