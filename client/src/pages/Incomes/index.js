@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Modal, Button, Badge } from 'react-bootstrap';
+import { Table, Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import ContentContainer from '../../components/ContentContainer';
@@ -75,7 +75,24 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                             return (
                                 <tr key={income._id}>
                                     {/* <td>{income.name}</td> */}
-                                    <td>{income.category_id.name}</td>
+                                    <td><OverlayTrigger
+                                        trigger="focus"
+                                        key={income._id}
+                                        placement="right"
+                                        overlay={
+                                            <Popover id={`popover-positioned-${income._id}`}>
+                                                <Popover.Title as="h3">Description</Popover.Title>
+                                                <Popover.Content>
+                                                    {income.description}
+                                                </Popover.Content>
+                                            </Popover>
+                                        }
+                                    >
+                                        <Button style={{
+                                            color: '#212529',
+                                            backgroundColor: '#e2e6ea',
+                                            borderColor: '#dae0e5'}}>{income.category_id.name}</Button>
+                                    </OverlayTrigger></td>
                                     <td>$ {numberWithCommas(income.amount)}</td>
                                     {/* <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td> */}
                                     <td>{moment(income.created_date).format("MMM DD, YYYY")}</td>
