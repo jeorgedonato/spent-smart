@@ -33,14 +33,14 @@ const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
           {/* <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag> */}
         </FlexContainer>
         <VictoryPie
-         labelPosition={({ index }) => index
-    ? "centroid"
-    : "startAngle"
-  }
-  labelPlacement={({ index }) => index
-    ? "parallel"
-    : "vertical"
-  }
+  //        labelPosition={({ index }) => index
+  //   ? "centroid"
+  //   : "startAngle"
+  // }
+  // labelPlacement={({ index }) => index
+  //   ? "parallel"
+  //   : "vertical"
+  // }
           labels={categoryExpenses ? categoryExpenses.map(ce => {return ce.category[0].name}) : []}
           data={categoryExpenses ? categoryExpenses.map(ce => {return parseInt(ce.amount)}) : []}
           colorScale={categoryExpenses ? categoryExpenses.map(ce => {return getRandomColor()}) : []}

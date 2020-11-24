@@ -79,7 +79,7 @@ img.responsive{
   transition: all 0.3s ease;
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 768px){
   .nav-links{
   width: 60%;
 }
@@ -93,7 +93,7 @@ img.responsive {
   
 }
 }
-@media screen and (max-width: 400px){
+@media screen and (max-width: 768px){
   body{
     overflow-x: hidden;
   }
@@ -170,7 +170,7 @@ img.responsive {
   background: none;
 } */
 /* smallest size vertical */
-@media(max-width: 320px){
+@media(max-width: 528px){
 
   .nav {
     display: flex;
