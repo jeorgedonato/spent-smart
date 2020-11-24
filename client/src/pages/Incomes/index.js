@@ -9,6 +9,7 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import { Redirect } from 'react-router-dom';
 import numberWithCommas from '../../utils/numberWithCommas';
+import DataTable from 'react-data-table-component';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -27,9 +28,46 @@ const AnchorTag = styled.a`
   }
 `;
 
-const CenteredTd = styled.td`
-  text-align: center;
-`;
+const customStyle = {
+  cells : {
+    style : {
+      fontSize: '1.2rem'
+    }
+  },
+  pagination : {
+    style : {
+      zIndex : 0
+    }
+  },
+  headCells: {
+    style: {
+      fontSize: '1.2rem',
+    },
+  }
+};
+
+const columns = [
+  {
+    name: 'Category',
+    // sortable: true,
+    selector: 'category'
+  },
+  {
+    name: 'Amount',
+    sortable: true,
+    selector: 'amount'
+  },
+  {
+    name: 'Created Date',
+    sortable: true,
+    selector: 'created_date'
+  },
+  {
+    name: 'Actions',
+    // sortable: true,
+    selector: 'actions'
+  },
+];
 
 const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome } }) => {
 
@@ -50,6 +88,35 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
         setShow(false)
     };
 
+     const data = incomes.map((income, it) => {
+   return {
+      id: income._id,
+      category : <OverlayTrigger
+                      trigger="focus"
+                      key={income._id}
+                      placement="right"
+                      overlay={
+                        <Popover id={`popover-positioned-${income._id}`}>
+                          <Popover.Title as="h3">Description</Popover.Title>
+                          <Popover.Content>
+                            {income.description ? income.description : "No description provided"}
+                          </Popover.Content>
+                        </Popover>
+                      }
+                    >
+                      <Button style={{
+                          color: '#212529',
+                          backgroundColor: '#e2e6ea',
+                          borderColor: '#dae0e5'}}
+                      >{income.category_id.name}</Button>
+                    </OverlayTrigger>,
+      amount : `$ ${numberWithCommas(income.amount)}`,
+      created_date : moment(income.created_date).format("MMM DD, YYYY"),
+      actions: <span><AnchorTag info href={"/incomes/update/" + income._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
+                {' '}<AnchorTag onClick={() => handleShow(income._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
+    }
+  });
+
     return (
         <>
             <ContentContainer>
@@ -57,54 +124,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                     <h2 style={{ width: '50%' }}>Income</h2>
                     <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
                 </FlexContainer>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            {/* <th>Name</th> */}
-                            <th>Category</th>
-                            <th>Amount</th>
-                            {/* <th>Due Date</th> */}
-                            <th>Created Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* {console.log(incomes)} */}
-                        {incomes.map(income => {
-                            // {console.log(income)}
-                            return (
-                                <tr key={income._id}>
-                                    {/* <td>{income.name}</td> */}
-                                    <td><OverlayTrigger
-                                        trigger="focus"
-                                        key={income._id}
-                                        placement="right"
-                                        overlay={
-                                            <Popover id={`popover-positioned-${income._id}`}>
-                                                <Popover.Title as="h3">Description</Popover.Title>
-                                                <Popover.Content>
-                                                    {income.description}
-                                                </Popover.Content>
-                                            </Popover>
-                                        }
-                                    >
-                                        <Button style={{
-                                            color: '#212529',
-                                            backgroundColor: '#e2e6ea',
-                                            borderColor: '#dae0e5'}}>{income.category_id.name}</Button>
-                                    </OverlayTrigger></td>
-                                    <td>$ {numberWithCommas(income.amount)}</td>
-                                    {/* <td>{income.hasOwnProperty('due_date') ? <Moment>income.due_date</Moment> : "Not Provided"}</td> */}
-                                    <td>{moment(income.created_date).format("MMM DD, YYYY")}</td>
-                                    <CenteredTd>
-                                        <AnchorTag info href={"/incomes/update/" + income._id}><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>{' '}
-                                        <AnchorTag onClick={() => handleShow(income._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag>
-                                    </CenteredTd>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
+                <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
             </ContentContainer>
 
             <Modal

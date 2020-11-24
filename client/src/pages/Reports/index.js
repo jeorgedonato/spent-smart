@@ -15,7 +15,7 @@ const FlexContainer = styled.div`
 
 const ContentContainer = styled.div`
   max-width : 100%;
-  padding-top : 15vh;
+  padding-top : 2vh;
 `;
 
 const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
@@ -33,6 +33,14 @@ const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
           {/* <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag> */}
         </FlexContainer>
         <VictoryPie
+         labelPosition={({ index }) => index
+    ? "centroid"
+    : "startAngle"
+  }
+  labelPlacement={({ index }) => index
+    ? "parallel"
+    : "vertical"
+  }
           labels={categoryExpenses ? categoryExpenses.map(ce => {return ce.category[0].name}) : []}
           data={categoryExpenses ? categoryExpenses.map(ce => {return parseInt(ce.amount)}) : []}
           colorScale={categoryExpenses ? categoryExpenses.map(ce => {return getRandomColor()}) : []}
@@ -40,8 +48,8 @@ const Reports = ({getMonthlyExpenseCategorySum, categoryExpenses}) => {
           height={250}
           style={{
             parent: {
-              marginTop: -140,
-              marginBottom : -140
+              // marginTop: -140,
+              // marginBottom : -140
               // padding: -200,
 
             },
