@@ -29,9 +29,9 @@ Pages of this application include:
   * Log-in Page
   * Sign-up Page
   * E-mail Confirmation Page
-  * Member Dashboard
-  * View/Add Expenses
-  * View/Add Income
+  * User Dashboard
+  * View + Add/Update/Delete Expenses
+  * View + Add/Update/Delete Income
   * Graph Reports
 
 
