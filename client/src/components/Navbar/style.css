@@ -204,7 +204,7 @@ img.responsive {
     display: flex;
     background-color: #266352;
     font-family: 'Poppins', sans-serif;
-    padding: 57px;
+    /* padding: 57px; */
     margin: 0px;
     height: 32%;
 }
