@@ -82,7 +82,7 @@ https://spentsmart.herokuapp.com/
 
 
 ## Screenshots:
-![Image 1]()
+![Image 1](./client/public/readme-screenshot-1.PNG)
 
-![Image 2]()
+![Image 2](./client/public/readme-screenshot-2.PNG)
 
