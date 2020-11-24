@@ -4,6 +4,7 @@ const router = express.Router();
 const moment = require('moment');
 // const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
+const ObjectId = require('mongodb').ObjectID;
 
 // @route    POST api/income
 // @desc     Create a income
@@ -132,36 +133,6 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/incomes/monthly/month/year
-// @desc     GET a monthly 
-// @access   Private
-router.get("/monthly/:month/:year", auth, async (req, res) => {
-  try {
-    const incomeRec = await db.Income.aggregate([
-    {
-        '$match': {
-            'month_created': parseInt(req.params.month), 
-            'year_created': parseInt(req.params.year),
-            'user_id' : req.user.id
-        }
-    }, {
-        '$group': {
-            '_id': null, 
-            'sum': {
-                '$sum': '$amount'
-            }
-        }
-    }
-]);
-// console.log(expenseRec);
-    res.json(incomeRec);
-  } catch (err) {
-    console.error(err.message);
-
-    res.status(500).send("Server Error");
-  }
-});
-
 
 // @route    GET api/incomes/monthly/month/year
 // @desc     GET a monthly 
@@ -173,7 +144,7 @@ router.get("/monthly/:month/:year", auth, async (req, res) => {
         '$match': {
           'month_created': parseInt(req.params.month),
           'year_created': parseInt(req.params.year),
-          'user_id' : req.user.id
+          'user_id': ObjectId(req.user.id)
         }
       }, {
         '$group': {
@@ -203,7 +174,7 @@ router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
         '$match': {
           'month_created': parseInt(req.params.month),
           'year_created': parseInt(req.params.year),
-          'user_id' : req.user.id
+          'user_id': ObjectId(req.user.id)
         }
       }, {
         '$group': {

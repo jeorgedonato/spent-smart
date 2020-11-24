@@ -3,6 +3,7 @@ const db = require("../models");
 const router = express.Router();
 const moment = require("moment");
 const auth = require("../middleware/auth");
+const ObjectId = require('mongodb').ObjectID;
 
 // @route    POST api/expense
 // @desc     Create an expense
@@ -143,7 +144,7 @@ router.get("/monthly/:month/:year", auth, async (req, res) => {
         '$match': {
             'month_created': parseInt(req.params.month), 
             'year_created': parseInt(req.params.year),
-            'user_id' : req.user.id
+            'user_id': ObjectId(req.user.id)
         }
     }, {
         '$group': {
@@ -173,7 +174,7 @@ router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
         '$match': {
             'month_created': parseInt(req.params.month), 
             'year_created': parseInt(req.params.year),
-            'user_id' : req.user.id
+            'user_id': ObjectId(req.user.id)
         }
     }, {
         '$group': {
