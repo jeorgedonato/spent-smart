@@ -3,12 +3,19 @@ const path = require("path");
 const PORT = process.env.PORT || 3002;
 const app = express();
 const connectDB = require('./config/db');
+const bodyParser = require('body-parser');
+const { graphqlHTTP } = require("express-graphql");
+const {  buildSchema} = require('graphql')
 
 connectDB();
 
-app.use(express.json({ extended: false }));
+// app.use(express.json({ extended: false }));
+app.use(bodyParser.json());
 // Serve up static assets (usually on heroku)
 
+app.use('/graphql', graphqlHTTP({
+  
+}))
 
 //Define routes here
 app.use('/api/users', require('./controllers/usersController'));
