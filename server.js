@@ -4,18 +4,16 @@ const PORT = process.env.PORT || 3002;
 const app = express();
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
-const { graphqlHTTP } = require("express-graphql");
-const {  buildSchema} = require('graphql')
+const {ApolloServer} = require('apollo-server-express');
+
 
 connectDB();
 
 // app.use(express.json({ extended: false }));
+app.disable('x-powered-by');
 app.use(bodyParser.json());
 // Serve up static assets (usually on heroku)
 
-app.use('/graphql', graphqlHTTP({
-  
-}))
 
 //Define routes here
 app.use('/api/users', require('./controllers/usersController'));
@@ -23,6 +21,14 @@ app.use('/api/auth', require('./controllers/authController'));
 app.use('/api/incomes', require('./controllers/incomeController'));
 app.use('/api/categories', require('./controllers/categoriesController'));
 app.use('/api/expenses', require('./controllers/expenseController'));
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  playground : true
+});
+
+server.applyMiddleware({ app });
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
