@@ -11,7 +11,8 @@ import {getMonthlyIncomeSum} from '../../actions/incomes';
 import numberWithCommas from '../../utils/numberWithCommas';
 // import expenses from "../../reducers/expenses";
 import moment from 'moment';
-import BarChart from "../../components/BarChart"
+import BarChart from "../../components/BarChart";
+import DashboardCalendar from './DashboardCalendar';
 
 function DashAmount(props) {
   return (
@@ -35,24 +36,29 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
     <div>
       {/* <ContentContainer style={{textAlign: "center"}}> */}
         <Jumbotron className="jumbo">
-            <h1>Welcome to $pent $mart</h1>
+            <h1>Welcome to <span className="nerko-font">$pent $mart</span></h1>
             <p style={{fontSize: "1.3rem"}}>Hello, {user ? user.firstname : ""} {user ? user.lastname : ""}</p>
         </Jumbotron>
         <Row style={{textAlign: "center"}}>
+        {incomeMonthlySum ? 
           <Col size="md-4">
             <DashAmount style={{color: "green"}} label={"Monthly Income Amount"} amount={incomeMonthlySum ? numberWithCommas(incomeMonthlySum) : ""} />
           </Col>
+           : ""}
+           {expenseMonthlySum ?
           <Col size="md-4">
             <DashAmount style={{color: "red"}} label={"Monthly Expenses Amount"} amount={expenseMonthlySum ? numberWithCommas(expenseMonthlySum) : ""} />
           </Col>
+           : ""}
+           {savings ? 
           <Col size="md-4">
             <DashAmount style={{color: "blue"}} label={"Monthly Savings Amount"} amount={savings ? numberWithCommas(savings) : ""} />
           </Col>
+           : ""}
         </Row>
-        {/* <Chart savings={savings} expenses={expenses}/> */}
-        {/* <PieChart expenses={expenseMonthlySum} savings={savings} /> */}
-        {/* <LineChart income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} /> */}
-        <BarChart className="barchart" income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} />
+        
+        {/* <BarChart className="barchart" income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} /> */}
+        <DashboardCalendar />
     </div>
   );
 }
