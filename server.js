@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3002;
 const app = express();
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
-const {ApolloServer} = require('apollo-server-express');
+// const {ApolloServer} = require('apollo-server-express');
 
 
 connectDB();
@@ -22,13 +22,13 @@ app.use('/api/incomes', require('./controllers/incomeController'));
 app.use('/api/categories', require('./controllers/categoriesController'));
 app.use('/api/expenses', require('./controllers/expenseController'));
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  playground : true
-});
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   playground : true
+// });
 
-server.applyMiddleware({ app });
+// server.applyMiddleware({ app });
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

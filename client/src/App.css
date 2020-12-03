@@ -1,11 +1,20 @@
 #root {
-    height: 100vh;
-    overflow: auto;
+  height: 100vh;
+  overflow: auto;
+  font-family: 'Epilogue', sans-serif;
 }
 .content {
-    min-height: 100%;
-    position: relative;
+  min-height: 100%;
+  position: relative;
 }
 footer {
-    margin-top: -6.0rem;
+  margin-top: -6rem;
+}
+
+.nerko-font {
+  font-family: 'Nerko One', cursive !important;
+}
+
+.epilogue-font {
+  font-family: 'Epilogue', sans-serif;
 }

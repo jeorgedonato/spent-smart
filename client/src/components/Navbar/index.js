@@ -49,10 +49,10 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
 
   return (
     <div className="nav">
-          <nav  ref={navRef}>
+          <nav className="epilogue-font"  ref={navRef}>
       
-      <div className="logo">
-        <h4>$pent $mart</h4>
+      <div className="logo nerko-font">
+        <h4>$pent Smart</h4>
         <img src="/favicon.png" alt="spent-smart" className="responsive"></img>
       </div>
       <ul className={navClassNames.join(" ")} ref={ulNav}>
