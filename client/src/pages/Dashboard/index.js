@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Row from "../../components/Row";
 import Col from "../../components/Col";
 import {Jumbotron} from 'react-bootstrap';
-import ContentContainer from '../../components/ContentContainer';
+// import ContentContainer from '../../components/ContentContainer';
 import './style.css';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@ import {getMonthlyIncomeSum} from '../../actions/incomes';
 import numberWithCommas from '../../utils/numberWithCommas';
 // import expenses from "../../reducers/expenses";
 import moment from 'moment';
-import BarChart from "../../components/BarChart";
+// import BarChart from "../../components/BarChart";
 import DashboardCalendar from './DashboardCalendar';
 
 function DashAmount(props) {
