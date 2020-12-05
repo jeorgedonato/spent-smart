@@ -62,6 +62,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
           [
             <li key="0"><Link to="/expenses">Expense</Link></li>,
             <li key="1"><Link to="/incomes">Income</Link></li>,
+            <li key="5"><Link to="/profile">Profile</Link></li>,
             <DropdownButton
               as="li"
               key="3"

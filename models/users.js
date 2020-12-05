@@ -30,7 +30,10 @@ const usersSchema = new Schema({
   },
   profile_picture: {
     type: String,
-    get: v => `${root}${v}`
+    // get: v => `${root}${v}`
+  },
+  budget_threshold:{
+    type: Number
   },
   created_date: {
     type: Date,

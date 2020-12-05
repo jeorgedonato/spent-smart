@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/jeorgedonato/spent-smart#readme",
   "dependencies": {
+    "@fullcalendar/interaction": "^5.4.0",
     "apollo-server-express": "^2.19.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

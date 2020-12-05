@@ -10,6 +10,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   CONFIRM_SUCCESS,
+  PROFILE_UPDATE,
   LOGOUT,
   CLEAR_PROFILE
 } from './types';
@@ -71,6 +72,39 @@ export const register = ({ firstname, lastname, email, password }) => async disp
     });
     
   }
+};
+
+export const profileUpdate = (firstname, lastname, budget_threshold) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const body = JSON.stringify({ firstname, lastname, budget_threshold });
+  const res = await axios.post('/api/users/profile', body, config);
+    // console.log(res)
+    dispatch({
+      type: PROFILE_UPDATE,
+      payload: res.data
+    });
+    
+    // dispatch(loadUser());
+    dispatch(setAlert('Profile Updated','success'));
+
+  try {
+    
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: AUTH_ERROR
+    });
+  }
+
 };
 
 // Login User
