@@ -9,18 +9,12 @@ import {getExpenses} from '../../actions/expenses';
 import moment from 'moment';
 
 
-const DashboardCalendar = ({incomes, expenses , getExpenses, getIncomes}) => {
-  const [events, setEvents] = useState([])
-
+const DashboardCalendar = ({incomes : {incomes , loading : incomeLoading}, expenses : {expenses , loading : expenseLoading} , getExpenses, getIncomes}) => {
+  const [events,setEvents] = useState([])
   useEffect(() => {
     getIncomes()
     getExpenses()
-    expenses.map(expenses => {
-      renderEventContent(expenses)
-    })
-
-  },[getExpenses,getIncomes])
-
+  },[incomeLoading, expenseLoading])
   const handleDateClick = arg => {
     console.log(arg);
   }
@@ -36,15 +30,15 @@ const DashboardCalendar = ({incomes, expenses , getExpenses, getIncomes}) => {
 };
 
 DashboardCalendar.propTypes = {
-  incomes: PropTypes.array.isRequired,
-  expenses: PropTypes.array.isRequired,
+  // incomes: PropTypes.obj.isRequired,
+  // expenses: PropTypes.obj.isRequired,
   getExpenses : PropTypes.func.isRequired,
   getIncomes : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-  incomes: state.incomes.incomes,
-  expenses: state.expenses.expenses,
+  incomes: state.incomes,
+  expenses: state.expenses,
 })
 
 
