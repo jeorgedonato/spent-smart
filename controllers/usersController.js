@@ -22,8 +22,16 @@ router.post("/register", async (req, res) => {
 
     newUser = new db.User({
       email,
-      firstname,
-      lastname,
+      firstname : firstname.trim()
+      .toLowerCase()
+      .split(" ")
+      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(" "),
+      lastname : lastname.trim()
+      .toLowerCase()
+      .split(" ")
+      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(" "),
       password,
     });
 
@@ -97,6 +105,35 @@ router.get("/confirm/:id", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+
+// Update User
+// Route : /api/users/profile
+router.put("/profile", auth, async(req, res) => {
+  try {
+    let user = await db.User.findById(req.user.id);
+
+    const { firstname, lastname, budget_threshold } = req.body;
+
+    user.firstname = firstname.trim()
+    .toLowerCase()
+    .split(" ")
+    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
+    user.lastname = lastname.trim()
+    .toLowerCase()
+    .split(" ")
+    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
+
+    user.budget_threshold = budget_threshold;
+    await db.User.save();
+    res.json(user)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 

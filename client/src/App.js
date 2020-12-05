@@ -14,6 +14,7 @@ import UpdateIncomesPage from './pages/Incomes/Update';
 import ExpensesPage from './pages/Expenses';
 import AddExpensesPage from './pages/Expenses/Add';
 import UpdateExpensesPage from './pages/Expenses/Update';
+import Profile from './pages/Profile';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/Alert';
 import {Container} from 'react-bootstrap';
@@ -58,6 +59,7 @@ function App() {
           <PrivateRoute exact path="/report" component={ExpensePie}/>
           <PrivateRoute exact path="/report/income" component={IncomePieChart}/>
           <PrivateRoute exact path="/report/savings" component={YearlySavings}/>
+          <PrivateRoute exact path="/profile" component={Profile}/>
           <Route component={NotFound}></Route>
         </Switch>
         </Container>
