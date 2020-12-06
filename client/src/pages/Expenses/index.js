@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ContentContainer from '../../components/ContentContainer';
 import { getExpenses, deleteExpense, getExpense } from '../../actions/expenses';
 import PropTypes from 'prop-types';
@@ -13,7 +14,7 @@ const FlexContainer = styled.div`
   display: flex;
 `;
 
-const AnchorTag = styled.a`
+const AnchorTag = styled(Link)`
   color : ${props => props.info ? "#117a8b" : "#dc3545"};
   &:hover {
     text-decoration : none;
@@ -110,7 +111,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
                     </OverlayTrigger>,
       amount : `$ ${numberWithCommas(expense.amount)}`,
       created_date : moment(expense.created_date).format("MMM DD, YYYY"),
-      actions: <span><AnchorTag info href={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
+      actions: <span><AnchorTag info to={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
                 {' '}<AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
     }
   });
@@ -121,7 +122,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
       <ContentContainer>
         <FlexContainer>
           <h2 style={{ width: '50%' }}>Expenses</h2>
-          <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag>
+         <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info  to="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag></span>
         </FlexContainer>
         <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
       </ContentContainer>

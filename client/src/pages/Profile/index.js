@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, InputGroup, Row, Col } from 'react-bootstrap';
+import { Form, InputGroup, Row, Col, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import ContentContainer from '../../components/ContentContainer';
@@ -37,15 +37,18 @@ const AnchorTag = styled.button`
 const Profile = ({ auth, profileUpdate }) => {
     const [isEdit, setIsEdit] = useState(false);
 
-    useEffect(() => {
-
-    })
+    
 
     const [formInput, setFormInput] = useState({
         firstname: "",
         lastname: "",
         budget_threshold: "",
     })
+    const {firstname, lastname, budget_threshold} = formInput;
+
+    useEffect(() => {
+        setFormInput({ ...setFormInput, ["firstname"]: auth.user ? auth.user.firstname : "", ["lastname"]: auth.user ? auth.user.lastname : "", ["budget_threshold"]: auth.user && auth.user.hasOwnProperty('budget_threshold') ? auth.user.budget_threshold : ""});
+    },[auth.loading])
 
     return (
         <>
@@ -67,7 +70,7 @@ const Profile = ({ auth, profileUpdate }) => {
                         Firstname
                         </Form.Label>
                         <Col sm="5">
-                        <Form.Control   />
+                        <Form.Control readOnly={!isEdit ? true : false} value={firstname} />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} controlId="lastname">
@@ -75,7 +78,7 @@ const Profile = ({ auth, profileUpdate }) => {
                         Lastname
                         </Form.Label>
                         <Col sm="5">
-                        <Form.Control  defaultValue="email@example.com" />
+                        <Form.Control readOnly={!isEdit ? true : false}  value={lastname} />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} controlId="threshold">
@@ -83,9 +86,10 @@ const Profile = ({ auth, profileUpdate }) => {
                         Monthly Threshold
                         </Form.Label>
                         <Col sm="5">
-                        <Form.Control  defaultValue="email@example.com" />
+                        <Form.Control readOnly={!isEdit ? true : false} type="number" value={budget_threshold} />
                         </Col>
                     </Form.Group>
+                    <Button type="submit" style={{display : !isEdit ? "none" : "block", float: 'right'}}><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</Button>
                  </Form>
 
 

@@ -1,10 +1,10 @@
-.footer {
+footer {
   min-height: 4rem;
   background: #128061;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   bottom: 0;
   width: 100%;

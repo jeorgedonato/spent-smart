@@ -1,8 +1,39 @@
 .alert{
     position: absolute;
-    width: 50%;
-    /* left: 30%; */
+    width: 20%;
+    font-size: .9rem;
+    right: 5%;
+    top: 10%;
+    z-index: 99999999;
+    /* transform: translateX(35%) translateY(5%); */
+    /* transition: transform 0.5s ease-in; */
+}
 
-    transform: translateX(40%) translateY(5%);
-    transition: transform 0.5s ease-in;
+
+@media screen and (max-width : 1024px){
+    .alert{
+        width: 30%;
+        top: 15%;
+    }
+}
+
+@media screen and (max-width : 768px){
+    .alert{
+        width: 45%;
+        top: 15%;
+    }
+}
+
+@media screen and (max-width : 425px){
+    .alert{
+        width: 60%;
+        top: 15%;
+    }
+}
+
+@media screen and (max-width : 375px){
+    .alert{
+        width: 80%;
+        top: 15%;
+    }
 }
