@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3002;
 const app = express();
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 // const {ApolloServer} = require('apollo-server-express');
 
 
@@ -12,6 +13,7 @@ connectDB();
 // app.use(express.json({ extended: false }));
 app.disable('x-powered-by');
 app.use(bodyParser.json());
+app.use(cookieParser());
 // Serve up static assets (usually on heroku)
 
 
