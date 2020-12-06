@@ -77,20 +77,25 @@ const SignUpPage = ({ setAlert, register, isAuthenticated }) => {
           </Form.Group>
 
           <Form.Group >
-            <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
+            <Form.Label >
               Password
             </Form.Label>
               <InputGroup className="mb-2 mr-sm-2">
                 <Form.Control type={passwordShown ? "text" : "password"} name="password" onChange={handleOnChange} placeholder="Password" />
               <InputGroup.Append>
-                  <InputGroup.Text><i onClick={handleTogglePassword}><i className="fa fa-eye" aria-hidden="true"></i></i></InputGroup.Text>
+                  <InputGroup.Text><Form.Check 
+                    type="switch"
+                    id="custom-switch"
+                    label={<i className="fa fa-eye" aria-hidden="true"></i>}
+                    onClick={handleTogglePassword}
+                  /></InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
           </Form.Group>
 
           <Form.Group >
             <Form.Label>
-              Password
+              Confirm Password
             </Form.Label>
             <InputGroup className="mb-2 mr-sm-2">
               <Form.Control type={passwordShown ? "text" : "password"} name="cPassword" onChange={handleOnChange} placeholder="Confirm Password" />
@@ -98,7 +103,8 @@ const SignUpPage = ({ setAlert, register, isAuthenticated }) => {
           </Form.Group>
 
         </Form>
-        <Button variant="primary" onClick={handleFormSubmit}>Register</Button>{' '}Do you have an account? <Link to="/login" >Log In</Link>
+        Do you have an account? <Link to="/login" >Log In</Link><br />
+        <Button variant="primary" onClick={handleFormSubmit}>Register</Button>
       </ContentContainer>
     </>
   );

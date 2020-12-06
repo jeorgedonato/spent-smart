@@ -1,13 +1,13 @@
-.form {
+/* .form {
     margin-top: 50px;
-  }
+  } */
   
-  .form input {
+  /* .form input {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
     width: 100%;
-  }
+  } */
 .btn {
   background: #266352;
   border-color: black;
@@ -36,15 +36,15 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.App > input {
+/* .App > input {
   margin-top: 200px;
-}
+} */
 
-.pass-wrapper {
+/* .pass-wrapper {
   position: relative;
   display: flex;
   margin-bottom: 14px;
-}
+} */
 
 /* i {
   position: absolute;
@@ -59,43 +59,7 @@ i:hover {
 
 
 /* smallest size vertical */
-@media (min-width: 568px){
 
-  .content-container  {
-    padding-top: 50px;
-    height: 100vh;
-    max-width: 100%;
-    max-height: 100%;
-    overflow: auto;
-}
-.container{
-  width: 80%;
-  margin-right: auto;
-}
-.underlogin{
-  padding: -1px;
-}
-
-}
-/* smallest size horizontal */
-@media (max-width: 320px){
-
-  .content-container  {
-    /* padding: 10vh 15px 70px 15px; */
-    height: 80vh;
-    max-width: 100%;
-    max-height: 100%;
-    overflow: auto;
-}
-.container{
-  width: 80%;
-  margin-right: auto;
-}
-.underlogin{
-  padding: -1px;
-}
-
-}
 
 
 

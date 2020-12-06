@@ -2,6 +2,7 @@
   height: 100vh;
   overflow: auto;
   font-family: 'Epilogue', sans-serif;
+  padding-bottom: 5rem;
 }
 .content {
   min-height: 100%;

@@ -65,18 +65,24 @@ const LoginPage = ({ login, isAuthenticated }) => {
             <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" />
           </Form.Group>
           <Form.Group >
-            <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>Password</Form.Label>
+            <Form.Label >Password</Form.Label>
             <InputGroup className="mb-2 mr-sm-2">
               <Form.Control type={passwordShown ? "text" : "password"} name="password" onChange={handleInputChange} placeholder="Password" />
               <InputGroup.Append>
                 <InputGroup.Text>
-                  <i onClick={handleTogglePassword}><i className="fa fa-eye" aria-hidden="true"></i></i>
+                  <Form.Check 
+                    type="switch"
+                    id="custom-switch"
+                    label={<i className="fa fa-eye" aria-hidden="true"></i>}
+                    onClick={handleTogglePassword}
+                  />
               </InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
           </Form.Group>
         </Form>
-        <Button variant="primary" onClick={handleFormSubmit}>Log In</Button>{' '}<div className="underlogin">Don't have an account? </div> <Link to="/register" >Sign Up</Link>
+        Don't have an account? <Link to="/register" >Sign Up</Link><br />
+        <Button variant="primary" onClick={handleFormSubmit}>Log In</Button> 
         
       </ContentContainer>
     </>
