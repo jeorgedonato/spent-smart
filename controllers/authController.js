@@ -17,6 +17,12 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+//Logout
+router.get('/logout', auth, async (req,res) => {
+  res.clearCookie('token');
+  res.json({ msg: "You've been logout" });
+});
+
 
 // @route    POST api/auth
 // @desc     Authenticate user & get token
@@ -70,6 +76,7 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
+          res.cookie('token', token, { httpOnly: true});
           res.json({ token });
         }
       );

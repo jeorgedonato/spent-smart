@@ -99,6 +99,7 @@ router.get("/confirm/:id", async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
+        res.cookie('token', token, { httpOnly: true});
         res.json({ token });
       }
     );

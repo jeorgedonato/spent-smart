@@ -20,7 +20,7 @@ import setAuthToken from '../utils/setAuthToken';
 export const loadUser = () => async dispatch => {
   //setting the token to axios header
    if (localStorage.token) {
-    setAuthToken(localStorage.token);
+    // setAuthToken(localStorage.token);
   }
 
   try {
@@ -165,7 +165,23 @@ export const confirm = (id) => async dispatch => {
 };
 
 // Logout / Clear Profile
-export const logout = () => dispatch => {
-  dispatch({ type: CLEAR_PROFILE });
-  dispatch({ type: LOGOUT });
+export const logout = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/auth/logout/');
+    dispatch(setAlert(res.data.msg, 'success'));
+
+    dispatch({ type: CLEAR_PROFILE });
+    dispatch({ type: LOGOUT });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
+  
 };

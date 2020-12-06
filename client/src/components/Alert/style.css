@@ -1,4 +1,8 @@
 .alert{
-    /* margin-top: 75px; */
-    /* padding-top: 50px; */
+    position: absolute;
+    width: 50%;
+    /* left: 30%; */
+
+    transform: translateX(40%) translateY(5%);
+    transition: transform 0.5s ease-in;
 }

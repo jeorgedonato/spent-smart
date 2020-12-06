@@ -51,7 +51,7 @@ export const getMonthlyIncomeSum = (month, year) => async dispatch => {
   // console.log(id)
   try {
     const res = await axios.get(`/api/incomes/monthly/${month}/${year}`);
-
+    // console.log(res)
     dispatch({
       type: GET_MONTHLY_INCOME,
       payload: res.data
