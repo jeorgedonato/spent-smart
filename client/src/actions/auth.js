@@ -81,7 +81,7 @@ export const profileUpdate = (firstname, lastname, budget_threshold) => async di
     }
   };
   const body = JSON.stringify({ firstname, lastname, budget_threshold });
-  const res = await axios.post('/api/users/profile', body, config);
+  const res = await axios.put('/api/users/profile', body, config);
     // console.log(res)
     dispatch({
       type: PROFILE_UPDATE,

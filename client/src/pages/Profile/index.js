@@ -37,14 +37,18 @@ const AnchorTag = styled.button`
 const Profile = ({ auth, profileUpdate }) => {
     const [isEdit, setIsEdit] = useState(false);
 
-    
-
     const [formInput, setFormInput] = useState({
         firstname: "",
         lastname: "",
         budget_threshold: "",
     })
     const {firstname, lastname, budget_threshold} = formInput;
+
+    const handleOnSubmit = e => {
+        e.preventDefault();
+        profileUpdate(firstname,lastname,budget_threshold)
+        setIsEdit(false)
+    }
 
     useEffect(() => {
         setFormInput({ ...setFormInput, ["firstname"]: auth.user ? auth.user.firstname : "", ["lastname"]: auth.user ? auth.user.lastname : "", ["budget_threshold"]: auth.user && auth.user.hasOwnProperty('budget_threshold') ? auth.user.budget_threshold : ""});
@@ -64,13 +68,13 @@ const Profile = ({ auth, profileUpdate }) => {
                         </AnchorTag>
                     </span>
                 </FlexContainer>
-                 <Form style={{marginLeft: '1rem', marginTop : '1rem'}}>
+                 <Form onSubmit={handleOnSubmit} style={{marginLeft: '1rem', marginTop : '1rem'}}>
                     <Form.Group as={Row} controlId="firstname">
                         <Form.Label column sm="2">
                         Firstname
                         </Form.Label>
                         <Col sm="5">
-                        <Form.Control readOnly={!isEdit ? true : false} value={firstname} />
+                        <Form.Control readOnly={!isEdit ? true : false} value={firstname} onChange={e => setFormInput({ ...formInput, ["firstname"]: e.target.value })} />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} controlId="lastname">
@@ -78,7 +82,7 @@ const Profile = ({ auth, profileUpdate }) => {
                         Lastname
                         </Form.Label>
                         <Col sm="5">
-                        <Form.Control readOnly={!isEdit ? true : false}  value={lastname} />
+                        <Form.Control readOnly={!isEdit ? true : false}  value={lastname} onChange={e => setFormInput({ ...formInput, ["lastname"]: e.target.value })} />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} controlId="threshold">
@@ -86,10 +90,10 @@ const Profile = ({ auth, profileUpdate }) => {
                         Monthly Threshold
                         </Form.Label>
                         <Col sm="5">
-                        <Form.Control readOnly={!isEdit ? true : false} type="number" value={budget_threshold} />
+                        <Form.Control readOnly={!isEdit ? true : false} type="number" value={budget_threshold} onChange={e => setFormInput({ ...formInput, ["budget_threshold"]: e.target.value })} />
                         </Col>
                     </Form.Group>
-                    <Button type="submit" style={{display : !isEdit ? "none" : "block", float: 'right'}}><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</Button>
+                    <Button type="submit" style={{display : !isEdit ? "none" : "block"}}><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</Button>
                  </Form>
 
 

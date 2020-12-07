@@ -130,7 +130,7 @@ router.put("/profile", auth, async(req, res) => {
     .join(" ");
 
     user.budget_threshold = budget_threshold;
-    await db.User.save();
+    await user.save();
     res.json(user)
   } catch (err) {
     console.error(err.message);

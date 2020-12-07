@@ -7,7 +7,8 @@ import {
 	GET_EXPENSE,
 	GET_MONTHLY_EXPENSE,
 	GET_MONTHLY_EXPENSE_CATEGORY,
-	GET_YEARLY_SAVINGS
+	GET_YEARLY_SAVINGS,
+	RESET_LOADING
 } from '../actions/types';
 
 const initialState = {
@@ -80,6 +81,11 @@ export default function (state = initialState, action) {
 				),
 				loading: false,
 			};
+		case RESET_LOADING:
+			return {
+				...state,
+				loading: true
+			}
 
 		default:
 			return state;

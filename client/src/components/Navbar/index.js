@@ -68,9 +68,9 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
               key="3"
               title="Report"
             >
-              <Dropdown.Item style={{color: 'black'}} href="/report" eventKey="1">Expense by Category</Dropdown.Item>
-              <Dropdown.Item style={{color: 'black'}} href="/report/income" eventKey="2">Income by Category</Dropdown.Item>
-              <Dropdown.Item style={{color: 'black'}} href="/report/savings" eventKey="3">Yearly Savings</Dropdown.Item>
+              <Dropdown.Item as={Link} style={{color: 'black'}} to="/report" eventKey="1">Expense by Category</Dropdown.Item>
+              <Dropdown.Item as={Link} style={{color: 'black'}} to="/report/income" eventKey="2">Income by Category</Dropdown.Item>
+              <Dropdown.Item as={Link} style={{color: 'black'}} to="/report/savings" eventKey="3">Yearly Savings</Dropdown.Item>
             </DropdownButton>,
             <li key="2"><Link to="" onClick={logout}>Logout</Link></li>
           ] :

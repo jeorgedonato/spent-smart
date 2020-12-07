@@ -10,6 +10,7 @@ import {
   GET_MONTHLY_EXPENSE,
   GET_MONTHLY_EXPENSE_CATEGORY,
   GET_YEARLY_SAVINGS,
+  RESET_LOADING
 } from './types';
 import moment from 'moment';
 
@@ -37,6 +38,11 @@ export const getExpense = id => async dispatch => {
   // console.log(id)
   try {
     const res = await axios.get(`/api/expenses/${id}`);
+
+    // dispatch({
+    //   type : RESET_LOADING,
+    //   payload: "RESET"
+    // })
 
     dispatch({
       type: GET_EXPENSE,
@@ -103,7 +109,7 @@ export const addExpense = formData => async dispatch => {
       type: ADD_EXPENSE,
       payload: res.data
     });
-    window.location.replace('/expenses');
+    // window.location.replace('/expenses');
     dispatch(setAlert(`Expense Created`, 'success'));
   } catch (err) {
     dispatch({
@@ -130,7 +136,7 @@ export const updateExpense = (id, formData) => async dispatch => {
       type: UPDATE_EXPENSE,
       payload: res.data
     });
-      window.location.replace('/expenses')
+      // window.location.replace('/expenses')
      dispatch(setAlert(`Expense Updated`, 'success'));
   } catch (err) {
     dispatch({
