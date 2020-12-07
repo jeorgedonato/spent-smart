@@ -11,6 +11,7 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const GET_EXPENSES = 'GET_EXPENSES';
+export const RESET_LOADING = "RESET_LOADING";
 export const EXPENSE_ERROR = 'EXPENSE_ERROR';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
@@ -34,3 +35,4 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 export const CATEGORY_ERROR = 'CATEGORY_ERROR';
 export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
+

@@ -8,7 +8,9 @@ import { getCategories } from '../../actions/categories';
 import { updateExpense, getExpense } from '../../actions/expenses';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import {getMonthlyExpenseSum} from '../../actions/expenses';
+import moment from 'moment';
 
 
 const FlexContainer = styled.div`
@@ -28,7 +30,7 @@ const AnchorTag = styled(Link)`
   }
 `;
 
-const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories }, expense, match, loading }) => {
+const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories }, expense, match, loading ,getMonthlyExpenseSum, expenseMonthlySum }) => {
 
   const [formData, setFormData] = useState({
     category: "",
@@ -41,7 +43,6 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
   const handleSelectChange = (newValue, actionMeta) => {
     if (actionMeta.action === "select-option") {
       setFormData({ ...formData, ["category"]: newValue.value });
-
     } else if (actionMeta.action === "create-option") {
       setFormData({ ...formData, ["category"]: newValue.value });
     } else {
@@ -55,17 +56,20 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     // console.log(formData)
     if (category && amount) {
       updateExpense(match.params.id, formData);
+      <Redirect to="/expense" />
     } else {
       setAlert("Category and Amount fields are required", "danger");
     }
   }
   // setCatArr(categories.map(c => {return {value : c.name, label : c.name}}))
   useEffect(() => {
+    // if(!loading){
     getCategories("Expense");
     getExpense(match.params.id);
-    if (!loading) {
-      setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : "" });
-    }
+    setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : "" });
+    const [month, year] = moment().format("M/YYYY").split("/");
+    getMonthlyExpenseSum(month,year);
+    // }
   }, [loading]);
 
   return (
@@ -113,6 +117,7 @@ Update.propTypes = {
   getExpense: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
+  getMonthlyExpenseSum: PropTypes.object.isRequired,
   // loading: PropTypes.object.isRequired,
   // expense: PropTypes.object.isRequired,
 
@@ -122,10 +127,11 @@ Update.propTypes = {
 const mapStateToProps = state => ({
   categories: state.categories,
   expense: state.expenses.expense,
-  loading: state.expenses.loading
+  loading: state.expenses.loading,
+  expenseMonthlySum : state.expenses.monthlySum,
 });
 
 export default connect(
   mapStateToProps,
-  { getCategories, updateExpense, setAlert, getExpense }
+  { getCategories, updateExpense, setAlert, getExpense, getMonthlyExpenseSum }
 )(Update);

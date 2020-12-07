@@ -8,7 +8,9 @@ import { getCategories, addCategory } from '../../actions/categories';
 import { addExpense } from '../../actions/expenses';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import {getMonthlyExpenseSum} from '../../actions/expenses';
+import moment from 'moment';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -28,7 +30,7 @@ const AnchorTag = styled(Link)`
 `;
 
 
-const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { categories } }) => {
+const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { categories }, getMonthlyExpenseSum, expenseMonthlySum }) => {
   const [formData, setFormData] = useState({
     category: "",
     description: "",
@@ -48,6 +50,7 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
     }
 
   };
+  const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
 
@@ -57,16 +60,27 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log(formData)
-    if (category && amount) {
+    const totalSum = parseFloat(expenseMonthlySum) + parseFloat(amount);
+    console.log(totalSum + " " + parseFloat(expenseMonthlySum))
+    if (category && amount && totalSum <= parseFloat(expenseMonthlySum)) {
       addExpense(formData);
+      <Redirect to="/expense" />
+    }else if(category && amount && totalSum > parseFloat(expenseMonthlySum)){
+      handleShow()
     } else {
       setAlert("Category and Amount fields are required", "danger");
     }
   }
 
+  const handleOnAdd = e => {
+    e.preventDefault();
+    addExpense(formData);
+  }
+
   useEffect(() => {
     getCategories("Expense");
+    const [month, year] = moment().format("M/YYYY").split("/");
+    getMonthlyExpenseSum(month,year);
   }, [getCategories]);
 
   return (
@@ -103,6 +117,25 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
           <Button type="submit" style={{ backgroundColor: "#28a745" }}><i className="fa fa-plus" aria-hidden="true"></i> Add</Button>
         </Form>
       </ContentContainer>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        style={{ top: '30%' }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Add Expense</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ fontSize: '1.2rem' }}>
+          Looks like you've hit your montly budget. Do you still want to continue?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button style={{ backgroundColor: "#117a8b" }} onClick={handleClose}>No</Button>
+          <Button style={{ backgroundColor: "rgb(40, 167, 69)" }} onClick={handleOnAdd} >Add</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 };
@@ -113,14 +146,16 @@ Add.propTypes = {
   setAlert: PropTypes.func.isRequired,
   addCategory: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
+  getMonthlyExpenseSum : PropTypes.func.isRequired
   // curExpense: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  categories: state.categories
+  categories: state.categories,
+  expenseMonthlySum : state.expenses.monthlySum,
 });
 
 export default connect(
   mapStateToProps,
-  { getCategories, addExpense, setAlert, addCategory }
+  { getCategories, addExpense, setAlert, addCategory, getMonthlyExpenseSum }
 )(Add);
