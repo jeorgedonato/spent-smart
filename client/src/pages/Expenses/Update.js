@@ -38,6 +38,16 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     amount: ""
   });
 
+  useEffect(() => {
+    // if(!loading){
+    getCategories("Expense");
+    getExpense(match.params.id);
+    setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : "" });
+    const [month, year] = moment().format("M/YYYY").split("/");
+    getMonthlyExpenseSum(month,year);
+    // }
+  }, [loading]);
+
   const { category, description, amount } = formData;
 
   const handleSelectChange = (newValue, actionMeta) => {
@@ -62,15 +72,7 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     }
   }
   // setCatArr(categories.map(c => {return {value : c.name, label : c.name}}))
-  useEffect(() => {
-    // if(!loading){
-    getCategories("Expense");
-    getExpense(match.params.id);
-    setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : "" });
-    const [month, year] = moment().format("M/YYYY").split("/");
-    getMonthlyExpenseSum(month,year);
-    // }
-  }, [loading]);
+
 
   return (
     <>
@@ -118,6 +120,7 @@ Update.propTypes = {
   setAlert: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
   getMonthlyExpenseSum: PropTypes.object.isRequired,
+  user : PropTypes.object.isRequired
   // loading: PropTypes.object.isRequired,
   // expense: PropTypes.object.isRequired,
 
@@ -129,6 +132,7 @@ const mapStateToProps = state => ({
   expense: state.expenses.expense,
   loading: state.expenses.loading,
   expenseMonthlySum : state.expenses.monthlySum,
+  user: state.auth.user
 });
 
 export default connect(
