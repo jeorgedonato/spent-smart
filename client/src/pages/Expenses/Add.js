@@ -8,7 +8,7 @@ import { getCategories, addCategory } from '../../actions/categories';
 import { addExpense } from '../../actions/expenses';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import {getMonthlyExpenseSum} from '../../actions/expenses';
 import moment from 'moment';
 
@@ -30,7 +30,8 @@ const AnchorTag = styled(Link)`
 `;
 
 
-const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { categories }, getMonthlyExpenseSum, expenseMonthlySum }) => {
+const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { categories }, getMonthlyExpenseSum, expenseMonthlySum, user }) => {
+  let history = useHistory();
   const [formData, setFormData] = useState({
     category: "",
     description: "",
@@ -61,12 +62,16 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
   const handleSubmit = e => {
     e.preventDefault();
     const totalSum = parseFloat(expenseMonthlySum) + parseFloat(amount);
-    console.log(totalSum + " " + parseFloat(expenseMonthlySum))
-    if (category && amount && totalSum <= parseFloat(expenseMonthlySum)) {
-      addExpense(formData);
-      <Redirect to="/expense" />
-    }else if(category && amount && totalSum > parseFloat(expenseMonthlySum)){
-      handleShow()
+    if (category && amount) {
+      if(!user.hasOwnProperty('budget_threshold')){
+        addExpense(formData);
+        history.replace('/expenses')
+      }else if(totalSum <= parseFloat(user.budget_threshold)){
+        addExpense(formData);
+        history.replace('/expenses')
+      }else{
+        handleShow()
+      }
     } else {
       setAlert("Category and Amount fields are required", "danger");
     }
@@ -75,6 +80,7 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
   const handleOnAdd = e => {
     e.preventDefault();
     addExpense(formData);
+    history.replace('/expenses')
   }
 
   useEffect(() => {
@@ -146,13 +152,15 @@ Add.propTypes = {
   setAlert: PropTypes.func.isRequired,
   addCategory: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
-  getMonthlyExpenseSum : PropTypes.func.isRequired
+  getMonthlyExpenseSum : PropTypes.func.isRequired,
+  user : PropTypes.object.isRequired
   // curExpense: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   categories: state.categories,
   expenseMonthlySum : state.expenses.monthlySum,
+  user: state.auth.user
 });
 
 export default connect(

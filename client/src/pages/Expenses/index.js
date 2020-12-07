@@ -70,6 +70,10 @@ const columns = [
 
 const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense } }) => {
 
+  useEffect(() => {
+    getExpenses();
+  }, [getExpenses, loading]);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -78,9 +82,6 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
     setShow(true)
   };
   // console.log(curExpense)
-  useEffect(() => {
-    getExpenses();
-  }, [getExpenses]);
 
   const handleDelete = id => {
     deleteExpense(id);
