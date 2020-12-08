@@ -8,9 +8,27 @@ import {getCategories} from '../../actions/categories';
 import { updateIncome ,getIncome } from '../../actions/incomes';
 import {setAlert} from '../../actions/alert';
 import styled from 'styled-components';
+import {Link, useHistory} from 'react-router-dom';
+
+const FlexContainer = styled.div`
+display: flex;
+`;
+
+const AnchorTag = styled(Link)`
+color : ${props => props.info ? "#117a8b" : "#dc3545"};
+&:hover {
+  text-decoration : none;
+  color :  ${props => props.info ? "#117a8b" : "#dc3545"};
+}
+font-size : 1.5rem;
+@media (max-width: 768px){
+  font-size : 1rem;
+  margin-top: 15px
+}
+`;
 
 const Update = ({getCategories, getIncome, setAlert, updateIncome, categories : {categories } , income, match}) => {
-
+  const history = useHistory();
   const [formData, setFormData] = useState({
     category : "",
     description: "",
@@ -36,6 +54,7 @@ const Update = ({getCategories, getIncome, setAlert, updateIncome, categories : 
     // console.log(formData)
     if(category && amount){
       updateIncome(match.params.id, formData);
+      history.replace('/incomes');
     }else{
       setAlert("Category and Amount fields are required","danger");
     }
@@ -49,29 +68,12 @@ const Update = ({getCategories, getIncome, setAlert, updateIncome, categories : 
     }
   }, [getCategories, getIncome, income]);
 
-  const FlexContainer = styled.div`
-  display: flex;
-  `;
-
-  const AnchorTag = styled.a`
-  color : ${props => props.info ? "#117a8b" : "#dc3545"};
-  &:hover {
-    text-decoration : none;
-    color :  ${props => props.info ? "#117a8b" : "#dc3545"};
-  }
-  font-size : 1.5rem;
-  @media (max-width: 768px){
-    font-size : 1rem;
-    margin-top: 15px
-  }
-`;
-
   return (
     <>
       <ContentContainer>
         <FlexContainer>
           <h3 style={{width: '50%'}}><i className="fa fa-pencil-square" aria-hidden="true"></i>{' '}Update Income</h3>
-          <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes"><i className="fa fa-arrow-left" aria-hidden="true"></i> Go Back</AnchorTag>
+          <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info to="/incomes"><i className="fa fa-arrow-left" aria-hidden="true"></i> Go Back</AnchorTag></span>
         </FlexContainer>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="categoryInput">

@@ -1,9 +1,9 @@
 import {
-  GET_EXPENSES,
-  EXPENSE_ERROR,
-  ADD_EXPENSE,
-  UPDATE_EXPENSE,
-  DELETE_EXPENSE,
+	GET_EXPENSES,
+	EXPENSE_ERROR,
+	ADD_EXPENSE,
+	UPDATE_EXPENSE,
+	DELETE_EXPENSE,
 	GET_EXPENSE,
 	GET_MONTHLY_EXPENSE,
 	GET_MONTHLY_EXPENSE_CATEGORY,
@@ -12,18 +12,17 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  expenses: [],
-  expense: null,
-  loading: true,
+	expenses: [],
+	expense: null,
+	loading: true,
 	error: {},
 	monthlySum: null,
-	categoryExpenses : null,
-	yearlySavings : null
+	categoryExpenses: null,
+	yearlySavings: null
 };
 
 export default function (state = initialState, action) {
 	const { type, payload } = action;
-
 	switch (type) {
 		case GET_EXPENSES:
 			return {

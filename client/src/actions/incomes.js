@@ -79,7 +79,7 @@ export const addIncome = formData => async dispatch => {
             type: ADD_INCOME,
             payload: res.data
         });
-        window.location.replace('/incomes');
+        // window.location.replace('/incomes');
         dispatch(setAlert(`Income Created`, 'success'));
         // dispatch(setAlert(`Income ${res.data.name} Created`, 'success'));
     } catch (err) {
@@ -106,7 +106,7 @@ export const updateIncome = (id, formData) => async dispatch => {
             type: UPDATE_INCOME,
             payload: res.data
         });
-        window.location.replace('/incomes');
+        // window.location.replace('/incomes');
         dispatch(setAlert(`Income Created`, 'success'));
         // dispatch(setAlert(`Income ${res.data.name} is Updated`, 'success'));
     } catch (err) {

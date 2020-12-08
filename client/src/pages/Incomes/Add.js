@@ -8,7 +8,24 @@ import { getCategories, addCategory } from '../../actions/categories';
 import { addIncome } from '../../actions/incomes';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
+import {Link, useHistory} from 'react-router-dom';
 
+const FlexContainer = styled.div`
+display: flex;
+`;
+
+  const AnchorTag = styled(Link)`
+color : ${props => props.info ? "#117a8b" : "#dc3545"};
+&:hover {
+  text-decoration : none;
+  color :  ${props => props.info ? "#117a8b" : "#dc3545"};
+}
+font-size : 1.5rem;
+@media (max-width: 768px){
+  font-size : 1rem;
+  margin-top: 15px
+}
+`;
 
 const Add = ({ getCategories, setAlert, addIncome, addCategory, categories: { categories } }) => {
     const [formData, setFormData] = useState({
@@ -16,6 +33,7 @@ const Add = ({ getCategories, setAlert, addIncome, addCategory, categories: { ca
         description: "",
         amount: ""
     });
+    const history = useHistory();
 
     const { category, description, amount } = formData;
 
@@ -31,17 +49,18 @@ const Add = ({ getCategories, setAlert, addIncome, addCategory, categories: { ca
 
     };
 
-    const handleClose = () => setShow(false);
+    // const handleClose = () => setShow(false);
 
-    const handleShow = () => {
-        setShow(true)
-    };
+    // const handleShow = () => {
+    //     setShow(true)
+    // };
 
     const handleSubmit = e => {
         e.preventDefault();
         // console.log(formData)
         if (category && amount) {
             addIncome(formData);
+            history.replace('/incomes')
         } else {
             setAlert("Category and Amount fields are required", "danger");
         }
@@ -51,29 +70,12 @@ const Add = ({ getCategories, setAlert, addIncome, addCategory, categories: { ca
         getCategories("Income");
     }, [getCategories]);
 
-    const FlexContainer = styled.div`
-  display: flex;
-  `;
-
-    const AnchorTag = styled.a`
-  color : ${props => props.info ? "#117a8b" : "#dc3545"};
-  &:hover {
-    text-decoration : none;
-    color :  ${props => props.info ? "#117a8b" : "#dc3545"};
-  }
-  font-size : 1.5rem;
-  @media (max-width: 768px){
-    font-size : 1rem;
-    margin-top: 15px
-  }
-`;
-
     return (
         <>
             <ContentContainer>
                 <FlexContainer>
                     <h3 style={{ width: '50%' }}><i className="fa fa-plus-square" aria-hidden="true"></i>{' '}Add Income</h3>
-                    <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes"><i className="fa fa-arrow-left" aria-hidden="true"></i> Go Back</AnchorTag>
+                    <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info to="/incomes"><i className="fa fa-arrow-left" aria-hidden="true"></i> Go Back</AnchorTag></span>
                 </FlexContainer>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="categoryInput">
