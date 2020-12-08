@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Modal, Button, Badge, Popover, OverlayTrigger, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -74,6 +74,35 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
     getExpenses();
   }, [getExpenses, loading]);
 
+  const [options, setOptions] = useState({
+    monthOpt : [],
+    yearOpt: []
+  })
+
+  const {monthOpt, yearOpt} = options;
+
+  const populateOption = () => {
+    let months = [
+      {name: 'Jan', num : 1},
+      {name: 'Feb', num : 2},
+      {name: 'Mar', num : 3},
+      {name: 'Apr', num : 4},
+      {name: 'May', num : 5},
+      {name: 'Jun', num : 6},
+      {name: 'Jul', num : 7},
+      {name: 'Aug', num : 8},
+      {name: 'Sep', num : 9},
+      {name: 'Oct', num : 10},
+      {name: 'Nov', num : 11},
+      {name: 'Dec', num : 12},
+    ];
+    expenses.map(e => {
+      let curMonth = months[e.month_created + 1].name
+      !yearOpt.includes(e.year_created) ? setOptions({...options, yearOpt : yearOpt.push(e.year_created)}) : null; 
+      !monthOpt.includes(curMonth) ? setOptions({...options, monthOpt : monthOpt.push(curMonth)}) : null;
+    });
+  }
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -121,11 +150,20 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
 
   return (
     <>
+    {console.log(options)}
       <ContentContainer>
         <FlexContainer>
           <h2 style={{ width: '50%' }}>Expenses</h2>
           <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info to="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag></span>
         </FlexContainer>
+        <div style={{float: 'right'}}>
+        <select>
+          <option >2020</option>
+        </select>
+        <select>
+          <option >2020</option>
+        </select>
+        </div>
         <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
       </ContentContainer>
 
