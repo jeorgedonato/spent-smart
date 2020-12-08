@@ -12,7 +12,7 @@ import numberWithCommas from '../../utils/numberWithCommas';
 // import expenses from "../../reducers/expenses";
 import moment from 'moment';
 // import BarChart from "../../components/BarChart";
-import DashboardCalendar from './DashboardCalendar';
+// import DashboardCalendar from './DashboardCalendar';
 
 function DashAmount(props) {
   return (
@@ -58,7 +58,7 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
         </Row>
         
         {/* <BarChart className="barchart" income={incomeMonthlySum} expenses={expenseMonthlySum} savings={savings} /> */}
-        <DashboardCalendar />
+        {/* <DashboardCalendar /> */}
     </div>
   );
 }

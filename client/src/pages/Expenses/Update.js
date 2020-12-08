@@ -49,7 +49,7 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     const [month, year] = moment().format("M/YYYY").split("/");
     getMonthlyExpenseSum(month,year);
     // }
-  }, [loading, paramId]);
+  }, [loading, paramId, getExpense, getMonthlyExpenseSum]);
 
   const { category, description, amount } = formData;
 

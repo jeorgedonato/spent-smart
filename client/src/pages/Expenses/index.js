@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
@@ -28,14 +28,14 @@ const AnchorTag = styled(Link)`
 `;
 
 const customStyle = {
-  cells : {
-    style : {
+  cells: {
+    style: {
       fontSize: '1.2rem'
     }
   },
-  pagination : {
-    style : {
-      zIndex : 0
+  pagination: {
+    style: {
+      zIndex: 0
     }
   },
   headCells: {
@@ -89,31 +89,32 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
   };
 
   const data = expenses.map((expense, it) => {
-   return {
+    return {
       id: expense._id,
-      category : <OverlayTrigger
-                      trigger="focus"
-                      key={expense._id}
-                      placement="right"
-                      overlay={
-                        <Popover id={`popover-positioned-${expense._id}`}>
-                          <Popover.Title as="h3">Description</Popover.Title>
-                          <Popover.Content>
-                            {expense.description ? expense.description : "No description provided"}
-                          </Popover.Content>
-                        </Popover>
-                      }
-                    >
-                      <Button style={{
-                          color: '#212529',
-                          backgroundColor: '#e2e6ea',
-                          borderColor: '#dae0e5'}}
-                      >{expense.category_id.name}</Button>
-                    </OverlayTrigger>,
-      amount : `$ ${numberWithCommas(expense.amount)}`,
-      created_date : moment(expense.created_date).format("MMM DD, YYYY"),
+      category: <OverlayTrigger
+        trigger="focus"
+        key={expense._id}
+        placement="right"
+        overlay={
+          <Popover id={`popover-positioned-${expense._id}`}>
+            <Popover.Title as="h3">Description</Popover.Title>
+            <Popover.Content>
+              {expense.description ? expense.description : "No description provided"}
+            </Popover.Content>
+          </Popover>
+        }
+      >
+        <Button style={{
+          color: '#212529',
+          backgroundColor: '#e2e6ea',
+          borderColor: '#dae0e5'
+        }}
+        >{expense.category_id.name}</Button>
+      </OverlayTrigger>,
+      amount: `$ ${numberWithCommas(expense.amount)}`,
+      created_date: moment(expense.created_date).format("MMM DD, YYYY"),
       actions: <span><AnchorTag info to={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
-                {' '}<AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
+        {' '}<AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
     }
   });
   // console.log(data)
@@ -123,7 +124,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
       <ContentContainer>
         <FlexContainer>
           <h2 style={{ width: '50%' }}>Expenses</h2>
-         <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info  to="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag></span>
+          <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info to="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag></span>
         </FlexContainer>
         <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
       </ContentContainer>
