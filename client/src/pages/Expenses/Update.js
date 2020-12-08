@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, InputGroup, Button } from 'react-bootstrap';
+import { Form, InputGroup, Button, Modal } from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
 import CreatableSelect from 'react-select/creatable';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import { getCategories } from '../../actions/categories';
 import { updateExpense, getExpense } from '../../actions/expenses';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import {getMonthlyExpenseSum} from '../../actions/expenses';
 import moment from 'moment';
 
@@ -30,7 +30,8 @@ const AnchorTag = styled(Link)`
   }
 `;
 
-const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories }, expense, match, loading ,getMonthlyExpenseSum, expenseMonthlySum }) => {
+const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories }, expense, match, loading ,getMonthlyExpenseSum, expenseMonthlySum, user }) => {
+  let history = useHistory();
 
   const [formData, setFormData] = useState({
     category: "",
@@ -38,17 +39,27 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     amount: ""
   });
 
+  const [paramId, setParamId] = useState(match.params.id)
+
   useEffect(() => {
     // if(!loading){
     getCategories("Expense");
-    getExpense(match.params.id);
+    getExpense(paramId);
     setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : "" });
     const [month, year] = moment().format("M/YYYY").split("/");
     getMonthlyExpenseSum(month,year);
     // }
-  }, [loading]);
+  }, [loading, paramId]);
 
   const { category, description, amount } = formData;
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => {
+    setShow(true)
+  };
 
   const handleSelectChange = (newValue, actionMeta) => {
     if (actionMeta.action === "select-option") {
@@ -63,17 +74,27 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log(formData)
+    const totalSum = parseFloat(expenseMonthlySum) + parseFloat(amount);
     if (category && amount) {
-      updateExpense(match.params.id, formData);
-      <Redirect to="/expense" />
+      if(!user.hasOwnProperty('budget_threshold')){
+        updateExpense(match.params.id, formData);
+        history.replace('/expenses')
+      }else if(totalSum <= parseFloat(user.budget_threshold)){
+        updateExpense(match.params.id, formData);
+        history.replace('/expenses')
+      }else{
+        handleShow()
+      }
     } else {
       setAlert("Category and Amount fields are required", "danger");
     }
   }
-  // setCatArr(categories.map(c => {return {value : c.name, label : c.name}}))
 
-
+  const handleOnUpdate = e => {
+    e.preventDefault();
+    updateExpense(match.params.id, formData);
+    history.replace('/expenses')
+  }
   return (
     <>
       <ContentContainer>
@@ -106,8 +127,27 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
           </Form.Group>
           <Button type="submit" style={{ backgroundColor: "#28a745" }}><i className="fa fa-pencil" aria-hidden="true"></i> Update</Button>
         </Form>
-
       </ContentContainer>
+
+      
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        style={{ top: '30%' }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Update Expense</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ fontSize: '1.2rem' }}>
+          Looks like you've hit your montly budget. Do you still want to continue?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button style={{ backgroundColor: "#117a8b" }} onClick={handleClose}>No</Button>
+          <Button style={{ backgroundColor: "rgb(40, 167, 69)" }} onClick={handleOnUpdate} >Add</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 };

@@ -32,6 +32,13 @@ const AnchorTag = styled(Link)`
 
 const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { categories }, getMonthlyExpenseSum, expenseMonthlySum, user }) => {
   let history = useHistory();
+
+  useEffect(() => {
+    getCategories("Expense");
+    const [month, year] = moment().format("M/YYYY").split("/");
+    getMonthlyExpenseSum(month,year);
+  }, [getCategories]);
+  
   const [formData, setFormData] = useState({
     category: "",
     description: "",
@@ -83,11 +90,7 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
     history.replace('/expenses')
   }
 
-  useEffect(() => {
-    getCategories("Expense");
-    const [month, year] = moment().format("M/YYYY").split("/");
-    getMonthlyExpenseSum(month,year);
-  }, [getCategories]);
+
 
   return (
     <>

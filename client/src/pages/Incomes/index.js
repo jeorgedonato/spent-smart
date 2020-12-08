@@ -7,7 +7,7 @@ import { getIncomes, deleteIncome, getIncome } from '../../actions/incomes';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import numberWithCommas from '../../utils/numberWithCommas';
 import DataTable from 'react-data-table-component';
 
@@ -15,7 +15,7 @@ const FlexContainer = styled.div`
   display: flex;
 `;
 
-const AnchorTag = styled.a`
+const AnchorTag = styled(Link)`
   color : ${props => props.info ? "#117a8b" : "#dc3545"};
   &:hover {
     text-decoration : none;
@@ -72,7 +72,7 @@ const columns = [
 const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome } }) => {
 
     const [show, setShow] = useState(false);
-
+    
     const handleClose = () => setShow(false);
     const handleShow = id => {
         getIncome(id)
@@ -112,7 +112,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                     </OverlayTrigger>,
       amount : `$ ${numberWithCommas(income.amount)}`,
       created_date : moment(income.created_date).format("MMM DD, YYYY"),
-      actions: <span><AnchorTag info href={"/incomes/update/" + income._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
+      actions: <span><AnchorTag info to={"/incomes/update/" + income._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
                 {' '}<AnchorTag onClick={() => handleShow(income._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
     }
   });
@@ -122,7 +122,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
             <ContentContainer>
                 <FlexContainer>
                     <h2 style={{ width: '50%' }}>Income</h2>
-                    <AnchorTag info style={{ width: '50%', textAlign: "right" }} href="/incomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag>
+                    <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info to="/incomes/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Income</AnchorTag></span>
                 </FlexContainer>
                 <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
             </ContentContainer>
