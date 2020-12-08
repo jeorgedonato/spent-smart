@@ -30,26 +30,29 @@ const AnchorTag = styled(Link)`
   }
 `;
 
-const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories }, expense, match, loading ,getMonthlyExpenseSum, expenseMonthlySum, user }) => {
+const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories },  match, getMonthlyExpenseSum, user, expenses: {expense, loading, monthlySum : expenseMonthlySum} }) => {
   let history = useHistory();
-
-  const [formData, setFormData] = useState({
-    category: "",
-    description: "",
-    amount: ""
-  });
 
   const [paramId, setParamId] = useState(match.params.id)
 
+  // const isNotLoaded = expense._id !== paramId ? true : false;
+
   useEffect(() => {
-    // if(!loading){
-    getCategories("Expense");
-    getExpense(paramId);
-    setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : "" });
-    const [month, year] = moment().format("M/YYYY").split("/");
-    getMonthlyExpenseSum(month,year);
-    // }
-  }, [loading, paramId, getExpense, getMonthlyExpenseSum]);
+    // if(isNotLoaded){
+      getExpense(paramId);
+      console.log(expense)
+      getCategories("Expense");
+      const [month, year] = moment().format("M/YYYY").split("/");
+      getMonthlyExpenseSum(month,year);
+      setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : ""});
+  //  }
+  }, [expense]);
+
+  const [formData, setFormData] = useState({
+    category: expense ? expense.category_id.name : "",
+    description: expense ? expense.description : "",
+    amount: expense ? expense.amount : ""
+  });
 
   const { category, description, amount } = formData;
 
@@ -110,6 +113,7 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
               options={categories.map(c => { return { value: c.name, label: c.name } })}
               onChange={handleSelectChange}
               value={{ value: category, label: category }}
+              // defaultValue={expense ? expense.category_id.name : ""}
             />
           </Form.Group>
           <Form.Group controlId="amountInput">
@@ -118,12 +122,23 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
               <InputGroup.Prepend>
                 <InputGroup.Text>$</InputGroup.Text>
               </InputGroup.Prepend>
-              <Form.Control type="number" value={amount} placeholder="Amount" onChange={e => setFormData({ ...formData, ["amount"]: e.target.value })} />
+              <Form.Control 
+                type="number" 
+                // defaultValue={expense ? expense.amount : ""} 
+                value={amount} 
+                placeholder="Amount" 
+                onChange={e => setFormData({ ...formData, ["amount"]: e.target.value })} />
             </InputGroup>
           </Form.Group>
           <Form.Group controlId="descriptionInput">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" rows={3} value={description} onChange={e => setFormData({ ...formData, ["description"]: e.target.value })} />
+            <Form.Control 
+              as="textarea" 
+              rows={3} 
+              value={description} 
+              onChange={e => setFormData({ ...formData, ["description"]: e.target.value })}
+              // defaultValue={expense ? expense.description : ""}
+              />
           </Form.Group>
           <Button type="submit" style={{ backgroundColor: "#28a745" }}><i className="fa fa-pencil" aria-hidden="true"></i> Update</Button>
         </Form>
@@ -159,7 +174,7 @@ Update.propTypes = {
   getExpense: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
-  getMonthlyExpenseSum: PropTypes.object.isRequired,
+  getMonthlyExpenseSum: PropTypes.func.isRequired,
   user : PropTypes.object.isRequired
   // loading: PropTypes.object.isRequired,
   // expense: PropTypes.object.isRequired,
@@ -169,9 +184,10 @@ Update.propTypes = {
 
 const mapStateToProps = state => ({
   categories: state.categories,
-  expense: state.expenses.expense,
-  loading: state.expenses.loading,
-  expenseMonthlySum : state.expenses.monthlySum,
+  expenses : state.expenses,
+  // expense: state.expenses.expense,
+  // loading: state.expenses.loading,
+  // expenseMonthlySum : state.expenses.monthlySum,
   user: state.auth.user
 });
 
