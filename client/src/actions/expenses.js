@@ -74,7 +74,7 @@ export const getMonthlyExpenseSum = (month, year, id = null) => async dispatch =
 export const getMonthlyExpenseCategorySum = (month, year) => async dispatch => {
   // console.log(id)
   try {
-    const res = await axios.get(`/api/expenses/monthly/categories/${month}/${year}`);
+    const res = await axios.get(`/api/expenses/yearly/categories/${month}/${year}`);
 
     dispatch({
       type: GET_MONTHLY_EXPENSE_CATEGORY,
