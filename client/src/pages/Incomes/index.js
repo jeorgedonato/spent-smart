@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Table, Modal, Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
@@ -70,21 +70,32 @@ const columns = [
 
 const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome }, history }) => {
 
+    const usePrevious = value => {
+      const ref = useRef();
+      useEffect(() => {
+        ref.current = value;
+      });
+      return ref.current;
+    }
+      const prevIncomes = usePrevious(incomes);
+    // console.log(curIncome)
+    useEffect(() => {
+      if(prevIncomes !== incomes){
+        getIncomes();
+      }
+    }, [getIncomes, loading,prevIncomes]);
+
+    const handleDelete = id => {
+        deleteIncome(id);
+        setShow(false)
+    };
+
     const [show, setShow] = useState(false);
     
     const handleClose = () => setShow(false);
     const handleShow = id => {
         getIncome(id)
         setShow(true)
-    };
-    // console.log(curIncome)
-    useEffect(() => {
-        getIncomes();
-    }, [getIncomes, loading]);
-
-    const handleDelete = id => {
-        deleteIncome(id);
-        setShow(false)
     };
 
   const onClickUpdate = id => {

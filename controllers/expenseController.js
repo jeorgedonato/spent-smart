@@ -138,19 +138,20 @@ router.delete("/:id", auth, async (req, res) => {
 // @desc     GET a monthly 
 // @access   Private
 router.get("/monthly/:month/:year/:id", auth, async (req, res) => {
+  let objectParamId = req.params.id !== 'null' ? req.params.id : '7a397a058580b255811b5e39'
   try {
     // console.log(req.params.id)
+    
+    // console.log(objectParamId)
     const expenseRec = await db.Expense.aggregate([
     {
         '$match': {
             'month_created': parseInt(req.params.month), 
             'year_created': parseInt(req.params.year),
             'user_id': ObjectId(req.user.id),
-            'neId': {
-                '$ne': {
-                    '_id': ObjectId(req.params.id)
-                }
-            },
+            '_id': {
+              '$ne': ObjectId(objectParamId)
+            }
         }
     }, {
         '$group': {
