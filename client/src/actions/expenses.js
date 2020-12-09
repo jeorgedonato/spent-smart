@@ -39,11 +39,6 @@ export const getExpense = id => async dispatch => {
   try {
     const res = await axios.get(`/api/expenses/${id}`);
 
-    // dispatch({
-    //   type : RESET_LOADING,
-    //   payload: "RESET"
-    // })
-
     dispatch({
       type: GET_EXPENSE,
       payload: res.data

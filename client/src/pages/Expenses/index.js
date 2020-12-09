@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Modal, Button, Badge, Popover, OverlayTrigger, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ContentContainer from '../../components/ContentContainer';
 import { getExpenses, deleteExpense, getExpense } from '../../actions/expenses';
 import PropTypes from 'prop-types';
@@ -73,7 +73,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
   useEffect(() => {
     getExpenses();
   }, [getExpenses, loading]);
-
+  const history = useHistory();
   const [options, setOptions] = useState({
     monthOpt : [],
     yearOpt: []
@@ -150,7 +150,6 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
 
   return (
     <>
-    {console.log(options)}
       <ContentContainer>
         <FlexContainer>
           <h2 style={{ width: '50%' }}>Expenses</h2>
