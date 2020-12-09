@@ -38,7 +38,6 @@ export const getExpense = id => async dispatch => {
   // console.log(id)
   try {
     const res = await axios.get(`/api/expenses/${id}`);
-
     dispatch({
       type: GET_EXPENSE,
       payload: res.data
@@ -53,10 +52,10 @@ export const getExpense = id => async dispatch => {
 
 // Get Monthly Expense
 // GET SUM : /api/expenses/monthly/:month/:year
-export const getMonthlyExpenseSum = (month, year) => async dispatch => {
+export const getMonthlyExpenseSum = (month, year, id = null) => async dispatch => {
   // console.log(id)
   try {
-    const res = await axios.get(`/api/expenses/monthly/${month}/${year}`);
+    const res = await axios.get(`/api/expenses/monthly/${month}/${year}/${id}`);
 
     dispatch({
       type: GET_MONTHLY_EXPENSE,

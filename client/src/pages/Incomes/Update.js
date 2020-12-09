@@ -8,7 +8,7 @@ import {getCategories} from '../../actions/categories';
 import { updateIncome ,getIncome } from '../../actions/incomes';
 import {setAlert} from '../../actions/alert';
 import styled from 'styled-components';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, withRouter} from 'react-router-dom';
 
 const FlexContainer = styled.div`
 display: flex;
@@ -27,15 +27,32 @@ font-size : 1.5rem;
 }
 `;
 
-const Update = ({getCategories, getIncome, setAlert, updateIncome, categories : {categories } , income, match}) => {
-  const history = useHistory();
+const Update = ({incomes: {income , loading} , getCategories, getIncome, setAlert, updateIncome, categories : {categories } , match , history}) => {
+
   const [formData, setFormData] = useState({
+    id: "",
     category : "",
     description: "",
     amount: ""
   });
 
-  const {category,description,amount} = formData;
+  useEffect(() => {
+    if(income === null || id === "" || id !== income._id){
+      getIncome(match.params.id);
+      setFormData({
+       id : loading || !income ? "" : income._id, 
+       description : loading || !income ? "" : income.description, 
+       amount : loading || !income ? "" : income.amount, 
+       category: loading || !income ? "" : income.category_id.name
+      });
+    }
+  }, [getIncome, match.params.id, income]);
+
+ useEffect(() => {
+    getCategories("Income");
+  },[getCategories])
+
+    const {id,category,description,amount} = formData;
 
   const handleSelectChange = (newValue, actionMeta) => {
     if(actionMeta.action === "select-option"){
@@ -54,19 +71,12 @@ const Update = ({getCategories, getIncome, setAlert, updateIncome, categories : 
     // console.log(formData)
     if(category && amount){
       updateIncome(match.params.id, formData);
-      history.replace('/incomes');
+      history.push('/incomes');
     }else{
       setAlert("Category and Amount fields are required","danger");
     }
   }
   // setCatArr(categories.map(c => {return {value : c.name, label : c.name}}))
-  useEffect(() => {
-    if(income === null || amount === ""){
-      getCategories("Income");
-      getIncome(match.params.id);
-      setFormData({ ...formData, ["description"]: income ? income.description : "", ["amount"]: income ? income.amount : "", ["category"]: income ? income.category_id.name : ""});
-    }
-  }, [getCategories, getIncome, income]);
 
   return (
     <>
@@ -113,17 +123,18 @@ Update.propTypes = {
   getIncome: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
+  incomes : PropTypes.object.isRequired
   // income: PropTypes.object.isRequired,
 
   // curIncome: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  incomes : state.incomes,
   categories: state.categories,
-  income : state.incomes.income
 });
 
 export default connect(
   mapStateToProps,
   { getCategories, updateIncome, setAlert, getIncome }
-)(Update);
+)(withRouter(Update));

@@ -5,9 +5,8 @@ import { connect } from 'react-redux'
 import ContentContainer from '../../components/ContentContainer';
 import { getIncomes, deleteIncome, getIncome } from '../../actions/incomes';
 import PropTypes from 'prop-types';
-import Moment from 'react-moment';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import numberWithCommas from '../../utils/numberWithCommas';
 import DataTable from 'react-data-table-component';
 
@@ -69,7 +68,7 @@ const columns = [
   },
 ];
 
-const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome } }) => {
+const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome }, history }) => {
 
     const [show, setShow] = useState(false);
     
@@ -81,12 +80,16 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
     // console.log(curIncome)
     useEffect(() => {
         getIncomes();
-    }, [getIncomes]);
+    }, [getIncomes, loading]);
 
     const handleDelete = id => {
         deleteIncome(id);
         setShow(false)
     };
+
+  const onClickUpdate = id => {
+    return history.push("/incomes/update/" + id);
+  }
 
      const data = incomes.map((income, it) => {
    return {
@@ -112,7 +115,7 @@ const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loadi
                     </OverlayTrigger>,
       amount : `$ ${numberWithCommas(income.amount)}`,
       created_date : moment(income.created_date).format("MMM DD, YYYY"),
-      actions: <span><AnchorTag info to={"/incomes/update/" + income._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
+      actions: <span><AnchorTag info onClick={() => {onClickUpdate(income._id)}} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
                 {' '}<AnchorTag onClick={() => handleShow(income._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
     }
   });
@@ -164,4 +167,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { getIncomes, deleteIncome, getIncome }
-)(Income);
+)(withRouter(Income));
