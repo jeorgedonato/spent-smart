@@ -9,6 +9,7 @@ import { updateIncome ,getIncome } from '../../actions/incomes';
 import {setAlert} from '../../actions/alert';
 import styled from 'styled-components';
 import {Link, useHistory, withRouter} from 'react-router-dom';
+import usePrevious from '../../utils/usePrevious';
 
 const FlexContainer = styled.div`
 display: flex;
@@ -36,8 +37,15 @@ const Update = ({incomes: {income , loading} , getCategories, getIncome, setAler
     amount: ""
   });
 
+  // const prevIncome = usePrevious(income)
+
   useEffect(() => {
-    if(income === null || id === "" || id !== income._id){
+    if(income === null || 
+        id === "" || 
+        id !== income._id || 
+        description !== income.description || 
+        amount !== income.amount || 
+        category !== income.category_id.name){
       getIncome(match.params.id);
       setFormData({
        id : loading || !income ? "" : income._id, 

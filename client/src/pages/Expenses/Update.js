@@ -8,9 +8,10 @@ import { getCategories } from '../../actions/categories';
 import { updateExpense, getExpense } from '../../actions/expenses';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
-import { Link, withRouter, useHistory } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {getMonthlyExpenseSum} from '../../actions/expenses';
 import moment from 'moment';
+import usePrevious from '../../utils/usePrevious'
 
 
 const FlexContainer = styled.div`
@@ -38,17 +39,17 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     description: "",
     amount: ""
   });
-// const usePrevious = value => {
-//   const ref = useRef();
-//   useEffect(() => {
-//     ref.current = value;
-//   });
-//   return ref.current;
-// }
-//   const prevExpense = usePrevious(expense);
-  // console.log(prevExpense)
+
+  const prevExpense = usePrevious(expense)
+
   useEffect(() => {
-    if(expense === null || id === "" || id !== expense._id){
+    if(expense === null || 
+        id === "" || 
+        id !== expense._id || 
+        description !== expense.description || 
+        amount !== expense.amount || 
+        category !== expense.category_id.name
+        ){
       getExpense(match.params.id);
       setFormData({
        id : loading || !expense ? "" : expense._id, 
