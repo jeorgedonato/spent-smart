@@ -141,8 +141,6 @@ router.get("/monthly/:month/:year/:id", auth, async (req, res) => {
   let objectParamId = req.params.id !== 'null' ? req.params.id : '7a397a058580b255811b5e39'
   try {
     // console.log(req.params.id)
-    
-    // console.log(objectParamId)
     const expenseRec = await db.Expense.aggregate([
     {
         '$match': {
@@ -174,7 +172,8 @@ router.get("/monthly/:month/:year/:id", auth, async (req, res) => {
 // @route    GET api/expenses/monthly/categories/month/year
 // @desc     GET a monthly 
 // @access   Private
-router.get("/monthly/categories/:month/:year", auth, async (req, res) => {
+router.get("/yearly/categories/:month/:year", auth, async (req, res) => {
+  // console.log('thisone?')
   try {
     const expenseRec = await db.Expense.aggregate([
     {
