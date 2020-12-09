@@ -80,11 +80,7 @@ export default function (state = initialState, action) {
 				),
 				loading: false,
 			};
-		case RESET_LOADING:
-			return {
-				...state,
-				loading: true
-			}
+
 
 		default:
 			return state;

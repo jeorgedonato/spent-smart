@@ -40,18 +40,17 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
   useEffect(() => {
     // if(isNotLoaded){
       getExpense(paramId);
-      console.log(expense)
       getCategories("Expense");
       const [month, year] = moment().format("M/YYYY").split("/");
       getMonthlyExpenseSum(month,year);
       setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : ""});
   //  }
-  }, [expense]);
+  }, [getExpense]);
 
   const [formData, setFormData] = useState({
-    category: expense ? expense.category_id.name : "",
-    description: expense ? expense.description : "",
-    amount: expense ? expense.amount : ""
+    category: "",
+    description: "",
+    amount: ""
   });
 
   const { category, description, amount } = formData;
