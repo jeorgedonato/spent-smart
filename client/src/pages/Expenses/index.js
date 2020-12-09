@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Modal, Button, Badge, Popover, OverlayTrigger, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, withRouter } from 'react-router-dom';
 import ContentContainer from '../../components/ContentContainer';
 import { getExpenses, deleteExpense, getExpense } from '../../actions/expenses';
 import PropTypes from 'prop-types';
@@ -68,12 +68,12 @@ const columns = [
   },
 ];
 
-const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense } }) => {
-
+const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense }, history }) => {
+  // console.log(history)
   useEffect(() => {
     getExpenses();
   }, [getExpenses, loading]);
-  const history = useHistory();
+  // const history = useHistory();
   const [options, setOptions] = useState({
     monthOpt : [],
     yearOpt: []
@@ -81,27 +81,27 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
 
   const {monthOpt, yearOpt} = options;
 
-  const populateOption = () => {
-    let months = [
-      {name: 'Jan', num : 1},
-      {name: 'Feb', num : 2},
-      {name: 'Mar', num : 3},
-      {name: 'Apr', num : 4},
-      {name: 'May', num : 5},
-      {name: 'Jun', num : 6},
-      {name: 'Jul', num : 7},
-      {name: 'Aug', num : 8},
-      {name: 'Sep', num : 9},
-      {name: 'Oct', num : 10},
-      {name: 'Nov', num : 11},
-      {name: 'Dec', num : 12},
-    ];
-    expenses.map(e => {
-      let curMonth = months[e.month_created + 1].name
-      !yearOpt.includes(e.year_created) ? setOptions({...options, yearOpt : yearOpt.push(e.year_created)}) : null; 
-      !monthOpt.includes(curMonth) ? setOptions({...options, monthOpt : monthOpt.push(curMonth)}) : null;
-    });
-  }
+  // const populateOption = () => {
+  //   let months = [
+  //     {name: 'Jan', num : 1},
+  //     {name: 'Feb', num : 2},
+  //     {name: 'Mar', num : 3},
+  //     {name: 'Apr', num : 4},
+  //     {name: 'May', num : 5},
+  //     {name: 'Jun', num : 6},
+  //     {name: 'Jul', num : 7},
+  //     {name: 'Aug', num : 8},
+  //     {name: 'Sep', num : 9},
+  //     {name: 'Oct', num : 10},
+  //     {name: 'Nov', num : 11},
+  //     {name: 'Dec', num : 12},
+  //   ];
+  //   expenses.map(e => {
+  //     let curMonth = months[e.month_created + 1].name
+  //     !yearOpt.includes(e.year_created) ? setOptions({...options, yearOpt : yearOpt.push(e.year_created)}) : null; 
+  //     !monthOpt.includes(curMonth) ? setOptions({...options, monthOpt : monthOpt.push(curMonth)}) : null;
+  //   });
+  // }
 
   const [show, setShow] = useState(false);
 
@@ -116,6 +116,10 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
     deleteExpense(id);
     setShow(false)
   };
+
+  const onClickUpdate = id => {
+    return history.push("/expenses/update/" + id);
+  }
 
   const data = expenses.map((expense, it) => {
     return {
@@ -142,7 +146,7 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
       </OverlayTrigger>,
       amount: `$ ${numberWithCommas(expense.amount)}`,
       created_date: moment(expense.created_date).format("MMM DD, YYYY"),
-      actions: <span><AnchorTag info to={"/expenses/update/" + expense._id} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
+      actions: <span><AnchorTag info onClick={() => onClickUpdate(expense._id)} ><i className="fa fa-pencil-square" aria-hidden="true"></i></AnchorTag>
         {' '}<AnchorTag onClick={() => handleShow(expense._id)}><i className="fa fa-trash" aria-hidden="true"></i></AnchorTag></span>
     }
   });
@@ -155,14 +159,14 @@ const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses,
           <h2 style={{ width: '50%' }}>Expenses</h2>
           <span style={{ width: '50%', textAlign: "right" }}><AnchorTag info to="/expenses/add"><i className="fa fa-plus-square" aria-hidden="true"></i> Add Expense</AnchorTag></span>
         </FlexContainer>
-        <div style={{float: 'right'}}>
+        {/* <div style={{float: 'right'}}>
         <select>
           <option >2020</option>
         </select>
         <select>
           <option >2020</option>
         </select>
-        </div>
+        </div> */}
         <DataTable columns={columns} data={data} striped={true} pagination={true} noHeader={true} customStyles={customStyle} />
       </ContentContainer>
 
@@ -203,4 +207,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getExpenses, deleteExpense, getExpense }
-)(Expense);
+)(withRouter(Expense));

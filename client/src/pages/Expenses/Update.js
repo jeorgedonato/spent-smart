@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Form, InputGroup, Button, Modal } from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
 import CreatableSelect from 'react-select/creatable';
@@ -8,7 +8,7 @@ import { getCategories } from '../../actions/categories';
 import { updateExpense, getExpense } from '../../actions/expenses';
 import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import {getMonthlyExpenseSum} from '../../actions/expenses';
 import moment from 'moment';
 
@@ -30,30 +30,43 @@ const AnchorTag = styled(Link)`
   }
 `;
 
-const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories },  match, getMonthlyExpenseSum, user, expenses: {expense, loading, monthlySum : expenseMonthlySum} }) => {
-  let history = useHistory();
-
-  const [paramId, setParamId] = useState(match.params.id)
-
-  // const isNotLoaded = expense._id !== paramId ? true : false;
-
-  useEffect(() => {
-    // if(isNotLoaded){
-      getExpense(paramId);
-      getCategories("Expense");
-      const [month, year] = moment().format("M/YYYY").split("/");
-      getMonthlyExpenseSum(month,year);
-      setFormData({ ...formData, ["description"]: expense ? expense.description : "", ["amount"]: expense ? expense.amount : "", ["category"]: expense ? expense.category_id.name : ""});
-  //  }
-  }, [getExpense]);
+const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories: { categories },  match, history, location, getMonthlyExpenseSum, user, expenses: {expense, loading, monthlySum : expenseMonthlySum} }) => {
 
   const [formData, setFormData] = useState({
+    id : "",
     category: "",
     description: "",
     amount: ""
   });
+// const usePrevious = value => {
+//   const ref = useRef();
+//   useEffect(() => {
+//     ref.current = value;
+//   });
+//   return ref.current;
+// }
+//   const prevExpense = usePrevious(expense);
+  // console.log(prevExpense)
+  useEffect(() => {
+    if(expense === null || id === "" || id !== expense._id){
+      getExpense(match.params.id);
+      setFormData({
+       id : loading || !expense ? "" : expense._id, 
+       description : loading || !expense ? "" : expense.description, 
+       amount : loading || !expense ? "" : expense.amount, 
+       category: loading || !expense ? "" : expense.category_id.name
+      });
+    }
+  }, [getExpense, match.params.id, expense]);
 
-  const { category, description, amount } = formData;
+  useEffect(() => {
+    getCategories("Expense");
+      const [month, year] = moment().format("M/YYYY").split("/");
+      getMonthlyExpenseSum(month,year,match.params.id);
+  },[getCategories, getMonthlyExpenseSum])
+
+
+  const {id, category, description, amount } = formData;
 
   const [show, setShow] = useState(false);
 
@@ -80,10 +93,10 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
     if (category && amount) {
       if(!user.hasOwnProperty('budget_threshold')){
         updateExpense(match.params.id, formData);
-        history.replace('/expenses')
+        history.push('/expenses')
       }else if(totalSum <= parseFloat(user.budget_threshold)){
         updateExpense(match.params.id, formData);
-        history.replace('/expenses')
+        history.push('/expenses')
       }else{
         handleShow()
       }
@@ -95,8 +108,9 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
   const handleOnUpdate = e => {
     e.preventDefault();
     updateExpense(match.params.id, formData);
-    history.replace('/expenses')
+    history.push('/expenses')
   }
+
   return (
     <>
       <ContentContainer>
@@ -174,23 +188,21 @@ Update.propTypes = {
   setAlert: PropTypes.func.isRequired,
   categories: PropTypes.object.isRequired,
   getMonthlyExpenseSum: PropTypes.func.isRequired,
-  user : PropTypes.object.isRequired
-  // loading: PropTypes.object.isRequired,
-  // expense: PropTypes.object.isRequired,
+  user : PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  expenses : PropTypes.object.isRequired
 
-  // curExpense: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  categories: state.categories,
   expenses : state.expenses,
-  // expense: state.expenses.expense,
-  // loading: state.expenses.loading,
-  // expenseMonthlySum : state.expenses.monthlySum,
+  categories: state.categories,
   user: state.auth.user
 });
 
 export default connect(
   mapStateToProps,
   { getCategories, updateExpense, setAlert, getExpense, getMonthlyExpenseSum }
-)(Update);
+)(withRouter(Update));

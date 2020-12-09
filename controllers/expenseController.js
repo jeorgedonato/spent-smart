@@ -137,14 +137,20 @@ router.delete("/:id", auth, async (req, res) => {
 // @route    GET api/expenses/monthly/month/year
 // @desc     GET a monthly 
 // @access   Private
-router.get("/monthly/:month/:year", auth, async (req, res) => {
+router.get("/monthly/:month/:year/:id", auth, async (req, res) => {
   try {
+    // console.log(req.params.id)
     const expenseRec = await db.Expense.aggregate([
     {
         '$match': {
             'month_created': parseInt(req.params.month), 
             'year_created': parseInt(req.params.year),
-            'user_id': ObjectId(req.user.id)
+            'user_id': ObjectId(req.user.id),
+            'neId': {
+                '$ne': {
+                    '_id': ObjectId(req.params.id)
+                }
+            },
         }
     }, {
         '$group': {
