@@ -98,7 +98,7 @@ const Update = ({ getCategories, getExpense, setAlert, updateExpense, categories
       }else if(totalSum <= parseFloat(user.budget_threshold)){
         updateExpense(match.params.id, formData);
         history.push('/expenses')
-      }else{
+      }else if(totalSum > parseFloat(user.budget_threshold)){
         handleShow()
       }
     } else {

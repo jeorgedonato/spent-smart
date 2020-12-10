@@ -16,7 +16,7 @@ const initialState = {
 	expense: null,
 	loading: true,
 	error: {},
-	monthlySum: null,
+	monthlySum: 0,
 	categoryExpenses: null,
 	yearlySavings: null
 };

@@ -73,10 +73,10 @@ const Add = ({ getCategories, setAlert, addExpense, addCategory, categories: { c
       if(!user.hasOwnProperty('budget_threshold')){
         addExpense(formData);
         history.replace('/expenses')
-      }else if(totalSum <= parseFloat(user.budget_threshold)){
+      }else if(user.hasOwnProperty('budget_threshold') && totalSum <= parseFloat(user.budget_threshold)){
         addExpense(formData);
         history.replace('/expenses')
-      }else{
+      }else if(totalSum > parseFloat(user.budget_threshold)){
         handleShow()
       }
     } else {
