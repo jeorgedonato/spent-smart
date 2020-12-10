@@ -68,22 +68,16 @@ const columns = [
   },
 ];
 
-const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome }, history }) => {
+const Income = ({ getIncomes, deleteIncome, getIncome, incomes: { incomes, loading, income: curIncome }, history, location }) => {
 
-    const usePrevious = value => {
-      const ref = useRef();
-      useEffect(() => {
-        ref.current = value;
-      });
-      return ref.current;
-    }
-      const prevIncomes = usePrevious(incomes);
-    // console.log(curIncome)
+    // const [incomesState, setIncomesState] = useState(incomes);
+
     useEffect(() => {
-      if(prevIncomes !== incomes){
         getIncomes();
-      }
-    }, [getIncomes, loading,prevIncomes]);
+        return () => {
+      getIncomes();
+    }
+    }, [getIncomes, loading, location]);
 
     const handleDelete = id => {
         deleteIncome(id);

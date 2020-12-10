@@ -68,22 +68,17 @@ const columns = [
   },
 ];
 
-const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense }, history }) => {
+const Expense = ({ getExpenses, deleteExpense, getExpense, expenses: { expenses, loading, expense: curExpense }, history, location, match }) => {
 
-  const usePrevious = value => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
-  const prevExpenses = usePrevious(expenses);
+  // const [expensesState, setExpensesState] = useState(expenses);
 
   useEffect(() => {
-    if(prevExpenses !== expenses){
-    getExpenses();
+    // if(expenses !== expensesState){
+      getExpenses();
+    return () => {
+      getExpenses();
     }
-  }, [getExpenses, loading, prevExpenses]);
+  }, [getExpenses, loading, location]);
   // const history = useHistory();
   const [options, setOptions] = useState({
     monthOpt : [],

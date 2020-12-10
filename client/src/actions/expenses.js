@@ -103,6 +103,9 @@ export const addExpense = formData => async dispatch => {
       type: ADD_EXPENSE,
       payload: res.data
     });
+
+    dispatch(getExpenses());
+
     // window.location.replace('/expenses');
     dispatch(setAlert(`Expense Created`, 'success'));
   } catch (err) {
@@ -130,6 +133,8 @@ export const updateExpense = (id, formData) => async dispatch => {
       type: UPDATE_EXPENSE,
       payload: res.data
     });
+
+    dispatch(getExpenses());
       // window.location.replace('/expenses')
      dispatch(setAlert(`Expense Updated`, 'success'));
   } catch (err) {
