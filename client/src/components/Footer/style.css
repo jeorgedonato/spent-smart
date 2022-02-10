@@ -9,6 +9,16 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
+footer > .span{
+  text-align: center;
+}
+
+footer > .span > span > a{
+  text-decoration: none;
+
+}
+
 .gather-link {
   font-size: 25px;
   margin: 0%;

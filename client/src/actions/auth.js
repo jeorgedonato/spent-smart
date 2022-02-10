@@ -63,9 +63,11 @@ export const register = ({ firstname, lastname, email, password }) => async disp
   } catch (err) {
     const errors = err.response.data.errors;
 
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
+    // if (errors) {
+    //   errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    // }
+
+    dispatch(setAlert('Something went wrong','danger'));
 
     dispatch({
       type: REGISTER_FAIL
@@ -81,7 +83,9 @@ export const profileUpdate = (firstname, lastname, budget_threshold) => async di
     }
   };
   const body = JSON.stringify({ firstname, lastname, budget_threshold });
-  const res = await axios.put('/api/users/profile', body, config);
+
+  try {
+    const res = await axios.put('/api/users/profile', body, config);
     // console.log(res)
     dispatch({
       type: PROFILE_UPDATE,
@@ -90,19 +94,17 @@ export const profileUpdate = (firstname, lastname, budget_threshold) => async di
     
     // dispatch(loadUser());
     dispatch(setAlert('Profile Updated','success'));
-
-  try {
     
   } catch (err) {
     const errors = err.response.data.errors;
+    // if (errors) {
+    //   errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    // }
 
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
-
-    dispatch({
-      type: AUTH_ERROR
-    });
+    dispatch(setAlert('Internal Server Error','danger'));
+    // dispatch({
+    //   type: AUTH_ERROR
+    // });
   }
 
 };

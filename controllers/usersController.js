@@ -117,7 +117,6 @@ router.put("/profile", auth, async(req, res) => {
     let user = await db.User.findById(req.user.id);
 
     const { firstname, lastname, budget_threshold } = req.body;
-
     user.firstname = firstname.trim()
     .toLowerCase()
     .split(" ")

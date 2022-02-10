@@ -36,6 +36,12 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+ul{
+  list-style: none;
+}
+
+
+
 /* .App > input {
   margin-top: 200px;
 } */
