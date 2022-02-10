@@ -38,6 +38,7 @@ function Dashboard({auth : {user}, getMonthlyExpenseSum , getMonthlyIncomeSum, e
         <Jumbotron className="jumbo">
             <h1>Welcome to <span className="nerko-font">$pent $mart</span></h1>
             <p style={{fontSize: "1.3rem"}}>Hello, {user ? user.firstname : ""} {user ? user.lastname : ""}</p>
+            <p> Spent Smart allows users to input their monthly income and expense breakdown (along with their associated category options, such as paycheck, food, transportation, etc.). The goal is to be net positive after accounting for all of the users' expenses, which will result in a savings amount. Graphs of the users' data can be found under the Reports section.</p>
         </Jumbotron>
         <Row style={{textAlign: "center"}}>
         {incomeMonthlySum ? 

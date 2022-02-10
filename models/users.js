@@ -33,7 +33,8 @@ const usersSchema = new Schema({
     // get: v => `${root}${v}`
   },
   budget_threshold:{
-    type: Number
+    type: Number,
+    default: 0
   },
   created_date: {
     type: Date,

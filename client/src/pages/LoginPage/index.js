@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Container, Form, Button, InputGroup } from 'react-bootstrap';
 import ContentContainer from '../../components/ContentContainer';
 import "./LoginPage.css";
+import {Jumbotron} from 'react-bootstrap';
 // import { useForm } from "react-hook-form";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -14,8 +15,8 @@ import "./LoginPage.css";
 const LoginPage = ({ login, isAuthenticated }) => {
   // Setting the component's initial state
   const [loginCred, setLoginCred] = useState({
-    email: "",
-    password: ""
+    email: 'test@user.com',
+    password: 'password123'
   })
 
 
@@ -58,16 +59,27 @@ const LoginPage = ({ login, isAuthenticated }) => {
   return (
     <>
       <ContentContainer>
+      <Jumbotron className="jumbo">
+            <h2>Thank you for visiting $pent $mart!</h2>
+            <b>Please feel free to browse around!</b>
+            <p>
+              <ul>
+                <li><b>Email:</b> test@user.com</li>
+                <li><b>Password:</b> password123</li>
+              </ul>
+            </p>
+        </Jumbotron>
         <h3>Log In</h3>
+
         <Form onKeyDown={handleKeyPress}>
           <Form.Group >
             <Form.Label>Email</Form.Label>
-            <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" />
+            <Form.Control type="text" name="email" onChange={handleInputChange} placeholder="Email Address" defaultValue={`test@user.com`} />
           </Form.Group>
           <Form.Group >
             <Form.Label >Password</Form.Label>
             <InputGroup className="mb-2 mr-sm-2">
-              <Form.Control type={passwordShown ? "text" : "password"} name="password" onChange={handleInputChange} placeholder="Password" />
+              <Form.Control type={passwordShown ? "text" : "password"} name="password" onChange={handleInputChange} placeholder="Password" defaultValue={`password123`} />
               <InputGroup.Append>
                 <InputGroup.Text>
                   <Form.Check 
